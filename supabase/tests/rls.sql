@@ -21,20 +21,25 @@ do $$ begin
   perform public.subscribe_newsletter('Reader@Example.com', 'en', 'test');
   perform public.subscribe_newsletter('reader@example.com', 'sq', 'test'); -- duplicate is silent
 end $$;
+-- Denied either by missing grants (plain Postgres) or by RLS returning no rows (Supabase,
+-- where anon has table grants by default).
 do $$ begin
-  perform 1 from public.discount_codes;
-  raise exception 'anon must not read discount codes';
+  if (select count(*) from public.discount_codes) > 0 then raise exception 'anon must not read discount codes'; end if;
 exception when insufficient_privilege then null;
 end $$;
 do $$ begin
-  perform 1 from public.newsletter_subscribers;
-  raise exception 'anon must not read the newsletter list';
+  if (select count(*) from public.newsletter_subscribers) > 0 then raise exception 'anon must not read the newsletter list'; end if;
 exception when insufficient_privilege then null;
 end $$;
 do $$ begin
   perform public.subscribe_newsletter('not-an-email');
   raise exception 'invalid email accepted';
 exception when invalid_parameter_value then null;
+end $$;
+do $$ begin
+  update public.products set price_cents = 1 where slug = 'drita';
+  if (select price_cents from public.products where slug = 'drita') = 1 then raise exception 'anon changed a product'; end if;
+exception when insufficient_privilege then null;
 end $$;
 
 -- Signed-in customer
@@ -48,6 +53,7 @@ do $$ begin
   if (select price_cents from public.products where slug = 'drita') = 1 then raise exception 'customer changed a product'; end if;
   update public.profiles set full_name = 'Test Customer' where id = auth.uid();
   if (select full_name from public.profiles where id = auth.uid()) <> 'Test Customer' then raise exception 'customer cannot edit own profile'; end if;
+  update public.profiles set full_name = 'Hacked' where id = '00000000-0000-0000-0000-000000000002';
 end $$;
 do $$ begin
   update public.profiles set role = 'admin' where id = auth.uid();
@@ -58,11 +64,14 @@ end $$;
 -- Admin
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000002', true);
 do $$ begin
+  if (select full_name from public.profiles where id = auth.uid()) is not distinct from 'Hacked' then raise exception 'customer edited another profile'; end if;
+  if (select count(*) from public.profiles) <> 2 then raise exception 'admin should see all profiles'; end if;
   if (select count(*) from public.products) <> 12 then raise exception 'admin should see all 12 products'; end if;
   if (select count(*) from public.discount_codes) <> 1 then raise exception 'admin cannot read discount codes'; end if;
   if (select count(*) from public.newsletter_subscribers) <> 1 then raise exception 'newsletter should hold one deduplicated address'; end if;
   update public.products set featured = true where slug = 'era';
   if not (select featured from public.products where slug = 'era') then raise exception 'admin cannot edit products'; end if;
+  insert into public.testimonials (quote_sq, quote_en, author) values ('t', 't', 't');
 end $$;
 
 rollback;

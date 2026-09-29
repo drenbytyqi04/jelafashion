@@ -1,6 +1,8 @@
 -- Foundation: extensions, updated_at trigger, profiles and the admin check used by RLS.
 
-create extension if not exists citext with schema public;
+-- Extensions live in their own schema (Supabase's convention; keeps public clean).
+create schema if not exists extensions;
+create extension if not exists citext with schema extensions;
 
 create or replace function public.set_updated_at()
 returns trigger

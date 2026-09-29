@@ -28,7 +28,7 @@ create table public.shipping_rates (
 
 create table public.discount_codes (
   id uuid primary key default gen_random_uuid(),
-  code citext not null unique check (code ~ '^[A-Za-z0-9_-]{3,32}$'),
+  code extensions.citext not null unique check (code ~ '^[A-Za-z0-9_-]{3,32}$'),
   kind text not null check (kind in ('percent', 'fixed')),
   -- percent: 1–100; fixed: cents
   value integer not null check (value > 0),

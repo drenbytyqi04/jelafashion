@@ -47,11 +47,21 @@ The schema lives in `supabase/migrations/` (apply in filename order):
 | `…_content.sql`                 | site content blocks, testimonials, newsletter list + `subscribe_newsletter()` |
 | `…_commerce_config.sql`         | shipping zones and rates, discount codes, payment methods             |
 | `…_storage.sql`                 | buckets `product-images`, `site-media` (public) and `payment-proofs` (private) |
+| `…_hardening.sql`               | advisor fixes: `is_admin()` moved to a private schema, trigger functions not callable over the API, one policy per role/action, FK indexes |
 
 Row Level Security is on for every table: visitors read published catalog rows only,
 admins manage everything, discount codes and the newsletter list are never public.
 
-**Set up a project**
+**Live project:** `bducwcutmikztjcpqayk` (EU Central). All migrations and `seed.sql` are
+applied, `supabase/tests/rls.sql` passes against it, and the security advisor's only
+remaining notice is `subscribe_newsletter()` being callable by visitors, which is
+intentional. Local migration filenames match the project's migration history, so
+`supabase db push` sees them as already applied.
+
+For local development and Vercel set `NEXT_PUBLIC_SUPABASE_URL` and
+`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (Project Settings → API Keys). Both are public.
+
+**Set up a new project** (e.g. a staging copy)
 
 1. Create a Supabase project (EU region recommended).
 2. Apply the migrations, then the sample data:

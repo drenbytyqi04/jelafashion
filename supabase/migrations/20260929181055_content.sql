@@ -25,7 +25,7 @@ create table public.testimonials (
 
 create table public.newsletter_subscribers (
   id uuid primary key default gen_random_uuid(),
-  email citext not null unique,
+  email extensions.citext not null unique,
   locale text not null default 'sq' check (locale in ('sq', 'en')),
   source text not null default 'footer',
   created_at timestamptz not null default now(),

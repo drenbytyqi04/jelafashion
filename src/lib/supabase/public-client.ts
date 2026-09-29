@@ -10,7 +10,8 @@ let client: SupabaseClient | null | undefined;
 export function publicSupabase(): SupabaseClient | null {
   if (client !== undefined) return client;
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  // Publishable key (sb_publishable_…) preferred; the legacy anon JWT still works.
+  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   client = url && key ? createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } }) : null;
   return client;
 }
