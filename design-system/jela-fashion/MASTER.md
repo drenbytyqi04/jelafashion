@@ -3,10 +3,11 @@
 Global rules for every page. A file in `pages/<page>.md` overrides this file for that page
 only. Brand rules in `/CLAUDE.md` win over anything here and over any skill output.
 
-> Provenance: hand-authored in Phase 0 with the `frontend-design` skill. The
-> `ui-ux-pro-max` generator has not been run (the skill is not installed in this repo).
-> When it is, run it with `--persist`, then merge its output into this file and record any
-> conflict under **Decisions**. Do not let it overwrite the brand rules.
+> Provenance: authored in Phase 0 with the `frontend-design` skill, then reconciled with
+> the `ui-ux-pro-max` generator (`--design-system --persist`, page overrides, `--stack
+> nextjs`, `--domain ux`). Its raw output is kept for reference in `reference/`; it is not
+> authoritative. What was adopted and rejected is listed under **Decisions**. Never re-run
+> the generator with `--force` against this folder.
 
 ## Concept: the tape measure
 
@@ -146,7 +147,41 @@ Rules:
   static), no pinned scroll (lookbook becomes a swipe row), reveals become 200ms opacity
   fades. Wizard lines appear drawn.
 - Interrupted animations always resolve to the correct final state (use Framer's
-  `animate` to target states, never chained timeouts).
+  `animate` to target states, never chained timeouts). Required state (cart open, step
+  index, selected size) is set directly; never depend on `animationend`/`transitionend`.
+- Easing direction: decelerate (`ease-couture`) when arriving, accelerate when leaving,
+  linear only for constant-rate progress (marquee, progress bars).
+- Continuous motion is limited to the marquee and loading indicators. The marquee pauses
+  on hover and focus, stops when off-screen, and has a visible pause control (WCAG
+  2.2.2). The wizard band pulses twice, then rests.
+- At most 1–2 animated elements per viewport at a time.
+
+## Forms and feedback
+
+From `ui-ux-pro-max --domain ux`, applied to every form (checkout, wizard, account,
+contact, newsletter, admin):
+
+- Visible labels always; placeholders are examples, never the label.
+- Validate on blur, re-validate on change once a field has errored; never only on submit.
+- Error text sits below its field, specific ("Enter a postal code with 5 digits"), linked
+  with `aria-describedby`, announced via `role="alert"` / `aria-live="polite"`.
+- On a failed submit: show an error summary at the top of the form, move focus to it,
+  link each item to its field, keep the inline errors.
+- Submit buttons show a loading state, then success or error. Never a silent submit.
+- Correct `type`, `inputmode` and `autocomplete` on every input.
+
+## Next.js implementation rules
+
+From `ui-ux-pro-max --stack nextjs` (data verified against Next.js 16.2; confirm the
+latest stable version at Phase 1 setup):
+
+- App Router only. `next/image` for every image, `next/font` (variable where the family
+  offers it) for every font; no `<img>`, no Google Fonts `<link>`.
+- Server Actions for mutations (`<form action={…}>`). Every action validates input with
+  the shared Zod schema and checks auth/role; actions are public endpoints.
+- `updateTag` after mutations whose result must show immediately (cart, admin edits);
+  `revalidateTag` for the rest.
+- Stream slow data behind `<Suspense>` with skeletons sized to the final layout.
 
 ## Voice
 
@@ -187,7 +222,14 @@ evening dress, custom size dresses, handmade wedding dress.
 - [ ] One `h1`, logical `h2`/`h3`, descriptive alt text, aria labels on icon buttons.
 - [ ] Both locales render with real copy; Albanian diacritics correct.
 - [ ] No invented facts; placeholders use `[BRACKETS]`.
-- [ ] Forms: labels, `autocomplete`, `inputmode`, inline Zod errors, translated.
+- [ ] Forms: labels, `autocomplete`, `inputmode`, inline Zod errors, focusable error
+      summary on submit, loading/success states, translated.
+- [ ] No emoji icons; one icon set (Lucide) at one stroke weight.
+- [ ] Hover and state changes have transitions from the motion tokens (no instant jumps,
+      no layout-shifting hovers).
+- [ ] No content hidden behind the fixed nav or the sticky mobile bars
+      (`scroll-margin-top`, safe-area insets).
+- [ ] Marquee pause control works; no other decorative continuous motion.
 - [ ] Lighthouse mobile ≥ 90 for performance, accessibility, SEO.
 
 ## Decisions
@@ -210,3 +252,33 @@ resolved.
 7. **Footer**: linen, not charcoal. The final CTA image above it is the dark moment; a dark
    footer would merge with it and break the light-only rule's spirit.
 8. **Font choice**: Cormorant Garamond + Manrope (reasons in Typography).
+
+### ui-ux-pro-max reconciliation
+
+The generator classified the project as "E-commerce Luxury". Its output and what happened
+to each part:
+
+| Generator recommendation | Result | Reason |
+| --- | --- | --- |
+| Primary `#1C1917` | **Adopted** (already `ink`) | Matches the warm near-black |
+| Accent `#A16207` dark gold for CTAs, white text | Rejected | Brand requires champagne `#C9A86A`; `gold-ink #836636` covers gold text |
+| Background `#FAFAF9`, card `#FFFFFF`, muted `#E8ECF0`, muted text `#475569` | Rejected | Cool greys/slate clash with warm ivory; brand requires ~#FAF7F2 |
+| Border `#D6D3D1` | Rejected | Kept `hairline #E2D9CC` (warmer); `field` covers the 3:1 need |
+| Destructive `#DC2626` | Rejected | Too bright for the palette; `error #9B2C2C` passes 7:1 |
+| Cormorant + Montserrat | Partly | Cormorant Garamond kept; Montserrat rejected (Typography) |
+| Style "Liquid Glass" (translucency, refraction, blur) | Rejected | Brand forbids glassmorphism |
+| Shadow scale sm–xl, card hover lift | Rejected | Brand forbids heavy shadows; no card chrome |
+| 8/12/16px radius on buttons, cards, modals | Rejected | Radius 0 storefront, 4px admin |
+| Modal overlay `backdrop-filter: blur(4px)` | Rejected | Glass effect; plain ink scrim 40% |
+| Page pattern "Feature-Rich Showcase" (feature cards, logos) | Rejected | Editorial sections per brief; no invented social proof |
+| Home/collection/checkout/wizard: single column, 800px max | Rejected | Brief mandates asymmetric editorial grid and a two-column checkout |
+| Hero type `clamp(3rem,10vw,12rem)`, weight 900, -0.05em | Rejected | Heavy grotesk treatment; Cormorant 300 display instead |
+| Product: drag-to-rotate, AR, 3D orbit | Rejected | No 3D assets; the gallery and zoom are the brief |
+| Collection: filter chips wrap or use a "+n" disclosure, never clip | **Adopted** | See `pages/collection.md` |
+| Admin: restrained transitions, purposeful feedback | **Adopted** | Already in `pages/admin.md` |
+| Anti-patterns: emoji icons, missing `cursor-pointer`, layout-shifting hovers, low contrast, instant state changes, invisible focus | **Adopted** | Added to the checklist |
+| UX: error summary, blur validation, `aria-live`, submit feedback, `inputmode` | **Adopted** | Forms and feedback |
+| UX: continuous animation only for loading | Adapted | Brief requires the marquee: it gets a pause control and stops off-screen; wizard pulse limited to two cycles |
+| UX: cancellable transitions, easing direction, 1–2 animated elements per view | **Adopted** | Motion |
+| Next.js: next/image, next/font, Server Actions + validation, `updateTag`, Suspense | **Adopted** | Next.js implementation rules |
+| Checklist: 375/768/1024/1440, no content under fixed nav, no horizontal scroll | **Adopted** | Checklist |

@@ -43,7 +43,7 @@ Centimetres / Inches. Unit is chosen once and shown as a suffix inside every fie
   an ellipse band (front arc solid, back arc dashed); `straight` draws a line with 6px end
   ticks — the tape-measure motif.
 - Measured path: 2px `champagne`, `stroke-dasharray` draw-in over 900ms `ease-couture`,
-  then a soft opacity pulse (0.7 ↔ 1, 2.4s) until input. Reduced motion: shown drawn, no
+  then a soft opacity pulse (0.7 ↔ 1, 2.4s) that runs twice and rests. Reduced motion: shown drawn, no
   pulse.
 - Step change: content slides 24px + fades (400ms); the figure cross-fades only when the
   view changes (front → back → side), otherwise stays put and only the band redraws.

@@ -27,12 +27,18 @@ Every page follows: **DESIRE → COLLECTION → PERFECT FIT → TRUST → ORDER*
 - Read MASTER.md and the matching page file before building any page.
 - Brand rules (below) beat any skill recommendation. Record every conflict and the
   decision in MASTER.md under "Decisions".
-- Skills: `frontend-design` (installed, `.claude/skills/frontend-design`) for aesthetic
-  direction. `ui-ux-pro-max` is **not yet installed** in this repo; when it is, run
-  `python3 .claude/skills/ui-ux-pro-max/scripts/search.py "luxury fashion e-commerce bridal evening dresses atelier" --design-system --persist -p "Jela Fashion"`
-  plus `--page` for home, collection, product, measurement-wizard, checkout, admin,
-  `--stack nextjs` and `--domain ux`, then reconcile its output into the existing files
-  (brand rules win) and run its pre-delivery checklist on every page.
+- Skills (in `.claude/skills/`):
+  - `frontend-design` for aesthetic direction, typography, composition and motion.
+  - `ui-ux-pro-max` (installed via `ui-ux-pro-max-cli`, `uipro init --ai claude`) for UX,
+    accessibility and stack guidance. Its design system was generated and reconciled into
+    MASTER.md (raw output in `design-system/jela-fashion/reference/`). Query it while
+    building, e.g. `python3 .claude/skills/ui-ux-pro-max/scripts/search.py "<topic>" --domain ux`
+    or `--stack nextjs`. **Never re-run `--persist --force`** against
+    `design-system/jela-fashion`; it would overwrite the reconciled files.
+  - The installer also added `banner-design`, `brand`, `design`, `design-system`,
+    `slides`, `ui-styling`. They are optional; brand rules still win over all of them.
+  - Run the pre-delivery checklist in MASTER.md (which includes ui-ux-pro-max's
+    checklist) on every page.
 
 ## Brand rules (non-negotiable)
 
@@ -123,7 +129,8 @@ with self-drawing measurement lines.
 
 ## Phase plan
 
-0. Design system (MASTER.md + page overrides), reconciled with brand rules. **Done —
+0. Design system (MASTER.md + page overrides), reconciled with brand rules and
+   ui-ux-pro-max output. **Done —
    awaiting approval.**
 1. Project setup, tokens, base components (Button, Input, Select, RadioGroup, Drawer,
    Modal, Accordion, Toast, Badge, Skeleton, FileUpload), i18n, nav, footer, motion

@@ -12,6 +12,9 @@
 - Product card: 4:5 image, name in `h3` at 20px, price `price` 18px, colors as 10px
   swatches. Hover (desktop): second image cross-fades over 600ms, "Quick add" bar slides up
   from the image bottom (ivory, `label`). No card border, no shadow.
+- Active filters show as removable chips above the grid (1px `field` border, `small`
+  text, 44px tall). Chips wrap to new lines; if more than one row on mobile, collapse to a
+  "+n more" button that expands. Never clip or hide chips in a single scrolling row.
 - Filters sync to the URL (`?category=&color=&length=&sleeves=&price=&availability=&sort=`).
 - "Load more" is a secondary button, centered, with "Showing 12 of N" in `small` above.
 - Skeletons match card geometry exactly (4:5 block + two text bars).
