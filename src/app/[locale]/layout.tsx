@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { ReactNode } from "react";
 import { routing } from "@/i18n/routing";
 import { site } from "@/lib/site";
+import { introSeenScript } from "@/components/motion/intro-loader";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -61,6 +63,11 @@ export default async function LocaleLayout({
   return (
     // The intro loader's inline script sets data attributes on <html> before hydration.
     <html lang={locale} className={`${cormorant.variable} ${manrope.variable}`} suppressHydrationWarning>
+      <head>
+        <Script id="intro-seen" strategy="beforeInteractive">
+          {introSeenScript}
+        </Script>
+      </head>
       <body>
         <NextIntlClientProvider>
           <MotionProvider>

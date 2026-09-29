@@ -39,3 +39,15 @@ export function WhatsAppIcon(props: IconProps) {
     </svg>
   );
 }
+
+/** A dress on a hanger, in Lucide's line style (Lucide has no dress icon). */
+export function DressIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 2.5v1.5" />
+      <path d="M9.5 4h5" />
+      <path d="M9.5 4 9 9.5c1 .8 2 1.2 3 1.2s2-.4 3-1.2L14.5 4" />
+      <path d="M9 9.5 5.5 21h13L15 9.5" />
+    </svg>
+  );
+}

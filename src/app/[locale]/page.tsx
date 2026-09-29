@@ -1,31 +1,53 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { getCategories, getHeroContent, getNewIn, getTestimonials } from "@/lib/catalog/repository";
+import type { Locale } from "@/lib/catalog/types";
+import { pick } from "@/lib/catalog/types";
 import { Button } from "@/components/ui/button";
-import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { IntroLoader } from "@/components/motion/intro-loader";
 import { Marquee } from "@/components/motion/marquee";
 import { RevealText } from "@/components/motion/reveal-text";
+import { AtelierStory } from "@/components/home/atelier-story";
+import { BridalFeature } from "@/components/home/bridal-feature";
+import { CategoryTiles } from "@/components/home/category-tiles";
+import { Consultation } from "@/components/home/consultation";
+import { FinalCta } from "@/components/home/final-cta";
+import { HeroMedia } from "@/components/home/hero-media";
+import { InstagramGrid } from "@/components/home/instagram-grid";
+import { Lookbook } from "@/components/home/lookbook";
+import { MadeToMeasure } from "@/components/home/made-to-measure";
+import { NewInCarousel } from "@/components/home/new-in-carousel";
+import { Testimonials } from "@/components/home/testimonials";
 
-// Phase 1: hero and marquee only, to exercise the transparent header, intro loader and
-// motion primitives. Phase 2 builds the remaining home sections from pages/home.md.
+// Prerendered, refreshed at most every 5 minutes (and on demand via the catalog tag).
+export const revalidate = 300;
+
+// Sections follow design-system/jela-fashion/pages/home.md:
+// DESIRE (hero, marquee, categories) → COLLECTION (new in, bridal) → PERFECT FIT (made to
+// measure) → TRUST (lookbook, atelier, testimonials, consultation) → ORDER (instagram, CTA).
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  setRequestLocale(locale as "sq" | "en");
+  const { locale: raw } = await params;
+  const locale = raw as Locale;
+  setRequestLocale(locale);
   const t = await getTranslations("home");
-  const title = t.raw("heroTitle") as string[];
+  const [hero, categories, newIn, testimonials] = await Promise.all([
+    getHeroContent(),
+    getCategories(),
+    getNewIn(8),
+    getTestimonials(),
+  ]);
   const marquee = t.raw("marquee") as string[];
 
   return (
     <>
       <IntroLoader />
-      <section className="hero relative flex min-h-svh items-end overflow-hidden bg-stone text-white">
-        {/* Video slot: replaced by the admin-managed hero video in Phase 2 */}
-        <div className="absolute inset-0" aria-hidden>
-          <ImagePlaceholder ratio="9/16" tone="stone" className="h-full !aspect-auto opacity-60" />
+      <section className="hero on-image relative flex min-h-svh items-end overflow-hidden bg-stone text-white">
+        <div className="absolute inset-0">
+          <HeroMedia videoUrl={hero.videoUrl} posterUrl={hero.posterUrl} />
         </div>
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-ink/55 to-transparent" />
 
-        <div className="container-page relative pb-[max(3rem,env(safe-area-inset-bottom))] lg:pb-24">
+        <div className="container-page relative pb-[max(3rem,env(safe-area-inset-bottom))] lg:pb-20">
           <div className="lg:mx-auto lg:max-w-4xl lg:text-center">
             <p className="hero-fade label" style={{ animationDelay: "calc(var(--intro-delay) + 0.1s)" }}>
               {t("heroLabel")}
@@ -34,14 +56,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               as="h1"
               immediate
               delay={0.2}
-              lines={title}
+              lines={hero.headline[locale] ?? hero.headline.sq}
               className="mt-5 font-serif text-display font-light"
             />
             <p
-              className="hero-fade measure mt-6 text-body text-white/90 lg:mx-auto lg:text-lead lg:font-serif"
+              className="hero-fade measure mt-6 text-body text-white/90 lg:mx-auto lg:font-serif lg:text-lead"
               style={{ animationDelay: "calc(var(--intro-delay) + 0.6s)" }}
             >
-              {t("heroSubtitle")}
+              {pick(hero.subtitle, locale)}
             </p>
             <div
               className="hero-fade mt-10 flex flex-col gap-3 md:flex-row lg:justify-center"
@@ -63,14 +85,18 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       <Marquee items={marquee} className="bg-ivory" />
-
-      <section className="section container-page">
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-6">
-          <ImagePlaceholder ratio="3/4" tone="linen" />
-          <ImagePlaceholder ratio="3/4" tone="blush" className="lg:mt-24" />
-          <ImagePlaceholder ratio="3/4" tone="stone" className="hidden lg:block" />
-        </div>
-      </section>
+      <CategoryTiles categories={categories} locale={locale} />
+      <NewInCarousel products={newIn} />
+      <BridalFeature />
+      <div className="pt-24 lg:pt-40">
+        <MadeToMeasure />
+      </div>
+      <Lookbook />
+      <AtelierStory />
+      <Testimonials items={testimonials} />
+      <Consultation />
+      <InstagramGrid />
+      <FinalCta />
     </>
   );
 }

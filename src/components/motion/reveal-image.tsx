@@ -1,13 +1,14 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { duration, ease } from "@/lib/motion";
+import { useReducedMotionSafe } from "@/components/motion/use-reduced-motion-safe";
 
 /** Clip-path reveal from the bottom edge with a slight settle of the image inside. */
 export function RevealImage({ children, className }: { children: ReactNode; className?: string }) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
 
   if (reduce) {
     return (

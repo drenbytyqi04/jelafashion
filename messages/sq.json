@@ -130,5 +130,146 @@
     "subtotal": "Nëntotali",
     "size": "Masa {size}",
     "quantity": "Sasia {count}"
+  },
+  "collection": {
+    "shopTitle": "Koleksioni",
+    "shopIntro": "Fustane nusërie, mbrëmjeje dhe të shkurtra, të punuara me dorë në Prizren.",
+    "newInTitle": "Të rejat",
+    "newInIntro": "Fustanet më të reja nga atelja.",
+    "filter": "Filtro",
+    "filters": "Filtrat",
+    "sort": "Rendit",
+    "sortBy": "Rendit sipas",
+    "showResults": "{count, plural, =0 {Asnjë fustan për të shfaqur} one {Shfaq # fustan} other {Shfaq # fustane}}",
+    "results": "{count, plural, one {# fustan} other {# fustane}}",
+    "clearAll": "Pastro të gjitha",
+    "removeFilter": "Hiq filtrin: {label}",
+    "moreFilters": "+{count} të tjerë",
+    "showing": "Po shfaqen {shown} nga {total}",
+    "loadMore": "Shfaq më shumë",
+    "empty": "Asnjë fustan nuk përputhet me këto filtra.",
+    "emptyText": "Provo të heqësh një filtër, ose na trego çfarë kërkon dhe të ndihmojmë.",
+    "emptyCta": "Pastro filtrat",
+    "view": "Pamja",
+    "gridStandard": "Rrjetë standarde",
+    "gridLarge": "Fotografi të mëdha",
+    "groups": {
+      "category": "Kategoria",
+      "color": "Ngjyra",
+      "length": "Gjatësia",
+      "sleeves": "Mëngët",
+      "price": "Çmimi",
+      "availability": "Disponueshmëria"
+    },
+    "sorts": {
+      "newest": "Më të rejat",
+      "price-asc": "Çmimi, nga më i ulëti",
+      "price-desc": "Çmimi, nga më i larti"
+    },
+    "category": {
+      "bridal": "Nusëri",
+      "evening": "Mbrëmje",
+      "short": "Të shkurtra"
+    },
+    "length": {
+      "mini": "Mini",
+      "knee": "Deri te gjuri",
+      "midi": "Midi",
+      "floor": "Deri në tokë"
+    },
+    "sleeves": {
+      "sleeveless": "Pa mëngë",
+      "short": "Me mëngë të shkurtra",
+      "long": "Me mëngë të gjata"
+    },
+    "price": {
+      "under-500": "Nën 500 €",
+      "500-1000": "500 € deri 1.000 €",
+      "over-1000": "Mbi 1.000 €"
+    },
+    "availability": {
+      "in_stock": "Në gjendje",
+      "made_to_order": "Me porosi"
+    },
+    "color": {
+      "ivory": "Fildish",
+      "white": "E bardhë",
+      "champagne": "Shampanjë",
+      "blush": "Rozë",
+      "black": "E zezë",
+      "red": "Bordo",
+      "silver": "Argjend",
+      "green": "Jeshile",
+      "blue": "Blu"
+    }
+  },
+  "product": {
+    "inStock": "Në gjendje",
+    "madeToOrder": "Me porosi · gati për {weeks} javë",
+    "quickAdd": "Shto shpejt",
+    "quickAddTo": "Shto shpejt: {name}",
+    "chooseSize": "Zgjidh masën",
+    "customSize": "Masë e personalizuar",
+    "customSizeHint": "Qepet sipas masave të tua. I shënon ato në faqen e fustanit.",
+    "outOfStock": "{size}, nuk ka në gjendje",
+    "added": "U shtua në shportë",
+    "addedText": "{name}, masa {size}",
+    "saveToWishlist": "Ruaje {name} te të preferuarat",
+    "removeFromWishlist": "Hiqe {name} nga të preferuarat",
+    "colors": "{count, plural, one {# ngjyrë} other {# ngjyra}}",
+    "priceLabel": "Çmimi"
+  },
+  "homeSections": {
+    "categoriesTitle": "Zgjidh sipas kategorisë",
+    "newInTitle": "Të rejat",
+    "viewAll": "Shiko të gjitha",
+    "previous": "E mëparshmja",
+    "next": "Tjetra",
+    "bridalTitle": [
+      "Fustani që",
+      "do ta kujtosh",
+      "përgjithmonë."
+    ],
+    "bridalText": "Disa fustane vishen një herë dhe mbahen mend një jetë. Tonat priten, qepen dhe përfundohen me dorë, që fustani me të cilin ecën të duket sikur ka qenë gjithmonë i yti.",
+    "bridalCta": "Zbulo koleksionin e nusërisë",
+    "mtmTitle": [
+      "Masat e tua.",
+      "Fustani yt."
+    ],
+    "mtmText": "Çdo fustan i koleksionit mund të qepet sipas trupit tënd. Të udhëheqim në çdo masë, një nga një.",
+    "mtmSteps": [
+      {
+        "title": "Zgjidh fustanin",
+        "text": "Çdo fustan i koleksionit mund të qepet sipas masave të tua."
+      },
+      {
+        "title": "Shëno masat, hap pas hapi",
+        "text": "Një udhëzues me një masë në çdo ekran dhe me ilustrim për secilën."
+      },
+      {
+        "title": "Ne e qepim dhe ta dërgojmë",
+        "text": "Pritet dhe qepet me dorë në Prizren, pastaj të dërgohet kudo në botë."
+      }
+    ],
+    "mtmCta": "Fillo porosinë me masa",
+    "lookbookTitle": "Lookbook",
+    "lookbookText": "Çaste nga atelja dhe fustanet që lindin aty.",
+    "atelierTitle": "Punuar me dorë në Prizren.",
+    "atelierText": "Çdo fustan nis mbi tryezën e atelesë: pëlhura zgjidhet me dorë, modeli pritet sipas masave të tua, qëndisja vendoset pe pas peri dhe prova kontrollohet para se të nisë nga Prizreni.",
+    "atelierCta": "Rreth atelesë",
+    "testimonialsTitle": "Me fjalët e tyre",
+    "testimonialOf": "Përshtypja {current} nga {total}",
+    "consultTitle": "Nuk je e sigurt për masën? Na shkruaj.",
+    "consultText": "Na shkruaj ose rezervo një video-thirrje. Të ndihmojmë të zgjedhësh masën ose t'i marrim masat bashkë.",
+    "consultWhatsapp": "Na shkruaj në WhatsApp",
+    "consultVideo": "Rezervo video-konsultë",
+    "instagramTitle": "Ndiq atelenë",
+    "instagramCta": "@jelafashionpz në Instagram",
+    "instagramPost": "Postimi {n} në Instagram, hapet Instagram-i",
+    "finalTitle": [
+      "Fustani yt",
+      "të pret."
+    ],
+    "finalCta": "Bli tani"
   }
 }

@@ -1,10 +1,11 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useId, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { duration, ease } from "@/lib/motion";
 import { FieldError, fieldIds } from "./field";
+import { useReducedMotionSafe } from "@/components/motion/use-reduced-motion-safe";
 
 export type RadioOption = {
   value: string;
@@ -44,7 +45,7 @@ export function RadioGroup({
   className,
 }: RadioGroupProps) {
   const groupId = useId();
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
 
   return (
     <fieldset

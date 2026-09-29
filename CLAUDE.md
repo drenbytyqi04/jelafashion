@@ -133,9 +133,11 @@ with self-drawing measurement lines.
    ui-ux-pro-max output. **Done.**
 1. Project setup, tokens, base components (Button, Input, Select, RadioGroup, Drawer,
    Modal, Accordion, Toast, Badge, Skeleton, FileUpload), i18n, nav, footer, motion
-   primitives. **Done — awaiting approval.** Components are previewed at `/sq/styleguide`
-   (dev only); `npm run qa` runs screenshots, overflow and axe checks.
-2. Supabase migrations, seed data, home and collection pages.
+   primitives. **Done.** Components are previewed at `/sq/styleguide` (dev only);
+   `npm run qa` runs screenshots, overflow and axe checks.
+2. Supabase migrations, seed data, home and collection pages. **Done — awaiting
+   approval.** Seed data has one source (`src/lib/catalog/seed-data.ts`) that generates
+   `supabase/seed.sql` and doubles as the fallback when Supabase env vars are absent.
 3. Product page, cart, measurement wizard.
 4. Checkout, payment providers, proof upload, emails.
 5. Customer accounts and admin panel.

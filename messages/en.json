@@ -130,5 +130,145 @@
     "subtotal": "Subtotal",
     "size": "Size {size}",
     "quantity": "Quantity {count}"
+  },
+  "collection": {
+    "shopTitle": "The Collection",
+    "shopIntro": "Bridal, evening and short dresses, handmade in Prizren.",
+    "newInTitle": "New In",
+    "newInIntro": "The latest dresses from the atelier.",
+    "filter": "Filter",
+    "filters": "Filters",
+    "sort": "Sort",
+    "sortBy": "Sort by",
+    "showResults": "{count, plural, =0 {No dresses to show} one {Show # dress} other {Show # dresses}}",
+    "results": "{count, plural, one {# dress} other {# dresses}}",
+    "clearAll": "Clear all",
+    "removeFilter": "Remove filter: {label}",
+    "moreFilters": "+{count} more",
+    "showing": "Showing {shown} of {total}",
+    "loadMore": "Load more",
+    "empty": "No dresses match these filters.",
+    "emptyText": "Try removing a filter, or tell us what you're looking for and we'll help.",
+    "emptyCta": "Clear filters",
+    "view": "View",
+    "gridStandard": "Standard grid",
+    "gridLarge": "Large images",
+    "groups": {
+      "category": "Category",
+      "color": "Colour",
+      "length": "Length",
+      "sleeves": "Sleeves",
+      "price": "Price",
+      "availability": "Availability"
+    },
+    "sorts": {
+      "newest": "Newest",
+      "price-asc": "Price, low to high",
+      "price-desc": "Price, high to low"
+    },
+    "category": {
+      "bridal": "Bridal",
+      "evening": "Evening",
+      "short": "Short"
+    },
+    "length": {
+      "mini": "Mini",
+      "knee": "Knee length",
+      "midi": "Midi",
+      "floor": "Floor length"
+    },
+    "sleeves": {
+      "sleeveless": "Sleeveless",
+      "short": "Short sleeves",
+      "long": "Long sleeves"
+    },
+    "price": {
+      "under-500": "Under €500",
+      "500-1000": "€500 to €1,000",
+      "over-1000": "Over €1,000"
+    },
+    "availability": {
+      "in_stock": "In stock",
+      "made_to_order": "Made to order"
+    },
+    "color": {
+      "ivory": "Ivory",
+      "white": "White",
+      "champagne": "Champagne",
+      "blush": "Blush",
+      "black": "Black",
+      "red": "Burgundy",
+      "silver": "Silver",
+      "green": "Green",
+      "blue": "Blue"
+    }
+  },
+  "product": {
+    "inStock": "In stock",
+    "madeToOrder": "Made to order · {weeks} weeks",
+    "quickAdd": "Quick add",
+    "quickAddTo": "Quick add: {name}",
+    "chooseSize": "Choose a size",
+    "customSize": "Custom size",
+    "customSizeHint": "Made to your measurements. You'll enter them on the dress page.",
+    "outOfStock": "{size}, out of stock",
+    "added": "Added to your cart",
+    "addedText": "{name}, size {size}",
+    "saveToWishlist": "Save {name} to wishlist",
+    "removeFromWishlist": "Remove {name} from wishlist",
+    "colors": "{count, plural, one {# colour} other {# colours}}",
+    "priceLabel": "Price"
+  },
+  "homeSections": {
+    "categoriesTitle": "Shop by category",
+    "newInTitle": "New in",
+    "viewAll": "View all",
+    "previous": "Previous",
+    "next": "Next",
+    "bridalTitle": [
+      "The Dress You",
+      "Will Remember."
+    ],
+    "bridalText": "Some dresses are worn once and remembered for a lifetime. Ours are cut, sewn and finished by hand, so the one you walk in feels like it was always yours.",
+    "bridalCta": "Explore bridal",
+    "mtmTitle": [
+      "Your Measurements.",
+      "Your Dress."
+    ],
+    "mtmText": "Every dress in the collection can be made to your body. We guide you through each measurement, one at a time.",
+    "mtmSteps": [
+      {
+        "title": "Choose your dress",
+        "text": "Any dress in the collection can be made to your measurements."
+      },
+      {
+        "title": "Enter your measurements",
+        "text": "A guided form, one measurement per screen, with an illustration for each."
+      },
+      {
+        "title": "We craft and deliver it",
+        "text": "Cut and sewn by hand in Prizren, then shipped to you anywhere in the world."
+      }
+    ],
+    "mtmCta": "Start Made to Measure",
+    "lookbookTitle": "Lookbook",
+    "lookbookText": "Moments from the atelier and the dresses it makes.",
+    "atelierTitle": "Handmade in Prizren.",
+    "atelierText": "Every dress begins on the atelier table: the fabric chosen by hand, the pattern cut to your measurements, the embroidery placed stitch by stitch, the fit checked before it leaves Prizren.",
+    "atelierCta": "About the atelier",
+    "testimonialsTitle": "In their words",
+    "testimonialOf": "Testimonial {current} of {total}",
+    "consultTitle": "Not sure about your size? Talk to us.",
+    "consultText": "Send us a message or book a video call. We'll help you choose a size or take your measurements together.",
+    "consultWhatsapp": "Message us on WhatsApp",
+    "consultVideo": "Book a video consultation",
+    "instagramTitle": "Follow the atelier",
+    "instagramCta": "@jelafashionpz on Instagram",
+    "instagramPost": "Instagram post {n}, opens Instagram",
+    "finalTitle": [
+      "Your Dress",
+      "Is Waiting."
+    ],
+    "finalCta": "Shop Now"
   }
 }

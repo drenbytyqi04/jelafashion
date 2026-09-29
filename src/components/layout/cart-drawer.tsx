@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+import { formatPrice } from "@/lib/format";
 import { Link } from "@/i18n/navigation";
 import { selectCartCount, useCartStore } from "@/stores/cart";
 import { useUiStore } from "@/stores/ui";
@@ -17,7 +18,7 @@ export function CartDrawer() {
   const lines = useCartStore((s) => s.lines);
   const count = useCartStore(selectCartCount);
   const subtotal = lines.reduce((n, l) => n + l.priceEUR * l.quantity, 0);
-  const eur = new Intl.NumberFormat(locale === "sq" ? "sq-AL" : "en-IE", { style: "currency", currency: "EUR" });
+  const eur = { format: (v: number) => formatPrice(Math.round(v * 100), locale as "sq" | "en") };
 
   return (
     <Drawer

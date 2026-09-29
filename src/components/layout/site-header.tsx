@@ -54,6 +54,11 @@ export function SiteHeader() {
   const transparent = overlayPage && atTop && !menuOpen;
   const isHidden = hidden && !menuOpen && !focusWithin;
 
+  // Sticky bars below the header (collection toolbar) follow it up and down.
+  useEffect(() => {
+    document.documentElement.style.setProperty("--header-offset", isHidden ? "0px" : "var(--header-h)");
+  }, [isHidden]);
+
   const iconLink = "flex size-11 items-center justify-center";
   const icon = { size: 22, strokeWidth: 1.25, "aria-hidden": true } as const;
 

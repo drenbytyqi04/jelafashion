@@ -9,6 +9,7 @@ export const routing = defineRouting({
     "/": "/",
     "/shop": { sq: "/dyqani", en: "/shop" },
     "/new-in": { sq: "/te-rejat", en: "/new-in" },
+    "/dress/[slug]": { sq: "/fustan/[slug]", en: "/dress/[slug]" },
     "/bridal": { sq: "/fustane-nuserie", en: "/bridal-dresses" },
     "/evening": { sq: "/fustane-mbremjeje", en: "/evening-dresses" },
     "/short": { sq: "/fustane-te-shkurtra", en: "/short-dresses" },
@@ -32,3 +33,5 @@ export const routing = defineRouting({
 
 export type Locale = (typeof routing.locales)[number];
 export type AppPathname = keyof typeof routing.pathnames;
+/** Routes without dynamic segments, usable as a plain `href`. */
+export type StaticPathname = Exclude<AppPathname, `${string}[${string}`>;

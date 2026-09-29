@@ -101,6 +101,7 @@
 /* Header heights, used for sticky offsets and scroll-margin */
 :root {
   --header-h: 60px;
+  --header-offset: var(--header-h);
   --gutter: 20px;
 }
 @media (min-width: 64rem) {

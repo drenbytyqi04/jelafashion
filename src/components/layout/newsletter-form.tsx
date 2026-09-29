@@ -30,7 +30,8 @@ export function NewsletterForm() {
     try {
       const result = await subscribeToNewsletter(values);
       if (!result.ok) {
-        setError("email", { message: result.error }, { shouldFocus: true });
+        if (result.field === "email") setError("email", { message: result.error }, { shouldFocus: true });
+        else toast({ title: t("failure"), tone: "error" });
         return;
       }
       reset();

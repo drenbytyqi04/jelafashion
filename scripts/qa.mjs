@@ -43,6 +43,37 @@ await check("styleguide-375", "/sq/styleguide", 375, 812, async (p) => p.screens
 await check("styleguide-1440", "/en/styleguide", 1440, 900, async (p) => p.screenshot({ path: `${OUT}/styleguide-1440-full.png`, fullPage: true }));
 await check("404-sq-375", "/sq/nuk-ekziston", 375, 812);
 await check("404-en-1440", "/en/does-not-exist", 1440, 900);
+for (const [w, h] of [[375, 812], [1024, 768], [1440, 900]]) {
+  await check(`shop-sq-${w}`, "/sq/dyqani", w, h, async (p) => p.screenshot({ path: `${OUT}/shop-sq-${w}-full.png`, fullPage: true }));
+}
+await check("bridal-en-375", "/en/bridal-dresses", 375, 812);
+await check("evening-filtered-1440", "/en/evening-dresses?sleeves=long&sort=price-desc", 1440, 900);
+await check("new-in-sq-768", "/sq/te-rejat", 768, 1024);
+
+// Collection interactions: filter drawer, load more, URL sync, empty state
+{
+  const { ctx, p, errors } = await page(375, 812);
+  await p.goto(BASE + "/sq/dyqani", { waitUntil: "networkidle" });
+  const cards = () => p.locator("main article").count();
+  const initial = await cards();
+  await p.getByRole("button", { name: /Shfaq më shumë/ }).click();
+  await p.waitForTimeout(300);
+  const afterMore = await cards();
+  const urlAfterMore = p.url();
+  await p.getByRole("button", { name: /^Filtro/ }).click();
+  await p.waitForTimeout(800);
+  await p.getByRole("dialog").getByText("Me mëngë të gjata").click();
+  const applyLabel = await p.getByRole("dialog").getByRole("button", { name: /^Shfaq/ }).textContent();
+  await p.screenshot({ path: `${OUT}/shop-filter-drawer-375.png` });
+  await p.getByRole("dialog").getByRole("button", { name: /^Shfaq/ }).click();
+  await p.waitForTimeout(800);
+  const filtered = await cards();
+  const urlFiltered = p.url();
+  await p.goto(BASE + "/sq/dyqani?price=under-500&length=floor", { waitUntil: "networkidle" });
+  const emptyShown = await p.getByText("Asnjë fustan nuk përputhet me këto filtra.").isVisible();
+  report.push({ label: "collection-interactions-375", errors, initial, afterMore, urlAfterMore, applyLabel, filtered, urlFiltered, emptyShown });
+  await ctx.close();
+}
 
 // Interactions
 {

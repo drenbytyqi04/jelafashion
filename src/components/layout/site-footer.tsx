@@ -1,13 +1,13 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import type { AppPathname } from "@/i18n/routing";
+import type { StaticPathname } from "@/i18n/routing";
 import { site, whatsappHref } from "@/lib/site";
 import { Accordion } from "@/components/ui/accordion";
 import { InstagramIcon, WhatsAppIcon } from "@/components/icons/brand-icons";
 import { LanguageSwitcher } from "./language-switcher";
 import { NewsletterForm } from "./newsletter-form";
 
-type FooterLink = { label: string; href: AppPathname } | { label: string; external: string; icon?: "instagram" | "whatsapp" };
+type FooterLink = { label: string; href: StaticPathname } | { label: string; external: string; icon?: "instagram" | "whatsapp" };
 
 export function SiteFooter() {
   const t = useTranslations();

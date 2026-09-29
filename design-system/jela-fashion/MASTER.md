@@ -267,6 +267,17 @@ resolved.
     are supplied; drawn imitations of brand logos would look cheap.
 13. **Footer and menu links** use `link-quiet` (no rule at rest, champagne rule on hover
     and focus). `link-underline` (always underlined) is for links inside running copy.
+14. **Collection filtering runs in the browser** (Phase 2): the server renders the first
+    view from the URL, then filter, sort and "load more" update the address with
+    `history.replaceState`. Results are instant, so skeletons appear only while a
+    collection route is loading. Revisit if the range grows beyond a few hundred dresses.
+15. **Sample imagery**: until photos are uploaded, product frames are tinted from the
+    dress's first colour and show a front or back croquis, so the grid reads as distinct
+    dresses rather than grey boxes. Tints are never used once a real image exists.
+16. **Prices are formatted by hand** ("1.450 €" / "€1,450"), not with `Intl`: Node and
+    browsers ship different Albanian locale data and the mismatch breaks hydration.
+17. **Load more** shows a thin champagne progress rule (shown / total) above the
+    button: the tape motif, used as information.
 
 ### ui-ux-pro-max reconciliation
 

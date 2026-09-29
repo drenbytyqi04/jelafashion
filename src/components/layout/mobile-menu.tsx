@@ -5,7 +5,7 @@ import { AnimatePresence, motion, type Variants } from "motion/react";
 import { Dialog } from "radix-ui";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import type { AppPathname } from "@/i18n/routing";
+import type { StaticPathname } from "@/i18n/routing";
 import { duration, ease } from "@/lib/motion";
 import { categoryNav } from "@/lib/nav";
 import { whatsappHref } from "@/lib/site";
@@ -15,7 +15,7 @@ import { WhatsAppIcon } from "@/components/icons/brand-icons";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { LanguageSwitcher } from "./language-switcher";
 
-const bigLinks: { key: "shop" | "newIn" | "madeToMeasure" | "atelier" | "contact"; href: AppPathname }[] = [
+const bigLinks: { key: "shop" | "newIn" | "madeToMeasure" | "atelier" | "contact"; href: StaticPathname }[] = [
   { key: "shop", href: "/shop" },
   { key: "newIn", href: "/new-in" },
   { key: "madeToMeasure", href: "/made-to-measure" },

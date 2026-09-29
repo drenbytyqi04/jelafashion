@@ -1,13 +1,14 @@
 "use client";
 
 import { X } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { Dialog } from "radix-ui";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { duration, ease } from "@/lib/motion";
 import { useLenisLock } from "@/components/motion/use-scroll-lock";
+import { useReducedMotionSafe } from "@/components/motion/use-reduced-motion-safe";
 
 type Side = "right" | "left" | "bottom";
 
@@ -49,7 +50,7 @@ export function Drawer({
   className,
 }: DrawerProps) {
   const t = useTranslations("common");
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   useLenisLock(open);
 
   const hidden = reduce ? { opacity: 0 } : { ...offscreen[side] };

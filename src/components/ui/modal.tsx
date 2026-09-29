@@ -1,13 +1,14 @@
 "use client";
 
 import { X } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { Dialog } from "radix-ui";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { duration, ease } from "@/lib/motion";
 import { useLenisLock } from "@/components/motion/use-scroll-lock";
+import { useReducedMotionSafe } from "@/components/motion/use-reduced-motion-safe";
 
 export type ModalProps = {
   open: boolean;
@@ -22,7 +23,7 @@ export type ModalProps = {
 
 export function Modal({ open, onOpenChange, title, description, children, actions, className }: ModalProps) {
   const t = useTranslations("common");
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   useLenisLock(open);
 
   return (
