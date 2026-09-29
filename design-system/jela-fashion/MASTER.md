@@ -48,7 +48,8 @@ Rules:
 - Champagne never carries text on ivory (2.1:1). Primary button = champagne fill with
   **ink** text (7.7:1).
 - Over imagery: white text on a bottom scrim `linear-gradient(to top, rgb(28 25 23 / .55),
-  transparent 55%)`. That's the only gradient allowed.
+  transparent 55%)`, and a short top scrim (ink 35% → transparent) under the transparent
+  header. Image scrims are the only gradients allowed.
 - No shadows for elevation. Layers separate by surface color (ivory/linen) and 1px lines.
   Drawers and modals sit over an `ink` scrim at 40%.
 - Focus ring: 1px `ink` outline + 3px `champagne` offset ring (`outline: 1px solid ink;
@@ -115,7 +116,7 @@ Rules:
   border, white text.
 - **Text link**: ink with a 1px underline that grows from the left on hover (champagne).
 - **Input**: 1px `field` border on all sides, 52px tall, 16px text (prevents iOS zoom),
-  floating label in `small`, unit suffix inside right edge in `stone`. Error: border and
+  static label above the field in `small` (never a placeholder-only or floating label), unit suffix inside right edge in `stone`. Error: border and
   message in `error`, message below with an icon, `aria-describedby`.
 - **Radio card** (shipping/payment): 1px `field` border; selected = 1px ink border + 3px
   champagne inner left rule. Expands content with height animation.
@@ -163,6 +164,8 @@ contact, newsletter, admin):
 
 - Visible labels always; placeholders are examples, never the label.
 - Validate on blur, re-validate on change once a field has errored; never only on submit.
+  In React Hook Form this is `mode: "onTouched"` (not `onBlur`, which keeps a fixed
+  error visible until the next blur and shifts the layout under the pointer).
 - Error text sits below its field, specific ("Enter a postal code with 5 digits"), linked
   with `aria-describedby`, announced via `role="alert"` / `aria-live="polite"`.
 - On a failed submit: show an error summary at the top of the form, move focus to it,
@@ -252,6 +255,18 @@ resolved.
 7. **Footer**: linen, not charcoal. The final CTA image above it is the dark moment; a dark
    footer would merge with it and break the light-only rule's spirit.
 8. **Font choice**: Cormorant Garamond + Manrope (reasons in Typography).
+
+9. **Top image scrim** (Phase 1): white header icons over a bright hero frame (a white
+   gown) fail contrast, so a short ink scrim sits under the transparent header.
+10. **Desktop text navigation from 1360px**: the five links in Albanian don't fit beside a
+    centred wordmark below that. From 1024 to 1359px the header keeps the menu button
+    plus search, account, wishlist, cart and language.
+11. **Static field labels**: labels sit above inputs rather than floating inside them;
+    clearer for long Albanian labels and for the adopted "visible labels" UX rule.
+12. **Payment methods in the footer** are text marks until official monochrome logo SVGs
+    are supplied; drawn imitations of brand logos would look cheap.
+13. **Footer and menu links** use `link-quiet` (no rule at rest, champagne rule on hover
+    and focus). `link-underline` (always underlined) is for links inside running copy.
 
 ### ui-ux-pro-max reconciliation
 

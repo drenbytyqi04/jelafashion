@@ -1,0 +1,474 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens from design-system/jela-fashion/MASTER.md.
+ * Light theme only. Change values there first, then here.
+ */
+@theme {
+  /* Color */
+  --color-*: initial;
+  --color-ivory: #faf7f2;
+  --color-linen: #f2ece3;
+  --color-blush: #efe3dd;
+  --color-ink: #1c1917;
+  --color-stone: #6b645c;
+  --color-champagne: #c9a86a;
+  --color-champagne-deep: #be9c5c;
+  --color-gold-ink: #836636;
+  --color-hairline: #e2d9cc;
+  --color-field: #8f8476;
+  --color-error: #9b2c2c;
+  --color-success: #3f5e45;
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* Type families (variables set by next/font in app/[locale]/layout.tsx) */
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-manrope), "Manrope", system-ui, sans-serif;
+
+  /* Type scale: perfect fourth, fluid between 375px and 1440px */
+  --text-display: clamp(3rem, 1.591rem + 6.01vw, 7rem);
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.01em;
+  --text-h1: clamp(2.5rem, 1.796rem + 3.005vw, 4.5rem);
+  --text-h1--line-height: 1;
+  --text-h1--letter-spacing: -0.01em;
+  --text-h2: clamp(2rem, 1.56rem + 1.878vw, 3.25rem);
+  --text-h2--line-height: 1.05;
+  --text-h3: clamp(1.5rem, 1.368rem + 0.563vw, 1.875rem);
+  --text-h3--line-height: 1.15;
+  --text-lead: clamp(1.25rem, 1.206rem + 0.188vw, 1.375rem);
+  --text-lead--line-height: 1.55;
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.55;
+  --text-label: clamp(0.6875rem, 0.666rem + 0.094vw, 0.75rem);
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.22em;
+  --text-wordmark: clamp(1.125rem, 1.037rem + 0.376vw, 1.375rem);
+  --text-wordmark--line-height: 1;
+  --text-wordmark--letter-spacing: 0.38em;
+  --text-price: clamp(1.125rem, 1.037rem + 0.376vw, 1.375rem);
+  --text-price--line-height: 1;
+  --text-price--letter-spacing: 0.02em;
+
+  /* Breakpoints (mobile first) */
+  --breakpoint-sm: 23.4375rem; /* 375 */
+  --breakpoint-md: 48rem; /* 768 */
+  --breakpoint-lg: 64rem; /* 1024 */
+  --breakpoint-nav: 85rem; /* 1360: the five text links fit beside a centred wordmark from here */
+  --breakpoint-xl: 90rem; /* 1440 */
+
+  /* Radius: 0 in the storefront; admin uses rounded-admin */
+  --radius-admin: 4px;
+
+  /* Motion */
+  --ease-couture: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-leave: cubic-bezier(0.55, 0, 1, 0.45);
+  --duration-micro: 200ms;
+  --duration-ui: 400ms;
+  --duration-reveal: 900ms;
+  --duration-cinematic: 1400ms;
+
+  --animate-skeleton: skeleton 1.6s ease-in-out infinite;
+  --animate-rise-in: rise-in 600ms var(--ease-curtain) both;
+
+  @keyframes skeleton {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.55;
+    }
+  }
+
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* Header heights, used for sticky offsets and scroll-margin */
+:root {
+  --header-h: 60px;
+  --gutter: 20px;
+}
+@media (min-width: 64rem) {
+  :root {
+    --header-h: 76px;
+    --gutter: 48px;
+  }
+}
+@media (min-width: 90rem) {
+  :root {
+    --gutter: 80px;
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    background: var(--color-ivory);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  :where(h1, h2, h3, h4) {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  :where(p) {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-blush);
+    color: var(--color-ink);
+  }
+
+  :where(a, button, [role="button"], label[for], select, summary, input[type="checkbox"], input[type="radio"]) {
+    cursor: pointer;
+  }
+
+  :where(button:disabled, [aria-disabled="true"]) {
+    cursor: not-allowed;
+  }
+
+  /* Anchored targets clear the fixed header */
+  :where([id]) {
+    scroll-margin-top: calc(var(--header-h) + 24px);
+  }
+
+  /* One focus style everywhere: champagne ring at the edge, ink outline outside it */
+  :focus-visible {
+    outline: 1px solid var(--color-ink);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 3px var(--color-champagne);
+  }
+  .on-image :focus-visible,
+  :focus-visible.on-image {
+    outline-color: var(--color-white);
+  }
+}
+
+@layer utilities {
+  .label {
+    font-family: var(--font-sans);
+    font-size: var(--text-label);
+    line-height: var(--text-label--line-height);
+    letter-spacing: var(--text-label--letter-spacing);
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .wordmark {
+    font-family: var(--font-serif);
+    font-size: var(--text-wordmark);
+    line-height: 1;
+    letter-spacing: var(--text-wordmark--letter-spacing);
+    font-weight: 500;
+    text-transform: uppercase;
+    white-space: nowrap;
+    /* Tracking adds trailing space after the last letter; pull it back so it centers */
+    margin-right: calc(var(--text-wordmark--letter-spacing) * -1);
+  }
+
+  .nums {
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  .container-page {
+    width: 100%;
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .section {
+    padding-block: 96px;
+  }
+  @media (min-width: 64rem) {
+    .section {
+      padding-block: 160px;
+    }
+  }
+
+  .measure {
+    max-width: 65ch;
+  }
+
+  /* Text link: underline grows from the left in champagne */
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor), linear-gradient(var(--color-champagne), var(--color-champagne));
+    background-size: 100% 1px, 0% 1px;
+    background-position: 100% 100%, 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+    transition: background-size var(--duration-ui) var(--ease-couture);
+  }
+  @media (hover: hover) {
+    .link-underline:hover {
+      background-size: 0% 1px, 100% 1px;
+    }
+  }
+
+  .sr-only-focusable:not(:focus-visible) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* Page transition on client-side navigation (see [locale]/template.tsx) */
+.page-enter {
+  animation: var(--animate-rise-in);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes button-progress {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+
+/* Accordion: Radix exposes the measured height as a CSS variable */
+.accordion-content[data-state="open"] {
+  animation: accordion-open var(--duration-ui) var(--ease-couture);
+}
+.accordion-content[data-state="closed"] {
+  animation: accordion-close var(--duration-ui) var(--ease-couture);
+}
+@keyframes accordion-open {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+@keyframes accordion-close {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+/* Toast */
+.toast[data-state="open"] {
+  animation: rise-in var(--duration-ui) var(--ease-couture);
+}
+.toast[data-state="closed"] {
+  animation: toast-out var(--duration-micro) var(--ease-leave) forwards;
+}
+.toast[data-swipe="move"] {
+  transform: translateY(var(--radix-toast-swipe-move-y));
+}
+.toast[data-swipe="cancel"] {
+  transform: translateY(0);
+  transition: transform var(--duration-micro) var(--ease-couture);
+}
+.toast[data-swipe="end"] {
+  animation: toast-out var(--duration-micro) var(--ease-leave) forwards;
+}
+@keyframes toast-out {
+  to {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* Masked line reveal, CSS path (RevealText immediate) */
+.reveal-line {
+  animation: reveal-line var(--duration-reveal) var(--ease-couture) both;
+}
+@keyframes reveal-line {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-line {
+    animation-name: fade-in;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Marquee: linear is correct for constant-rate motion */
+.marquee-track {
+  animation: marquee linear infinite;
+}
+@media (hover: hover) {
+  .group:hover > .marquee-track {
+    animation-play-state: paused !important;
+  }
+}
+.group:focus-within > .marquee-track {
+  animation-play-state: paused !important;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
+  }
+}
+
+/* Intro loader (components/motion/intro-loader.tsx), about 2.2s end to end */
+.intro {
+  animation: intro-curtain 800ms var(--ease-curtain) 1.4s forwards;
+}
+.intro-letter {
+  animation: reveal-line 600ms var(--ease-couture) both;
+}
+.intro-line {
+  transform: scaleX(0);
+  animation: intro-line 500ms var(--ease-couture) 0.9s forwards;
+}
+.intro-skip {
+  animation: intro-hide 300ms linear 1.9s forwards;
+}
+@keyframes intro-curtain {
+  to {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+}
+@keyframes intro-line {
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes intro-hide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+html[data-intro-skipped] .intro {
+  animation: intro-hide 1ms linear forwards, fade-out 300ms var(--ease-leave) forwards;
+}
+html[data-intro-skipped] .intro-skip,
+html[data-intro-seen] .intro,
+html[data-intro-seen] .intro-skip {
+  display: none;
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro,
+  .intro-skip {
+    display: none;
+  }
+}
+
+/* Home hero (Phase 1). --intro-delay holds entrances until the intro curtain lifts. */
+.hero {
+  --intro-delay: 1.7s;
+}
+html[data-intro-seen] .hero,
+html[data-intro-skipped] .hero {
+  --intro-delay: 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero {
+    --intro-delay: 0s;
+  }
+}
+.hero-fade {
+  animation: rise-in 900ms var(--ease-couture) both;
+}
+/* The tape line draws down once, then rests */
+.scroll-line {
+  transform: scaleY(0);
+  animation: scroll-line 1200ms var(--ease-couture) calc(var(--intro-delay) + 1s) forwards;
+}
+@keyframes scroll-line {
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* Navigation-list link: no rule at rest, champagne rule grows on hover and focus */
+.link-quiet {
+  background-image: linear-gradient(var(--color-champagne), var(--color-champagne));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 2px;
+  transition: background-size var(--duration-ui) var(--ease-couture);
+}
+@media (hover: hover) {
+  a:hover > .link-quiet,
+  .link-quiet:hover {
+    background-size: 100% 1px;
+  }
+}
+a:focus-visible > .link-quiet {
+  background-size: 100% 1px;
+}

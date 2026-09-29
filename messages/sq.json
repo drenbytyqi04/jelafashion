@@ -1,0 +1,134 @@
+{
+  "meta": {
+    "title": "Jela Fashion | Fustane nusërie dhe mbrëmjeje të punuara me dorë, Prizren",
+    "description": "Fustane nusërie, mbrëmjeje dhe të shkurtra, të punuara me dorë në një atele në Prizren. Në masat standarde ose të qepura sipas masave të tua, me dërgesë në mbarë botën."
+  },
+  "common": {
+    "skipToContent": "Kalo te përmbajtja",
+    "close": "Mbyll",
+    "menu": "Menyja",
+    "openMenu": "Hap menynë",
+    "closeMenu": "Mbyll menynë",
+    "cart": "Shporta",
+    "cartWithCount": "Shporta, {count, plural, =0 {bosh} one {# artikull} other {# artikuj}}",
+    "search": "Kërko",
+    "account": "Llogaria",
+    "wishlist": "Të preferuarat",
+    "language": "Gjuha",
+    "home": "Jela Fashion, ballina",
+    "whatsapp": "WhatsApp",
+    "messageOnWhatsapp": "Na shkruaj në WhatsApp",
+    "instagram": "Instagram",
+    "optional": "opsionale",
+    "loading": "Duke u ngarkuar",
+    "remove": "Hiq",
+    "pauseMotion": "Ndalo lëvizjen",
+    "playMotion": "Rinis lëvizjen"
+  },
+  "languages": {
+    "sq": "Shqip",
+    "en": "English"
+  },
+  "nav": {
+    "primary": "Kryesore",
+    "shop": "Dyqani",
+    "bridal": "Nusëri",
+    "evening": "Mbrëmje",
+    "short": "Të shkurtra",
+    "madeToMeasure": "Sipas masave",
+    "newIn": "Të rejat",
+    "atelier": "Atelja",
+    "contact": "Kontakti"
+  },
+  "menu": {
+    "collections": "Koleksionet"
+  },
+  "footer": {
+    "tagline": "Couture e punuar me dorë · Prizren",
+    "shop": "Dyqani",
+    "help": "Ndihmë",
+    "atelier": "Atelja",
+    "sizeGuide": "Udhëzuesi i masave",
+    "madeToMeasure": "Sipas masave",
+    "shipping": "Dërgesa",
+    "returns": "Kthimet",
+    "faq": "Pyetje të shpeshta",
+    "contact": "Kontakti",
+    "about": "Rreth atelesë",
+    "paymentMethods": "Mënyrat e pagesës",
+    "bankTransfer": "Transfertë bankare",
+    "legal": "Informata ligjore",
+    "privacy": "Privatësia",
+    "terms": "Kushtet e përdorimit",
+    "cookies": "Politika e cookies",
+    "rights": "© {year} Jela Fashion"
+  },
+  "newsletter": {
+    "title": "Letra nga atelja",
+    "text": "Koleksionet e reja, të parat te ti.",
+    "emailLabel": "Adresa e email-it",
+    "submit": "Abonohu",
+    "consent": "Duke u abonuar, pranon politikën tonë të privatësisë.",
+    "success": "U abonove. Koleksionet e reja do të vijnë te ti të parat.",
+    "failure": "Abonimi nuk u krye. Kontrollo lidhjen dhe provo sërish.",
+    "placeholder": "emri@shembull.com"
+  },
+  "home": {
+    "heroLabel": "JELA FASHION · PRIZREN",
+    "heroTitle": [
+      "E qepur për",
+      "momentin tënd."
+    ],
+    "heroSubtitle": "Fustane nusërie dhe mbrëmjeje, të punuara me dorë në Prizren dhe të qepura sipas masave të tua.",
+    "ctaShop": "Shiko koleksionin",
+    "ctaMeasure": "Porosit me masa",
+    "scroll": "Rrëshqit",
+    "videoSlot": "Video kryesore",
+    "marquee": [
+      "Punuar me dorë në Prizren",
+      "Sipas masave të tua",
+      "Dërgesa në mbarë botën"
+    ]
+  },
+  "intro": {
+    "skip": "Kalo"
+  },
+  "notFound": {
+    "title": "Kjo faqe nuk gjendet.",
+    "text": "Lidhja mund të jetë e vjetër ose e shkruar gabim. Koleksioni të pret ende.",
+    "shop": "Shiko koleksionin",
+    "home": "Kthehu në ballinë"
+  },
+  "error": {
+    "title": "Diçka e ndërpreu këtë faqe.",
+    "text": "Ringarko faqen. Nëse ndodh sërish, na shkruaj dhe të ndihmojmë ta përfundosh porosinë.",
+    "retry": "Ringarko faqen"
+  },
+  "forms": {
+    "required": "Plotëso këtë fushë.",
+    "email": "Shkruaj një adresë email të vlefshme, p.sh. emri@shembull.com.",
+    "errorSummary": "{count, plural, one {Korrigjo # fushë për të vazhduar:} other {Korrigjo # fusha për të vazhduar:}}"
+  },
+  "upload": {
+    "prompt": "Tërhiq skedarin këtu ose",
+    "choose": "zgjidh një skedar",
+    "hint": "JPG, PNG ose PDF, deri në {size} MB",
+    "replace": "Zëvendëso skedarin",
+    "typeError": "Ky lloj skedari nuk pranohet. Ngarko JPG, PNG ose PDF.",
+    "sizeError": "Skedari është më i madh se {size} MB. Zgjidh një skedar më të vogël."
+  },
+  "placeholder": {
+    "image": "Vend për fotografi, zëvendësohet nga paneli i administrimit"
+  },
+  "cart": {
+    "title": "Shporta jote",
+    "empty": "Shporta jote është bosh.",
+    "emptyText": "Çdo fustan punohet me dorë në Prizren. Fillo nga koleksioni.",
+    "emptyCta": "Shiko koleksionin",
+    "viewCart": "Shiko shportën",
+    "checkout": "Vazhdo me pagesën",
+    "subtotal": "Nëntotali",
+    "size": "Masa {size}",
+    "quantity": "Sasia {count}"
+  }
+}

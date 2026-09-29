@@ -1,0 +1,134 @@
+{
+  "meta": {
+    "title": "Jela Fashion | Handmade bridal and evening dresses, Prizren",
+    "description": "Handmade bridal, evening and short dresses from an atelier in Prizren, Kosovo. Standard sizes or made to your measurements, shipped worldwide."
+  },
+  "common": {
+    "skipToContent": "Skip to content",
+    "close": "Close",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "cart": "Cart",
+    "cartWithCount": "Cart, {count, plural, =0 {empty} one {# item} other {# items}}",
+    "search": "Search",
+    "account": "Account",
+    "wishlist": "Wishlist",
+    "language": "Language",
+    "home": "Jela Fashion, home",
+    "whatsapp": "WhatsApp",
+    "messageOnWhatsapp": "Message us on WhatsApp",
+    "instagram": "Instagram",
+    "optional": "optional",
+    "loading": "Loading",
+    "remove": "Remove",
+    "pauseMotion": "Pause animation",
+    "playMotion": "Play animation"
+  },
+  "languages": {
+    "sq": "Shqip",
+    "en": "English"
+  },
+  "nav": {
+    "primary": "Main",
+    "shop": "Shop",
+    "bridal": "Bridal",
+    "evening": "Evening",
+    "short": "Short",
+    "madeToMeasure": "Made to Measure",
+    "newIn": "New In",
+    "atelier": "The Atelier",
+    "contact": "Contact"
+  },
+  "menu": {
+    "collections": "Collections"
+  },
+  "footer": {
+    "tagline": "Handmade Couture · Prizren",
+    "shop": "Shop",
+    "help": "Help",
+    "atelier": "Atelier",
+    "sizeGuide": "Size Guide",
+    "madeToMeasure": "Made to Measure",
+    "shipping": "Shipping",
+    "returns": "Returns",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "about": "About the Atelier",
+    "paymentMethods": "Payment methods",
+    "bankTransfer": "Bank transfer",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "cookies": "Cookie policy",
+    "rights": "© {year} Jela Fashion"
+  },
+  "newsletter": {
+    "title": "Letters from the atelier",
+    "text": "New collections, first.",
+    "emailLabel": "Email address",
+    "submit": "Subscribe",
+    "consent": "By subscribing you agree to our privacy policy.",
+    "success": "You're subscribed. New collections will reach you first.",
+    "failure": "The subscription didn't go through. Check your connection and try again.",
+    "placeholder": "name@example.com"
+  },
+  "home": {
+    "heroLabel": "JELA FASHION · PRIZREN",
+    "heroTitle": [
+      "Made for",
+      "Your Moment."
+    ],
+    "heroSubtitle": "Handmade bridal and evening dresses, crafted in Prizren and made to your measurements.",
+    "ctaShop": "Shop the Collection",
+    "ctaMeasure": "Made to Measure",
+    "scroll": "Scroll",
+    "videoSlot": "Hero video",
+    "marquee": [
+      "Handmade in Prizren",
+      "Made to measure",
+      "Worldwide shipping"
+    ]
+  },
+  "intro": {
+    "skip": "Skip"
+  },
+  "notFound": {
+    "title": "This page isn't here.",
+    "text": "The link may be old or mistyped. The collection is still waiting for you.",
+    "shop": "Shop the Collection",
+    "home": "Back to home"
+  },
+  "error": {
+    "title": "Something interrupted this page.",
+    "text": "Reload the page. If it happens again, message us and we'll help you finish your order.",
+    "retry": "Reload the page"
+  },
+  "forms": {
+    "required": "This field is required.",
+    "email": "Enter a valid email address, like name@example.com.",
+    "errorSummary": "{count, plural, one {Fix # field to continue:} other {Fix # fields to continue:}}"
+  },
+  "upload": {
+    "prompt": "Drop a file here or",
+    "choose": "choose a file",
+    "hint": "JPG, PNG or PDF, up to {size} MB",
+    "replace": "Replace file",
+    "typeError": "This file type isn't accepted. Upload a JPG, PNG or PDF.",
+    "sizeError": "This file is larger than {size} MB. Choose a smaller file."
+  },
+  "placeholder": {
+    "image": "Image placeholder, to be replaced from the admin panel"
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is empty.",
+    "emptyText": "Every dress is made by hand in Prizren. Start with the collection.",
+    "emptyCta": "Shop the Collection",
+    "viewCart": "View cart",
+    "checkout": "Checkout",
+    "subtotal": "Subtotal",
+    "size": "Size {size}",
+    "quantity": "Quantity {count}"
+  }
+}

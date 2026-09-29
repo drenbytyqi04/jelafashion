@@ -130,11 +130,11 @@ with self-drawing measurement lines.
 ## Phase plan
 
 0. Design system (MASTER.md + page overrides), reconciled with brand rules and
-   ui-ux-pro-max output. **Done —
-   awaiting approval.**
+   ui-ux-pro-max output. **Done.**
 1. Project setup, tokens, base components (Button, Input, Select, RadioGroup, Drawer,
    Modal, Accordion, Toast, Badge, Skeleton, FileUpload), i18n, nav, footer, motion
-   primitives.
+   primitives. **Done — awaiting approval.** Components are previewed at `/sq/styleguide`
+   (dev only); `npm run qa` runs screenshots, overflow and axe checks.
 2. Supabase migrations, seed data, home and collection pages.
 3. Product page, cart, measurement wizard.
 4. Checkout, payment providers, proof upload, emails.
@@ -143,3 +143,5 @@ with self-drawing measurement lines.
 
 After each phase: run the dev server, check 375px and desktop, run the pre-delivery
 checklist in MASTER.md, fix all errors, then **stop and wait for approval**.
+
+@AGENTS.md
