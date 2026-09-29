@@ -9,7 +9,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "qa": "node scripts/qa.mjs",
-    "db:seed-sql": "tsx scripts/generate-seed.ts"
+    "db:seed-sql": "tsx scripts/generate-seed.ts",
+    "qa:product": "node scripts/qa-product.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",

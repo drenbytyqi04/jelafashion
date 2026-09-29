@@ -278,6 +278,9 @@ resolved.
     browsers ship different Albanian locale data and the mismatch breaks hydration.
 17. **Load more** shows a thin champagne progress rule (shown / total) above the
     button: the tape motif, used as information.
+18. **Wizard measured line in `gold-ink`, not champagne** (Phase 3): the line carries the
+    step's meaning and sits on blush, where champagne is 1.8:1. `gold-ink` (4.3:1 on blush)
+    meets the 3:1 rule for meaningful graphics and still reads as gold.
 
 ### ui-ux-pro-max reconciliation
 

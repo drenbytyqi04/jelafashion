@@ -23,7 +23,9 @@
     "loading": "Loading",
     "remove": "Remove",
     "pauseMotion": "Pause animation",
-    "playMotion": "Play animation"
+    "playMotion": "Play animation",
+    "previous": "Previous image",
+    "next": "Next image"
   },
   "languages": {
     "sq": "Shqip",
@@ -129,7 +131,22 @@
     "checkout": "Checkout",
     "subtotal": "Subtotal",
     "size": "Size {size}",
-    "quantity": "Quantity {count}"
+    "quantity": "Quantity {count}",
+    "customSize": "Custom size",
+    "viewMeasurements": "View measurements",
+    "hideMeasurements": "Hide measurements",
+    "notes": "Notes: {notes}",
+    "colorLine": "Colour: {color}",
+    "remove": "Remove {name}",
+    "decrease": "Decrease quantity of {name}",
+    "increase": "Increase quantity of {name}",
+    "quantityLabel": "Quantity",
+    "checkoutCta": "Proceed to checkout",
+    "shippingNote": "Shipping and any discount code are applied at checkout.",
+    "continue": "Continue shopping",
+    "pageTitle": "Your cart",
+    "items": "{count, plural, one {# item} other {# items}}",
+    "each": "{price} each"
   },
   "collection": {
     "shopTitle": "The Collection",
@@ -217,7 +234,40 @@
     "saveToWishlist": "Save {name} to wishlist",
     "removeFromWishlist": "Remove {name} from wishlist",
     "colors": "{count, plural, one {# colour} other {# colours}}",
-    "priceLabel": "Price"
+    "priceLabel": "Price",
+    "size": "Size",
+    "sizeGuide": "Size guide",
+    "color": "Colour",
+    "colorSelected": "Colour: {color}",
+    "addToCart": "Add to cart",
+    "enterMeasurements": "Enter your measurements",
+    "editMeasurements": "Change measurements",
+    "chooseSizeFirst": "Choose a size to continue.",
+    "customSizeOption": "Custom size, made to your measurements",
+    "customReady": "Your measurements are entered. Review them before adding to cart.",
+    "addToWishlist": "Add to wishlist",
+    "inWishlist": "Saved to wishlist",
+    "whatsapp": "Ask about this dress on WhatsApp",
+    "whatsappMessage": "Hello, I'm interested in the {name} dress: {url}",
+    "consultation": "Book a fitting or video consultation",
+    "accordion": {
+      "description": "Description",
+      "fabricCare": "Fabric & care",
+      "delivery": "Delivery & returns",
+      "mtm": "Made to measure"
+    },
+    "deliveryText": "Shipped worldwide from Prizren, with tracking. Delivery times and costs for your country are shown at checkout. [RETURNS POLICY]",
+    "mtmText": "Choose Custom size and we'll guide you through {count} measurements, one at a time, with an illustration for each. The dress is then cut to your body in Prizren.",
+    "related": "You may also love",
+    "recentlyViewed": "Recently viewed",
+    "galleryImage": "{name}, image {n} of {total}",
+    "openZoom": "Open image {n} in full screen",
+    "zoomDialog": "{name}, full screen",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "breadcrumb": "Breadcrumb",
+    "home": "Home",
+    "stickyAdd": "Add {name} to cart"
   },
   "homeSections": {
     "categoriesTitle": "Shop by category",
@@ -270,5 +320,70 @@
       "Is Waiting."
     ],
     "finalCta": "Shop Now"
+  },
+  "sizeGuide": {
+    "title": "Size guide",
+    "text": "Body measurements, not garment measurements. Between two sizes, or outside this chart? Choose Custom size and the dress is cut to you.",
+    "unit": "Unit",
+    "cm": "cm",
+    "in": "in",
+    "size": "Size",
+    "eu": "EU",
+    "bust": "Bust",
+    "waist": "Waist",
+    "hips": "Hips",
+    "howTo": "How to measure",
+    "howToBust": "Around the fullest part of the bust.",
+    "howToWaist": "Around the narrowest part of the waist.",
+    "howToHips": "Around the fullest part of the hips, feet together."
+  },
+  "wizard": {
+    "title": "Your measurements",
+    "for": "For {name}",
+    "stepOf": "Step {current} of {total}",
+    "close": "Close measurements",
+    "leaveTitle": "Leave without saving?",
+    "leaveText": "The measurements you've entered for this dress will be lost.",
+    "keep": "Keep measuring",
+    "leave": "Leave",
+    "introTitle": "Before you measure",
+    "introTips": [
+      "Measure over underwear, not over clothes.",
+      "Stand straight and relaxed, feet together.",
+      "Ask someone to help you. It's more accurate.",
+      "Keep the tape snug, but not tight."
+    ],
+    "unitLegend": "I'll measure in",
+    "unitCm": "Centimetres",
+    "unitIn": "Inches",
+    "start": "Start",
+    "useSaved": "Use my saved measurements",
+    "savedNote": "Measurements saved on this device will be filled in. You can change any of them.",
+    "next": "Next",
+    "back": "Back",
+    "backToSummary": "Back to summary",
+    "review": "Review measurements",
+    "valueLabel": "{label}, in {unit}",
+    "errors": {
+      "required": "Enter a measurement to continue.",
+      "invalid": "Enter a number, like 86 or 86.5.",
+      "range": "Enter a value between {min} and {max} {unit}."
+    },
+    "warnings": {
+      "underbust": "Your under bust is the same as or larger than your bust. Check both measurements.",
+      "waistHips": "Your waist is much larger than your hips. Check that the hips were measured at the fullest part.",
+      "hollowFloor": "Hollow to floor is unusually long for your height. Measure again barefoot, from the base of the neck."
+    },
+    "checkAgain": "Check again",
+    "itsCorrect": "It's correct",
+    "summaryTitle": "Your measurements",
+    "summaryText": "Check each value. Tap one to change it.",
+    "edit": "Change {label}",
+    "notesLabel": "Notes for the atelier",
+    "notesHint": "Anything we should know: posture, preferences, the date of the event.",
+    "remember": "Remember on this device",
+    "confirmAdd": "Confirm & add to cart",
+    "added": "Added to your cart",
+    "addedText": "{name}, made to your measurements"
   }
 }

@@ -35,6 +35,7 @@ export function ProductMedia({
       </div>
     );
   }
-  const color = product.colors[index % Math.max(product.colors.length, 1)]?.hex;
-  return <ImagePlaceholder ratio="3/4" tint={color} pose={index === 0 ? "front" : "back"} className={className} />;
+  // Placeholder frames go front, back per colour: 0 front/colour 1, 1 back/colour 1, 2 front/colour 2…
+  const color = product.colors[Math.floor(index / 2) % Math.max(product.colors.length, 1)]?.hex;
+  return <ImagePlaceholder ratio="3/4" tint={color} pose={index % 2 === 0 ? "front" : "back"} className={className} />;
 }

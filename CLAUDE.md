@@ -135,10 +135,11 @@ with self-drawing measurement lines.
    Modal, Accordion, Toast, Badge, Skeleton, FileUpload), i18n, nav, footer, motion
    primitives. **Done.** Components are previewed at `/sq/styleguide` (dev only);
    `npm run qa` runs screenshots, overflow and axe checks.
-2. Supabase migrations, seed data, home and collection pages. **Done — awaiting
-   approval.** Seed data has one source (`src/lib/catalog/seed-data.ts`) that generates
+2. Supabase migrations, seed data, home and collection pages. **Done.** Seed data has one source (`src/lib/catalog/seed-data.ts`) that generates
    `supabase/seed.sql` and doubles as the fallback when Supabase env vars are absent.
-3. Product page, cart, measurement wizard.
+3. Product page, cart, measurement wizard. **Done — awaiting approval.** `npm run qa:product`
+   drives the full purchase and wizard flow. The standard size chart in
+   `src/lib/catalog/size-chart.ts` must be confirmed by the atelier.
 4. Checkout, payment providers, proof upload, emails.
 5. Customer accounts and admin panel.
 6. Tracking, consent, SEO, performance and accessibility pass.

@@ -23,7 +23,9 @@
     "loading": "Duke u ngarkuar",
     "remove": "Hiq",
     "pauseMotion": "Ndalo lëvizjen",
-    "playMotion": "Rinis lëvizjen"
+    "playMotion": "Rinis lëvizjen",
+    "previous": "Fotografia e mëparshme",
+    "next": "Fotografia tjetër"
   },
   "languages": {
     "sq": "Shqip",
@@ -129,7 +131,22 @@
     "checkout": "Vazhdo me pagesën",
     "subtotal": "Nëntotali",
     "size": "Masa {size}",
-    "quantity": "Sasia {count}"
+    "quantity": "Sasia {count}",
+    "customSize": "Masë e personalizuar",
+    "viewMeasurements": "Shiko masat",
+    "hideMeasurements": "Fshih masat",
+    "notes": "Shënime: {notes}",
+    "colorLine": "Ngjyra: {color}",
+    "remove": "Hiq {name}",
+    "decrease": "Ul sasinë për {name}",
+    "increase": "Rrit sasinë për {name}",
+    "quantityLabel": "Sasia",
+    "checkoutCta": "Vazhdo te pagesa",
+    "shippingNote": "Dërgesa dhe kodi i zbritjes llogariten te pagesa.",
+    "continue": "Vazhdo blerjen",
+    "pageTitle": "Shporta jote",
+    "items": "{count, plural, one {# artikull} other {# artikuj}}",
+    "each": "{price} copa"
   },
   "collection": {
     "shopTitle": "Koleksioni",
@@ -217,7 +234,40 @@
     "saveToWishlist": "Ruaje {name} te të preferuarat",
     "removeFromWishlist": "Hiqe {name} nga të preferuarat",
     "colors": "{count, plural, one {# ngjyrë} other {# ngjyra}}",
-    "priceLabel": "Çmimi"
+    "priceLabel": "Çmimi",
+    "size": "Masa",
+    "sizeGuide": "Udhëzuesi i masave",
+    "color": "Ngjyra",
+    "colorSelected": "Ngjyra: {color}",
+    "addToCart": "Shto në shportë",
+    "enterMeasurements": "Shëno masat e tua",
+    "editMeasurements": "Ndrysho masat",
+    "chooseSizeFirst": "Zgjidh një masë për të vazhduar.",
+    "customSizeOption": "Masë e personalizuar, e qepur sipas trupit tënd",
+    "customReady": "Masat i ke shënuar. Kontrolloji para se ta shtosh në shportë.",
+    "addToWishlist": "Shto te të preferuarat",
+    "inWishlist": "Ruajtur te të preferuarat",
+    "whatsapp": "Pyet për këtë fustan në WhatsApp",
+    "whatsappMessage": "Përshëndetje, jam e interesuar për fustanin {name}: {url}",
+    "consultation": "Rezervo provë ose video-konsultë",
+    "accordion": {
+      "description": "Përshkrimi",
+      "fabricCare": "Pëlhura dhe kujdesi",
+      "delivery": "Dërgesa dhe kthimet",
+      "mtm": "Sipas masave"
+    },
+    "deliveryText": "Dërgohet në mbarë botën nga Prizreni, me numër gjurmimi. Afatet dhe kostoja për shtetin tënd shfaqen te pagesa. [POLITIKA E KTHIMEVE]",
+    "mtmText": "Zgjidh Masë e personalizuar dhe të udhëheqim nëpër {count} masa, një nga një, me ilustrim për secilën. Pastaj fustani pritet sipas trupit tënd në Prizren.",
+    "related": "Mund të të pëlqejnë edhe",
+    "recentlyViewed": "Parë së fundmi",
+    "galleryImage": "{name}, fotografia {n} nga {total}",
+    "openZoom": "Hap fotografinë {n} në ekran të plotë",
+    "zoomDialog": "{name}, ekran i plotë",
+    "zoomIn": "Zmadho",
+    "zoomOut": "Zvogëlo",
+    "breadcrumb": "Navigimi",
+    "home": "Ballina",
+    "stickyAdd": "Shto {name} në shportë"
   },
   "homeSections": {
     "categoriesTitle": "Zgjidh sipas kategorisë",
@@ -271,5 +321,70 @@
       "të pret."
     ],
     "finalCta": "Bli tani"
+  },
+  "sizeGuide": {
+    "title": "Udhëzuesi i masave",
+    "text": "Këto janë masat e trupit, jo të fustanit. Je mes dy masave, ose jashtë tabelës? Zgjidh Masë e personalizuar dhe fustani pritet sipas teje.",
+    "unit": "Njësia",
+    "cm": "cm",
+    "in": "inç",
+    "size": "Masa",
+    "eu": "EU",
+    "bust": "Gjoksi",
+    "waist": "Beli",
+    "hips": "Vithet",
+    "howTo": "Si të matesh",
+    "howToBust": "Rreth pjesës më të plotë të gjoksit.",
+    "howToWaist": "Rreth pjesës më të ngushtë të belit.",
+    "howToHips": "Rreth pjesës më të plotë të vitheve, me këmbët bashkë."
+  },
+  "wizard": {
+    "title": "Masat e tua",
+    "for": "Për fustanin {name}",
+    "stepOf": "Hapi {current} nga {total}",
+    "close": "Mbyll masat",
+    "leaveTitle": "Të dalësh pa i ruajtur?",
+    "leaveText": "Masat që ke shënuar për këtë fustan do të humbasin.",
+    "keep": "Vazhdo me masat",
+    "leave": "Dil",
+    "introTitle": "Para se të fillosh",
+    "introTips": [
+      "Matu mbi të brendshmet, jo mbi rroba.",
+      "Qëndro drejt dhe e qetë, me këmbët bashkë.",
+      "Kërko ndihmë nga dikush. Masat dalin më të sakta.",
+      "Shiriti të jetë i puthitur, por jo i shtrënguar."
+    ],
+    "unitLegend": "Do të matem në",
+    "unitCm": "Centimetra",
+    "unitIn": "Inç",
+    "start": "Fillo",
+    "useSaved": "Përdor masat e ruajtura",
+    "savedNote": "Masat e ruajtura në këtë pajisje plotësohen vetë. Mund ta ndryshosh secilën.",
+    "next": "Tjetra",
+    "back": "Mbrapa",
+    "backToSummary": "Kthehu te përmbledhja",
+    "review": "Shiko përmbledhjen",
+    "valueLabel": "{label}, në {unit}",
+    "errors": {
+      "required": "Shëno një masë për të vazhduar.",
+      "invalid": "Shkruaj një numër, p.sh. 86 ose 86,5.",
+      "range": "Shkruaj një vlerë nga {min} deri në {max} {unit}."
+    },
+    "warnings": {
+      "underbust": "Perimetri nën gjoks del i barabartë ose më i madh se perimetri i gjoksit. Kontrolloji të dyja masat.",
+      "waistHips": "Perimetri i belit del shumë më i madh se i vitheve. Kontrollo që vithet t'i kesh matur në pjesën më të gjerë.",
+      "hollowFloor": "Masa nga gropëza e qafës deri në dysheme del shumë e gjatë për gjatësinë tënde. Matu sërish zbathur, nga baza e qafës."
+    },
+    "checkAgain": "Kontrollo sërish",
+    "itsCorrect": "Është e saktë",
+    "summaryTitle": "Masat e tua",
+    "summaryText": "Kontrollo çdo vlerë. Prek njërën për ta ndryshuar.",
+    "edit": "Ndrysho: {label}",
+    "notesLabel": "Shënime për atelenë",
+    "notesHint": "Çdo gjë që duhet ta dimë: qëndrimi, preferencat, data e ceremonisë.",
+    "remember": "Mbaji mend në këtë pajisje",
+    "confirmAdd": "Konfirmo dhe shto në shportë",
+    "added": "U shtua në shportë",
+    "addedText": "{name}, i qepur sipas masave të tua"
   }
 }

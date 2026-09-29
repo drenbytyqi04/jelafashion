@@ -7,6 +7,7 @@ import type {
   CatalogProduct,
   CategoryId,
   HeroContent,
+  MeasurementDefinition,
   Size,
   Testimonial,
 } from "./types";
@@ -195,4 +196,41 @@ export const getHeroContent = unstable_cache(
 export async function getNewIn(limit: number) {
   const all = await getCatalog();
   return [...all].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)).slice(0, limit);
+}
+
+export const getMeasurementDefinitions = unstable_cache(
+  async (): Promise<MeasurementDefinition[]> => {
+    const db = publicSupabase();
+    if (!db) {
+      return seed.measurementDefinitions.map((m, i) => ({ ...m, sort: i + 1 }));
+    }
+    const { data, error } = await db.from("measurement_definitions").select("*").order("sort");
+    if (error) throw new Error(`Measurement definitions query failed: ${error.message}`);
+    return data.map((m) => ({
+      id: m.id,
+      kind: m.kind,
+      view: m.view,
+      label: { sq: m.label_sq, en: m.label_en },
+      hint: { sq: m.hint_sq, en: m.hint_en },
+      minCm: Number(m.min_cm),
+      maxCm: Number(m.max_cm),
+      alwaysRequired: m.always_required,
+      sort: m.sort,
+    }));
+  },
+  ["measurement-definitions"],
+  { tags: [CATALOG_TAG], revalidate: REVALIDATE_SECONDS },
+);
+
+export async function getProduct(slug: string) {
+  const all = await getCatalog();
+  return all.find((p) => p.slug === slug) ?? null;
+}
+
+/** Measurements a product asks for, in wizard order: always-required first, then its own. */
+export async function getProductMeasurements(product: CatalogProduct) {
+  const defs = await getMeasurementDefinitions();
+  return defs
+    .filter((d) => d.alwaysRequired || product.measurements.includes(d.id))
+    .sort((a, b) => a.sort - b.sort);
 }

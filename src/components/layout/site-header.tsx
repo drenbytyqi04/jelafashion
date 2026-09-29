@@ -142,6 +142,7 @@ export function SiteHeader() {
             <button
               type="button"
               onClick={() => setCartOpen(true)}
+              data-cart-target
               aria-label={t("common.cartWithCount", { count })}
               className={cn(iconLink, "relative -mr-3 lg:mr-0")}
             >

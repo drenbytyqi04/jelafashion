@@ -20,6 +20,8 @@ import { Parallax } from "@/components/motion/parallax";
 import { RevealImage } from "@/components/motion/reveal-image";
 import { RevealText } from "@/components/motion/reveal-text";
 import { toast } from "@/stores/toast";
+import { MeasurementIllustration, OVERLAYS } from "@/components/wizard/figures";
+import { measurementDefinitions } from "@/lib/catalog/seed-data";
 import { useCartStore } from "@/stores/cart";
 
 const colors = [
@@ -235,7 +237,7 @@ export function Styleguide() {
           <Button
             variant="secondary"
             onClick={() =>
-              addToCart({ key: `demo-${Date.now()}`, productId: "demo", name: "Aurora silk gown", priceEUR: 1240, size: "M" })
+              addToCart({ key: `demo-${Date.now()}`, productId: "demo", slug: "drita", name: "Aurora silk gown", priceEUR: 1240, size: "M", colorHex: "#F4EDE1" })
             }
           >
             Add demo item to cart
@@ -263,6 +265,17 @@ export function Styleguide() {
 
       <Block title="File upload">
         <FileUpload className="max-w-xl" label="Payment proof" value={file} onChange={setFile} />
+      </Block>
+
+      <Block title="Measurement illustrations">
+        <ul className="grid grid-cols-3 gap-4 md:grid-cols-6">
+          {measurementDefinitions.map((m) => (
+            <li key={m.id} className="bg-blush/60 p-2">
+              <MeasurementIllustration view={m.view} measurementId={OVERLAYS[m.id] ? m.id : undefined} className="h-auto w-full" />
+              <p className="mt-2 text-[11px] leading-tight">{m.label.en}</p>
+            </li>
+          ))}
+        </ul>
       </Block>
 
       <Block title="Motion">

@@ -8,7 +8,7 @@ import type { CatalogProduct, Locale, Size } from "@/lib/catalog/types";
 import { pick } from "@/lib/catalog/types";
 import { cn } from "@/lib/cn";
 import { formatPrice } from "@/lib/format";
-import { useCartStore } from "@/stores/cart";
+import { lineKey, useCartStore } from "@/stores/cart";
 import { toast } from "@/stores/toast";
 import { useUiStore } from "@/stores/ui";
 import { useWishlistStore } from "@/stores/wishlist";
@@ -39,12 +39,15 @@ export function ProductCard({
   function add(size: Size) {
     const color = product.colors[0];
     addToCart({
-      key: `${product.id}-${size}-${color?.id ?? "default"}`,
+      key: lineKey(product.id, size, color?.id),
       productId: product.id,
+      slug: product.slug,
       name,
       priceEUR: product.priceCents / 100,
       size,
       color: color ? pick(color.name, locale) : undefined,
+      colorHex: color?.hex,
+      image: product.images[0]?.url,
     });
     setPicking(false);
     toast({ title: t("added"), description: t("addedText", { name, size }), tone: "success" });

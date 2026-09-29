@@ -32,6 +32,7 @@ npm run dev                  # http://localhost:3000 → redirects to /sq (or /e
 | `npm run lint`        | ESLint                                                              |
 | `npm run typecheck`   | TypeScript, no emit                                                 |
 | `npm run qa`          | Playwright screenshots, overflow and axe checks against a running server (`BASE`, `OUT` env vars) |
+| `npm run qa:product`  | Product page, size guide, measurement wizard and cart flow in Playwright |
 | `npm run db:seed-sql` | Regenerate `supabase/seed.sql` from `src/lib/catalog/seed-data.ts`  |
 
 `/sq/styleguide` shows every base component and token (development only).
@@ -90,7 +91,9 @@ src/app/actions/           Server Actions (validate with Zod, never trust input)
 src/lib/catalog/           seed data, types, cached repository (Supabase or sample), filters
 src/components/home/       the 13 home sections
 src/components/collection/ collection page, filters, skeleton
-src/components/product/    product card and media
+src/components/product/    product card, gallery + zoom, purchase panel, size guide, rails
+src/components/wizard/     measurement wizard and its line-art figures
+src/components/cart/       cart line (with measurements), cart page
 src/components/ui/         Button, Input, Textarea, Select, Checkbox, RadioGroup, Drawer,
                            Modal, Accordion, Toaster, Badge, Skeleton, FileUpload,
                            ErrorSummary, ImagePlaceholder

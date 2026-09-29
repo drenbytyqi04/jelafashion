@@ -47,3 +47,18 @@ export type HeroContent = {
 export const SIZES: Size[] = ["XS", "S", "M", "L", "XL", "XXL"];
 
 export const pick = (b: Bilingual, locale: Locale) => b[locale] || b.sq;
+
+export type MeasurementKind = "around" | "straight" | "heel";
+export type MeasurementView = "front" | "back" | "side" | "shoe";
+
+export type MeasurementDefinition = {
+  id: string;
+  kind: MeasurementKind;
+  view: MeasurementView;
+  label: Bilingual;
+  hint: Bilingual;
+  minCm: number;
+  maxCm: number;
+  alwaysRequired: boolean;
+  sort: number;
+};

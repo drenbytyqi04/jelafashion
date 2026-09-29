@@ -27,6 +27,7 @@ export const routing = defineRouting({
     "/account": { sq: "/llogaria", en: "/account" },
     "/wishlist": { sq: "/te-preferuarat", en: "/wishlist" },
     "/cart": { sq: "/shporta", en: "/cart" },
+    "/checkout": { sq: "/pagesa", en: "/checkout" },
     "/styleguide": "/styleguide",
   },
 });
