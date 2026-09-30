@@ -10,6 +10,7 @@ import { cn } from "@/lib/cn";
 import { flyToCart } from "@/lib/fly-to-cart";
 import { formatPrice } from "@/lib/format";
 import { lineKey, useCartStore } from "@/stores/cart";
+import { productItem, track } from "@/lib/tracking/track";
 import { toast } from "@/stores/toast";
 import { useWishlistStore } from "@/stores/wishlist";
 import { Badge } from "@/components/ui/badge";
@@ -56,6 +57,12 @@ export function PurchasePanel({
   const toggleWishlist = useWishlistStore((s) => s.toggle);
   const color = product.colors.find((c) => c.id === colorId) ?? product.colors[0];
 
+  // One product view per page load (consent-gated inside track()).
+  useEffect(() => {
+    track({ name: "view_item", item: productItem(product, name) });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product.slug]);
+
   // The sticky mobile bar appears once the main button has scrolled out above the viewport.
   useEffect(() => {
     const el = ctaRef.current;
@@ -96,6 +103,7 @@ export function PurchasePanel({
       return;
     }
     addToCart({ ...baseLine(), key: lineKey(product.id, choice, color?.id), size: choice });
+    track({ name: "add_to_cart", item: productItem(product, name, choice) });
     toast({ title: t("added"), description: t("addedText", { name, size: choice }), tone: "success" });
     flyToCart(productImageEl());
   }
@@ -110,6 +118,7 @@ export function PurchasePanel({
       unit: result.unit,
       notes: result.notes || undefined,
     });
+    track({ name: "add_to_cart", item: productItem(product, name, "custom") });
     toast({ title: tw("added"), description: tw("addedText", { name }), tone: "success" });
     // Let the wizard fade before the image flies.
     window.setTimeout(() => flyToCart(productImageEl()), 420);
@@ -235,7 +244,10 @@ export function PurchasePanel({
         </Button>
         <button
           type="button"
-          onClick={() => toggleWishlist(product.id)}
+          onClick={() => {
+            if (!saved) track({ name: "add_to_wishlist", item: productItem(product, name) });
+            toggleWishlist(product.id);
+          }}
           aria-pressed={saved}
           aria-label={saved ? t("inWishlist") : t("addToWishlist")}
           title={saved ? t("inWishlist") : t("addToWishlist")}

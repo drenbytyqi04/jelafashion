@@ -23,6 +23,7 @@ export async function subscribeToNewsletter(input: unknown): Promise<NewsletterR
     return { ok: false, field: "email", error: parsed.error.issues[0]?.message ?? "email" };
   }
   const email = parsed.data.email.toLowerCase();
+  const source = parsed.data.source ?? "footer";
   const locale = (await getLocale()) as Locale;
   const origin = await siteOrigin();
   const welcome = () => after(() => sendNewsletterWelcome(email, locale, origin).then(() => undefined));
@@ -32,7 +33,7 @@ export async function subscribeToNewsletter(input: unknown): Promise<NewsletterR
     // Server-side insert tells us whether the address is new; duplicates are left as they are.
     const { data, error } = await service
       .from("newsletter_subscribers")
-      .upsert({ email, locale, source: "footer" }, { onConflict: "email", ignoreDuplicates: true })
+      .upsert({ email, locale, source }, { onConflict: "email", ignoreDuplicates: true })
       .select("email");
     if (error) {
       console.error("[newsletter] subscribe failed", error.message);
@@ -56,7 +57,7 @@ export async function subscribeToNewsletter(input: unknown): Promise<NewsletterR
   }
   const db = publicSupabase();
   if (!db) return { ok: true }; // sample-data preview: accepted, not stored
-  const { error } = await db.rpc("subscribe_newsletter", { p_email: email, p_locale: locale, p_source: "footer" });
+  const { error } = await db.rpc("subscribe_newsletter", { p_email: email, p_locale: locale, p_source: source });
   if (error) {
     console.error("[newsletter] subscribe failed", error.message);
     return { ok: false, error: "failure" };

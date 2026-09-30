@@ -6,6 +6,7 @@ import { Accordion } from "@/components/ui/accordion";
 import { InstagramIcon, WhatsAppIcon } from "@/components/icons/brand-icons";
 import { LanguageSwitcher } from "./language-switcher";
 import { NewsletterForm } from "./newsletter-form";
+import { CookieSettingsLink } from "@/components/consent/cookie-settings-link";
 
 type FooterLink = { label: string; href: StaticPathname } | { label: string; external: string; icon?: "instagram" | "whatsapp" };
 
@@ -142,6 +143,9 @@ export function SiteFooter() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <CookieSettingsLink label={t("consent.footerLink")} />
+              </li>
             </ul>
           </nav>
           <div className="flex items-center justify-between gap-6 lg:justify-end">

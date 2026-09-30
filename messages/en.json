@@ -1159,5 +1159,31 @@
       ]
     },
     "home": "Home"
+  },
+  "consent": {
+    "title": "Cookies at the atelier",
+    "text": "We use what the site needs to work. With your consent we also measure visits and our ads on Instagram, Facebook and TikTok.",
+    "accept": "Accept all",
+    "reject": "Only necessary",
+    "settings": "Settings",
+    "policy": "Cookie policy",
+    "preferencesTitle": "Cookie settings",
+    "preferencesText": "Choose what we may use. You can change this any time from the footer.",
+    "necessary": "Necessary",
+    "necessaryText": "Language, cart, sign-in and your choices here. Always on.",
+    "analytics": "Analytics",
+    "analyticsText": "Google Analytics counts visits and pages so we can improve the site.",
+    "marketing": "Marketing",
+    "marketingText": "Meta and TikTok pixels measure our ads and show them to people who may like the dresses.",
+    "alwaysOn": "Always on",
+    "save": "Save choices",
+    "footerLink": "Cookie settings"
+  },
+  "whatsappBubble": "Message us on WhatsApp",
+  "newsletterPopup": {
+    "label": "Letters from the atelier",
+    "title": "New collections, to you first.",
+    "text": "A few letters a season: new dresses, the atelier at work, and nothing you didn't ask for.",
+    "later": "Not now"
   }
 }

@@ -6,11 +6,12 @@ import { useForm } from "react-hook-form";
 import { subscribeToNewsletter } from "@/app/actions/newsletter";
 import { Link } from "@/i18n/navigation";
 import { newsletterSchema, type NewsletterInput } from "@/lib/validation/newsletter";
+import { track } from "@/lib/tracking/track";
 import { toast } from "@/stores/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export function NewsletterForm() {
+export function NewsletterForm({ source = "footer", onSubscribed }: { source?: "footer" | "popup"; onSubscribed?: () => void }) {
   const t = useTranslations("newsletter");
   const tf = useTranslations("forms");
   const {
@@ -28,7 +29,7 @@ export function NewsletterForm() {
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      const result = await subscribeToNewsletter(values);
+      const result = await subscribeToNewsletter({ ...values, source });
       if (!result.ok) {
         if (result.field === "email") setError("email", { message: result.error }, { shouldFocus: true });
         else toast({ title: t("failure"), tone: "error" });
@@ -36,6 +37,8 @@ export function NewsletterForm() {
       }
       reset();
       toast({ title: t("success"), tone: "success" });
+      track({ name: "lead", source: "newsletter" });
+      onSubscribed?.();
     } catch {
       toast({ title: t("failure"), tone: "error" });
     }

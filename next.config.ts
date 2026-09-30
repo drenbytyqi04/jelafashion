@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
+  // The floating dev badge sits over the cookie banner's buttons in local QA.
+  devIndicators: false,
   images: {
     formats: ["image/avif", "image/webp"],
     // Product and site images from Supabase Storage's public buckets.

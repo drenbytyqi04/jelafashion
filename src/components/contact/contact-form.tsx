@@ -6,6 +6,7 @@ import { useState, useTransition } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { sendContactMessage } from "@/app/actions/contact";
 import { CONTACT_TOPICS, contactSchema, type ContactInput } from "@/lib/validation/contact";
+import { track } from "@/lib/tracking/track";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
@@ -38,6 +39,7 @@ export function ContactForm({ topic, dress, dressName }: { topic?: string; dress
       const res = await sendContactMessage(values);
       if (res.ok) {
         setStatus("sent");
+        track({ name: "lead", source: "contact" });
         reset({ ...values, message: "", orderNumber: "" });
       } else setStatus("failure");
     });

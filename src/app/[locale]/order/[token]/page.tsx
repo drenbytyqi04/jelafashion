@@ -14,6 +14,9 @@ import { MeasurementsList } from "@/components/checkout/measurements-list";
 import { CardPaymentStatus } from "@/components/order/card-payment-status";
 import { PaymentDetails } from "@/components/order/payment-details";
 import { ProofUpload } from "@/components/order/proof-upload";
+import { PurchaseTracker } from "@/components/tracking/purchase-tracker";
+import { purchaseEventId } from "@/lib/tracking/meta-capi";
+import { purchaseIsFinal } from "@/lib/tracking/purchase";
 
 type Props = {
   params: Promise<{ locale: string; token: string }>;
@@ -67,6 +70,15 @@ export default async function OrderPage({ params, searchParams }: Props) {
 
   return (
     <section className={top}>
+      <PurchaseTracker
+        token={order.accessToken}
+        orderNumber={order.number}
+        eventId={purchaseEventId(order)}
+        final={purchaseIsFinal(order)}
+        value={order.totalCents / 100}
+        shipping={order.shippingCents / 100}
+        items={order.items.map((i) => ({ id: i.productSlug, name: i.name, price: i.unitPriceCents / 100, quantity: i.quantity, variant: i.size }))}
+      />
       <div className="grid gap-16 lg:grid-cols-12 lg:gap-6">
         <div className="lg:col-span-7">
           <p className="label text-stone">{order.number}</p>

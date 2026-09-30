@@ -13,6 +13,10 @@ import { CheckoutFooter } from "@/components/layout/checkout-chrome";
 import { FooterSwitch, HeaderSwitch } from "@/components/layout/chrome-switch";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { StoreHydrator } from "@/components/layout/store-hydrator";
+import { NewsletterPopup } from "@/components/layout/newsletter-popup";
+import { WhatsAppBubble } from "@/components/layout/whatsapp-bubble";
+import { ConsentBanner } from "@/components/consent/consent-banner";
+import { TrackingScripts } from "@/components/tracking/tracking-scripts";
 import { Toaster } from "@/components/ui/toaster";
 
 
@@ -69,8 +73,12 @@ export default async function LocaleLayout({
               {children}
             </main>
             <FooterSwitch site={<SiteFooter />} focus={<CheckoutFooter />} />
+            <WhatsAppBubble />
+            <NewsletterPopup />
+            <ConsentBanner />
             <Toaster />
             <StoreHydrator />
+            <TrackingScripts />
           </MotionProvider>
         </NextIntlClientProvider>
       </body>

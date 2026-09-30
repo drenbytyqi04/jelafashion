@@ -1,6 +1,7 @@
 import { ArrowLeft, Lock } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { CookieSettingsLink } from "@/components/consent/cookie-settings-link";
 
 // Focus mode for checkout: the wordmark, a way back and a quiet promise of security.
 // Nothing else competes with finishing the order.
@@ -28,6 +29,7 @@ export function CheckoutHeader() {
 
 export function CheckoutFooter() {
   const t = useTranslations("footer");
+  const tc = useTranslations("consent");
   const links = [
     ["/shipping", t("shipping")],
     ["/returns", t("returns")],
@@ -46,6 +48,9 @@ export function CheckoutFooter() {
                 </Link>
               </li>
             ))}
+            <li>
+              <CookieSettingsLink label={tc("footerLink")} />
+            </li>
           </ul>
         </nav>
         <p className="nums text-small text-stone">{t("rights", { year: new Date().getFullYear() })}</p>

@@ -1160,5 +1160,31 @@
       ]
     },
     "home": "Ballina"
+  },
+  "consent": {
+    "title": "Cookies në atelje",
+    "text": "Përdorim atë që i duhet faqes për të punuar. Me pëlqimin tënd matim edhe vizitat dhe reklamat tona në Instagram, Facebook dhe TikTok.",
+    "accept": "Prano të gjitha",
+    "reject": "Vetëm të domosdoshmet",
+    "settings": "Cilësimet",
+    "policy": "Politika e cookies",
+    "preferencesTitle": "Cilësimet e cookies",
+    "preferencesText": "Zgjidh çfarë mund të përdorim. Mund ta ndryshosh kurdo nga fundi i faqes.",
+    "necessary": "Të domosdoshme",
+    "necessaryText": "Gjuha, shporta, hyrja në llogari dhe zgjedhjet e tua këtu. Gjithmonë aktive.",
+    "analytics": "Analitike",
+    "analyticsText": "Google Analytics numëron vizitat dhe faqet, që ta përmirësojmë faqen.",
+    "marketing": "Marketing",
+    "marketingText": "Pikselët e Meta-s dhe TikTok-ut matin reklamat tona dhe ua shfaqin atyre që mund t'i pëlqejnë fustanet.",
+    "alwaysOn": "Gjithmonë aktive",
+    "save": "Ruaj zgjedhjet",
+    "footerLink": "Cilësimet e cookies"
+  },
+  "whatsappBubble": "Na shkruaj në WhatsApp",
+  "newsletterPopup": {
+    "label": "Letra nga atelja",
+    "title": "Koleksionet e reja, së pari te ti.",
+    "text": "Pak letra në sezon: fustane të reja, atelja në punë, dhe asgjë që nuk e ke kërkuar.",
+    "later": "Jo tani"
   }
 }

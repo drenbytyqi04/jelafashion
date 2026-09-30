@@ -13,6 +13,7 @@ import { useLocale, useTranslations } from "next-intl";
 import {
   useEffect,
   useMemo,
+  useRef,
   useState,
   useTransition,
   type ReactNode,
@@ -41,6 +42,7 @@ import type {
 } from "@/lib/commerce/types";
 import type { SavedAddress } from "@/lib/account/types";
 import { formatPrice } from "@/lib/format";
+import { track } from "@/lib/tracking/track";
 import { duration, ease } from "@/lib/motion";
 import {
   checkoutSchema,
@@ -216,6 +218,15 @@ export function CheckoutView({
     }
     if (!getValues("phone")) setValue("phoneCountry", country);
   }, [zone, country, getValues, setValue]);
+
+  // One begin_checkout per visit to the page, once the saved cart has loaded.
+  const checkoutTracked = useRef(false);
+  useEffect(() => {
+    if (!hydrated || checkoutTracked.current || lines.length === 0) return;
+    checkoutTracked.current = true;
+    const items = lines.map((l) => ({ id: l.slug, name: l.name, price: l.priceEUR, quantity: l.quantity, variant: l.size }));
+    track({ name: "begin_checkout", items, value: items.reduce((n, i) => n + i.price * i.quantity, 0) });
+  }, [hydrated, lines]);
 
   const subtotalCents = Math.round(subtotalEUR * 100);
   const computed = orderTotals(subtotalCents, discount, rate);

@@ -11,6 +11,7 @@ import { formatPrice } from "@/lib/format";
 import { lineKey, useCartStore } from "@/stores/cart";
 import { toast } from "@/stores/toast";
 import { useUiStore } from "@/stores/ui";
+import { productItem, track } from "@/lib/tracking/track";
 import { useWishlistStore } from "@/stores/wishlist";
 import { ProductMedia } from "./product-media";
 
@@ -50,6 +51,7 @@ export function ProductCard({
       image: product.images[0]?.url,
     });
     setPicking(false);
+    track({ name: "add_to_cart", item: productItem(product, name, size) });
     toast({ title: t("added"), description: t("addedText", { name, size }), tone: "success" });
     openCart(true);
   }
@@ -75,7 +77,10 @@ export function ProductCard({
 
         <button
           type="button"
-          onClick={() => toggleWishlist(product.id)}
+          onClick={() => {
+            if (!saved) track({ name: "add_to_wishlist", item: productItem(product, name) });
+            toggleWishlist(product.id);
+          }}
           aria-pressed={saved}
           aria-label={saved ? t("removeFromWishlist", { name }) : t("saveToWishlist", { name })}
           className="absolute right-1 top-1 flex size-11 items-center justify-center text-ink"
