@@ -2,6 +2,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import * as seed from "@/lib/catalog/seed-data";
 import { CATALOG_TAG } from "@/lib/catalog/repository";
+import { localCatalog, readLocalDb } from "@/lib/local-db";
 import { publicSupabase } from "@/lib/supabase/public-client";
 import { payseraConfigured, payseraSandbox } from "@/lib/payments/paysera";
 import type { PaymentMethodConfig, ShippingZone } from "./types";
@@ -11,6 +12,11 @@ import type { PaymentMethodConfig, ShippingZone } from "./types";
 
 export const getShippingZones = unstable_cache(
   async (): Promise<ShippingZone[]> => {
+    if (localCatalog()) {
+      return (await readLocalDb()).shippingZones
+        .sort((a, b) => a.sort - b.sort)
+        .map((z) => ({ id: z.id, name: z.name, countries: z.countries, isFallback: z.isFallback, rates: z.rates }));
+    }
     const db = publicSupabase();
     if (!db) {
       return seed.shippingZones.map((z, i) => ({
@@ -58,6 +64,12 @@ export const getShippingZones = unstable_cache(
 
 const getStoredPaymentMethods = unstable_cache(
   async (): Promise<PaymentMethodConfig[]> => {
+    if (localCatalog()) {
+      return (await readLocalDb()).paymentMethods
+        .filter((m) => m.enabled)
+        .sort((a, b) => a.sort - b.sort)
+        .map((m) => ({ id: m.id, details: m.details }) as PaymentMethodConfig);
+    }
     const db = publicSupabase();
     if (!db) return seed.paymentMethods as PaymentMethodConfig[];
     const { data, error } = await db.from("payment_methods").select("id, details, sort").eq("enabled", true).order("sort");

@@ -73,12 +73,24 @@ export type OrderItem = {
   notes: string | null;
 };
 
-export type PaymentProof = { fileName: string; reference: string | null; senderName: string | null; createdAt: string };
+export type PaymentProof = {
+  /** Storage path; server only (proofs are private). */
+  path: string;
+  fileName: string;
+  contentType: string;
+  reference: string | null;
+  senderName: string | null;
+  createdAt: string;
+};
+
+export type OrderEvent = { status: string; note: string | null; createdAt: string };
 
 export type Order = {
   id: string;
   number: string;
   accessToken: string;
+  /** Account that placed it; guest orders are matched by email instead. */
+  userId: string | null;
   email: string;
   phone: string;
   locale: Locale;

@@ -3,17 +3,21 @@ import { randomBytes, randomUUID } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import * as seed from "@/lib/catalog/seed-data";
+import { localWrites, mutateLocalDb, readLocalDb } from "@/lib/local-db";
 import { publicSupabase } from "@/lib/supabase/public-client";
 import { serviceSupabase } from "@/lib/supabase/service-client";
-import type { Discount, NewOrder, Order, OrderStatus, PaymentProof } from "./types";
+import type { Discount, NewOrder, Order, OrderEvent, OrderStatus, PaymentProof } from "./types";
 
 export type ProofFile = { bytes: Uint8Array; contentType: string; fileName: string; extension: string };
+export type ProofDownload = { kind: "url"; url: string } | { kind: "bytes"; bytes: Uint8Array; contentType: string; fileName: string };
+export type OrderListFilter = { status?: OrderStatus; query?: string; limit?: number; offset?: number };
+export type StatusChange = { note?: string | null; trackingNumber?: string | null; trackingCarrier?: string | null };
+export type OrderStats = { byStatus: Record<OrderStatus, number>; paidThisMonthCents: number; ordersThisMonth: number };
 
 /**
- * Where orders live. Supabase in production (service role, server only); a JSON file under
- * .data/ for local development without Supabase credentials. Callers never touch either
- * directly, so the checkout, callbacks and (Phase 5) admin share one set of rules.
+ * Where orders live. Supabase in production (service role, server only); the local
+ * development database otherwise. Callers never touch either directly, so checkout,
+ * callbacks, accounts and the admin panel share one set of rules.
  */
 export interface OrderStore {
   findDiscount(code: string): Promise<Discount | null>;
@@ -24,8 +28,30 @@ export interface OrderStore {
   getByToken(token: string): Promise<Order | null>;
   /** Moves an order from awaiting_payment to paid; returns null if it was not awaiting payment. */
   markPaid(id: string, reference: string | null, note: string): Promise<Order | null>;
+  /** Any other status change (the caller checks the workflow). Null if the status moved meanwhile. */
+  setStatus(id: string, from: OrderStatus, to: OrderStatus, change: StatusChange): Promise<Order | null>;
   addProof(orderId: string, file: ProofFile, reference: string | null, senderName: string | null): Promise<PaymentProof>;
+  proofDownload(orderId: string, index: number): Promise<ProofDownload | null>;
   recordCallback(orderId: string | null, provider: string, payload: unknown, verified: boolean): Promise<void>;
+  /** A customer's orders: placed while signed in, or as a guest with her verified email. */
+  listForCustomer(userId: string, email: string): Promise<Order[]>;
+  list(filter: OrderListFilter): Promise<{ orders: Order[]; total: number }>;
+  events(id: string): Promise<OrderEvent[]>;
+  stats(): Promise<OrderStats>;
+}
+
+const emptyByStatus = (): Record<OrderStatus, number> => ({
+  awaiting_payment: 0,
+  paid: 0,
+  in_production: 0,
+  shipped: 0,
+  delivered: 0,
+  cancelled: 0,
+});
+
+function monthStart() {
+  const d = new Date();
+  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1)).toISOString();
 }
 
 // ---------------------------------------------------------------------------------------
@@ -35,6 +61,7 @@ type OrderRow = {
   id: string;
   number: string;
   access_token: string;
+  user_id: string | null;
   email: string;
   phone: string;
   locale: Order["locale"];
@@ -68,17 +95,18 @@ type OrderRow = {
     measurement_unit: Order["items"][number]["measurementUnit"];
     notes: string | null;
   }[];
-  payment_proofs?: { file_name: string; reference: string | null; sender_name: string | null; created_at: string }[];
+  payment_proofs?: { storage_path: string; file_name: string; content_type: string; reference: string | null; sender_name: string | null; created_at: string }[];
 };
 
 const ORDER_SELECT = `*, order_items (product_id, product_slug, name, color, size, quantity, unit_price_cents, measurements, measurement_unit, notes),
-  payment_proofs (file_name, reference, sender_name, created_at)`;
+  payment_proofs (storage_path, file_name, content_type, reference, sender_name, created_at)`;
 
 function fromRow(r: OrderRow): Order {
   return {
     id: r.id,
     number: r.number,
     accessToken: r.access_token,
+    userId: r.user_id,
     email: r.email,
     phone: r.phone,
     locale: r.locale,
@@ -113,12 +141,21 @@ function fromRow(r: OrderRow): Order {
       notes: i.notes,
     })),
     proofs: (r.payment_proofs ?? [])
-      .map((p) => ({ fileName: p.file_name, reference: p.reference, senderName: p.sender_name, createdAt: p.created_at }))
+      .map((p) => ({
+        path: p.storage_path,
+        fileName: p.file_name,
+        contentType: p.content_type,
+        reference: p.reference,
+        senderName: p.sender_name,
+        createdAt: p.created_at,
+      }))
       .sort((a, b) => a.createdAt.localeCompare(b.createdAt)),
   };
 }
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+/** Characters that would change the meaning of a PostgREST filter. */
+const safeSearch = (q: string) => q.replace(/[,()*%\\]/g, " ").trim();
 
 class SupabaseOrderStore implements OrderStore {
   constructor(private db: SupabaseClient) {}
@@ -150,6 +187,7 @@ class SupabaseOrderStore implements OrderStore {
     const { data, error } = await this.db
       .from("orders")
       .insert({
+        user_id: o.userId,
         email: o.email,
         phone: o.phone,
         locale: o.locale,
@@ -224,6 +262,17 @@ class SupabaseOrderStore implements OrderStore {
     return this.getById(id);
   }
 
+  async setStatus(id: string, from: OrderStatus, to: OrderStatus, change: StatusChange) {
+    const patch: Record<string, unknown> = { status: to };
+    if (change.trackingNumber !== undefined) patch.tracking_number = change.trackingNumber;
+    if (change.trackingCarrier !== undefined) patch.tracking_carrier = change.trackingCarrier;
+    const { data, error } = await this.db.from("orders").update(patch).eq("id", id).eq("status", from).select("id");
+    if (error) throw new Error(`Status update failed: ${error.message}`);
+    if (!data?.length) return null;
+    await this.db.from("order_events").insert({ order_id: id, status: to, note: change.note ?? null });
+    return this.getById(id);
+  }
+
   async addProof(orderId: string, file: ProofFile, reference: string | null, senderName: string | null) {
     const storagePath = `${orderId}/${Date.now()}-${randomBytes(4).toString("hex")}.${file.extension}`;
     const { error: uploadError } = await this.db.storage
@@ -233,143 +282,232 @@ class SupabaseOrderStore implements OrderStore {
     const { data, error } = await this.db
       .from("payment_proofs")
       .insert({ order_id: orderId, storage_path: storagePath, file_name: file.fileName, content_type: file.contentType, reference, sender_name: senderName })
-      .select("file_name, reference, sender_name, created_at")
+      .select("storage_path, file_name, content_type, reference, sender_name, created_at")
       .single();
     if (error) throw new Error(`Proof insert failed: ${error.message}`);
-    return { fileName: data.file_name, reference: data.reference, senderName: data.sender_name, createdAt: data.created_at };
+    return {
+      path: data.storage_path,
+      fileName: data.file_name,
+      contentType: data.content_type,
+      reference: data.reference,
+      senderName: data.sender_name,
+      createdAt: data.created_at,
+    };
+  }
+
+  async proofDownload(orderId: string, index: number): Promise<ProofDownload | null> {
+    const order = await this.getById(orderId);
+    const proof = order?.proofs[index];
+    if (!proof) return null;
+    // Short-lived link: proofs are private and the URL may end up in browser history.
+    const { data, error } = await this.db.storage.from("payment-proofs").createSignedUrl(proof.path, 60);
+    if (error || !data) throw new Error(`Signed URL failed: ${error?.message}`);
+    return { kind: "url", url: data.signedUrl };
   }
 
   async recordCallback(orderId: string | null, provider: string, payload: unknown, verified: boolean) {
     const { error } = await this.db.from("payment_callbacks").insert({ order_id: orderId, provider, payload, verified });
     if (error) console.error("[orders] callback not recorded", error.message);
   }
+
+  async listForCustomer(userId: string, email: string) {
+    const { data, error } = await this.db
+      .from("orders")
+      .select(ORDER_SELECT)
+      .or(`user_id.eq.${userId},email.eq.${safeSearch(email)}`)
+      .order("created_at", { ascending: false })
+      .limit(100);
+    if (error) throw new Error(`Customer orders failed: ${error.message}`);
+    return (data as OrderRow[]).map(fromRow);
+  }
+
+  async list({ status, query, limit = 50, offset = 0 }: OrderListFilter) {
+    let q = this.db.from("orders").select(ORDER_SELECT, { count: "exact" });
+    if (status) q = q.eq("status", status);
+    const term = query ? safeSearch(query) : "";
+    if (term) q = q.or(`number.ilike.*${term}*,email.ilike.*${term}*`);
+    const { data, error, count } = await q.order("created_at", { ascending: false }).range(offset, offset + limit - 1);
+    if (error) throw new Error(`Order list failed: ${error.message}`);
+    return { orders: (data as OrderRow[]).map(fromRow), total: count ?? 0 };
+  }
+
+  async events(id: string) {
+    const { data, error } = await this.db.from("order_events").select("status, note, created_at").eq("order_id", id).order("created_at");
+    if (error) throw new Error(`Order events failed: ${error.message}`);
+    return data.map((e) => ({ status: e.status, note: e.note, createdAt: e.created_at }));
+  }
+
+  async stats() {
+    const { data, error } = await this.db.from("orders").select("status, total_cents, paid_at, created_at");
+    if (error) throw new Error(`Order stats failed: ${error.message}`);
+    return computeStats(data.map((r) => ({ status: r.status, totalCents: r.total_cents, paidAt: r.paid_at, createdAt: r.created_at })));
+  }
+}
+
+function computeStats(rows: { status: OrderStatus; totalCents: number; paidAt: string | null; createdAt: string }[]): OrderStats {
+  const since = monthStart();
+  const byStatus = emptyByStatus();
+  let paidThisMonthCents = 0;
+  let ordersThisMonth = 0;
+  for (const r of rows) {
+    byStatus[r.status]++;
+    if (r.createdAt >= since) ordersThisMonth++;
+    if (r.paidAt && r.paidAt >= since && r.status !== "cancelled") paidThisMonthCents += r.totalCents;
+  }
+  return { byStatus, paidThisMonthCents, ordersThisMonth };
 }
 
 // ---------------------------------------------------------------------------------------
-// Local development: a JSON file, so the whole flow runs without any credentials.
+// Local development database
 
-type LocalData = { nextNumber: number; orders: Order[]; discountUses: Record<string, number>; callbacks: unknown[] };
-
-const DATA_DIR = path.join(process.cwd(), ".data");
-const DATA_FILE = path.join(DATA_DIR, "orders.json");
+const PROOF_DIR = path.join(process.cwd(), ".data", "payment-proofs");
 
 class LocalOrderStore implements OrderStore {
-  // Serialises writes within this process; good enough for one developer.
-  private queue: Promise<unknown> = Promise.resolve();
-
-  private async read(): Promise<LocalData> {
-    try {
-      return JSON.parse(await readFile(DATA_FILE, "utf8")) as LocalData;
-    } catch {
-      return { nextNumber: 1001, orders: [], discountUses: {}, callbacks: [] };
-    }
-  }
-
-  private mutate<T>(fn: (d: LocalData) => T | Promise<T>): Promise<T> {
-    const run = this.queue.then(async () => {
-      const d = await this.read();
-      const result = await fn(d);
-      await mkdir(DATA_DIR, { recursive: true });
-      await writeFile(DATA_FILE, JSON.stringify(d, null, 2));
-      return result;
-    });
-    this.queue = run.catch(() => undefined);
-    return run;
-  }
-
-  private seedDiscount(code: string) {
-    return seed.discountCodes.find((d) => d.code.toLowerCase() === code.toLowerCase()) ?? null;
-  }
-
   async findDiscount(code: string) {
-    const d = this.seedDiscount(code);
-    if (!d || Date.parse(d.expiresAt) <= Date.now()) return null;
-    const used = (await this.read()).discountUses[d.code] ?? 0;
-    if (used >= d.usageLimit) return null;
-    return { code: d.code, kind: d.kind, value: d.value, minSubtotalCents: 0 };
+    const db = await readLocalDb();
+    const d = db.discounts.find((x) => x.code.toLowerCase() === code.toLowerCase());
+    const now = new Date().toISOString();
+    if (!d || !d.active) return null;
+    if ((d.startsAt && d.startsAt > now) || (d.expiresAt && d.expiresAt <= now)) return null;
+    if (d.usageLimit !== null && d.usedCount >= d.usageLimit) return null;
+    return { code: d.code, kind: d.kind, value: d.value, minSubtotalCents: d.minSubtotalCents };
   }
 
   redeemDiscount(code: string) {
-    return this.mutate((data) => {
-      const d = this.seedDiscount(code);
-      if (!d) return false;
-      const used = data.discountUses[d.code] ?? 0;
-      if (used >= d.usageLimit) return false;
-      data.discountUses[d.code] = used + 1;
+    return mutateLocalDb((db) => {
+      const d = db.discounts.find((x) => x.code.toLowerCase() === code.toLowerCase());
+      if (!d || !d.active || (d.usageLimit !== null && d.usedCount >= d.usageLimit)) return false;
+      d.usedCount++;
       return true;
     });
   }
 
   create(o: NewOrder) {
-    return this.mutate((data) => {
-      const order: Order = {
+    return mutateLocalDb((db) => {
+      const now = new Date().toISOString();
+      const order = {
         ...o,
         id: randomUUID(),
-        number: `JF-${data.nextNumber++}`,
+        number: `JF-${db.nextOrderNumber++}`,
         accessToken: randomBytes(24).toString("hex"),
-        status: "awaiting_payment",
+        status: "awaiting_payment" as const,
         paidAt: null,
         paymentReference: null,
         trackingNumber: null,
         trackingCarrier: null,
-        createdAt: new Date().toISOString(),
+        createdAt: now,
         proofs: [],
+        events: [{ status: "awaiting_payment", note: "Order placed", createdAt: now }],
       };
-      data.orders.push(order);
-      return order;
+      db.orders.push(order);
+      return strip(order);
     });
   }
 
   async getById(id: string) {
-    return (await this.read()).orders.find((o) => o.id === id) ?? null;
+    const o = (await readLocalDb()).orders.find((x) => x.id === id);
+    return o ? strip(o) : null;
   }
 
   async getByToken(token: string) {
-    return (await this.read()).orders.find((o) => o.accessToken === token) ?? null;
+    const o = (await readLocalDb()).orders.find((x) => x.accessToken === token);
+    return o ? strip(o) : null;
   }
 
-  markPaid(id: string, reference: string | null) {
-    return this.mutate((data) => {
-      const order = data.orders.find((o) => o.id === id);
+  markPaid(id: string, reference: string | null, note: string) {
+    return mutateLocalDb((db) => {
+      const order = db.orders.find((o) => o.id === id);
       if (!order || order.status !== "awaiting_payment") return null;
       order.status = "paid";
       order.paidAt = new Date().toISOString();
       order.paymentReference = reference;
-      return order;
+      order.events.push({ status: "paid", note, createdAt: order.paidAt });
+      return strip(order);
+    });
+  }
+
+  setStatus(id: string, from: OrderStatus, to: OrderStatus, change: StatusChange) {
+    return mutateLocalDb((db) => {
+      const order = db.orders.find((o) => o.id === id);
+      if (!order || order.status !== from) return null;
+      order.status = to;
+      if (change.trackingNumber !== undefined) order.trackingNumber = change.trackingNumber;
+      if (change.trackingCarrier !== undefined) order.trackingCarrier = change.trackingCarrier;
+      order.events.push({ status: to, note: change.note ?? null, createdAt: new Date().toISOString() });
+      return strip(order);
     });
   }
 
   async addProof(orderId: string, file: ProofFile, reference: string | null, senderName: string | null) {
-    const dir = path.join(DATA_DIR, "payment-proofs", orderId);
-    await mkdir(dir, { recursive: true });
-    await writeFile(path.join(dir, `${Date.now()}.${file.extension}`), file.bytes);
-    return this.mutate((data) => {
-      const proof = { fileName: file.fileName, reference, senderName, createdAt: new Date().toISOString() };
-      data.orders.find((o) => o.id === orderId)?.proofs.push(proof);
+    const rel = `${orderId}/${Date.now()}-${randomBytes(4).toString("hex")}.${file.extension}`;
+    await mkdir(path.join(PROOF_DIR, orderId), { recursive: true });
+    await writeFile(path.join(PROOF_DIR, rel), file.bytes);
+    return mutateLocalDb((db) => {
+      const proof = { path: rel, fileName: file.fileName, contentType: file.contentType, reference, senderName, createdAt: new Date().toISOString() };
+      db.orders.find((o) => o.id === orderId)?.proofs.push(proof);
       return proof;
     });
   }
 
+  async proofDownload(orderId: string, index: number): Promise<ProofDownload | null> {
+    const proof = (await this.getById(orderId))?.proofs[index];
+    if (!proof) return null;
+    const bytes = await readFile(path.join(PROOF_DIR, proof.path));
+    return { kind: "bytes", bytes, contentType: proof.contentType, fileName: proof.fileName };
+  }
+
   async recordCallback(orderId: string | null, provider: string, payload: unknown, verified: boolean) {
-    await this.mutate((data) => {
-      data.callbacks.push({ orderId, provider, payload, verified, at: new Date().toISOString() });
+    await mutateLocalDb((db) => {
+      db.callbacks.push({ orderId, provider, payload, verified, at: new Date().toISOString() });
     });
   }
+
+  async listForCustomer(userId: string, email: string) {
+    const db = await readLocalDb();
+    return db.orders
+      .filter((o) => o.userId === userId || o.email.toLowerCase() === email.toLowerCase())
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+      .map(strip);
+  }
+
+  async list({ status, query, limit = 50, offset = 0 }: OrderListFilter) {
+    const term = query?.trim().toLowerCase();
+    const all = (await readLocalDb()).orders
+      .filter((o) => !status || o.status === status)
+      .filter((o) => !term || o.number.toLowerCase().includes(term) || o.email.toLowerCase().includes(term))
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    return { orders: all.slice(offset, offset + limit).map(strip), total: all.length };
+  }
+
+  async events(id: string) {
+    return (await readLocalDb()).orders.find((o) => o.id === id)?.events ?? [];
+  }
+
+  async stats() {
+    return computeStats((await readLocalDb()).orders);
+  }
+}
+
+/** The local record keeps its event log inline; callers get the plain Order. */
+function strip<T extends Order & { events?: unknown }>(o: T): Order {
+  const { events: _events, ...order } = o;
+  void _events;
+  return order;
 }
 
 let store: OrderStore | null | undefined;
 
 /**
- * Supabase when the service key is set; the local file store in development; otherwise
- * null (checkout reports itself unavailable instead of losing orders).
+ * Supabase when the service key is set; the local database in development; otherwise null
+ * (checkout and the admin report themselves unavailable instead of losing orders).
  */
 export function orderStore(): OrderStore | null {
   if (store !== undefined) return store;
   const db = serviceSupabase();
   if (db) store = new SupabaseOrderStore(db);
-  else if (process.env.NODE_ENV !== "production" || process.env.JF_LOCAL_ORDERS === "1") {
+  else if (localWrites()) {
     if (publicSupabase()) {
-      console.warn("[orders] SUPABASE_SERVICE_ROLE_KEY is not set: orders are stored locally in .data/orders.json");
+      console.warn("[orders] SUPABASE_SERVICE_ROLE_KEY is not set: orders are stored locally in .data/db.json");
     }
     store = new LocalOrderStore();
   } else store = null;

@@ -4,6 +4,8 @@ import { parsePhoneNumberFromString, type CountryCode } from "libphonenumber-js/
 import { after } from "next/server";
 import { getLocale } from "next-intl/server";
 import { getPathname } from "@/i18n/navigation";
+import { accountStore } from "@/lib/account/store";
+import { getViewer } from "@/lib/auth/viewer";
 import { getCatalog, getMeasurementDefinitions } from "@/lib/catalog/repository";
 import type { Locale } from "@/lib/catalog/types";
 import { pick } from "@/lib/catalog/types";
@@ -41,7 +43,7 @@ export type PlaceOrderResult =
  * The only place an order is priced. Everything from the browser is treated as a wish:
  * prices, sizes, stock, measurements, shipping and the discount are all recomputed here.
  */
-export async function placeOrder(input: { values: unknown; lines: unknown }): Promise<PlaceOrderResult> {
+export async function placeOrder(input: { values: unknown; lines: unknown; saveAddress?: unknown }): Promise<PlaceOrderResult> {
   const values = checkoutSchema.safeParse(input?.values);
   const lines = cartLinesSchema.safeParse(input?.lines);
   if (!values.success || !lines.success) return { ok: false, error: "invalid" };
@@ -133,7 +135,9 @@ export async function placeOrder(input: { values: unknown; lines: unknown }): Pr
 
     // 3. Store
     const phone = parsePhoneNumberFromString(v.phone, v.phoneCountry as CountryCode);
+    const viewer = await getViewer();
     const newOrder: NewOrder = {
+      userId: viewer?.id ?? null,
       email: v.email.toLowerCase(),
       phone: phone?.number ?? v.phone,
       locale,
@@ -149,6 +153,17 @@ export async function placeOrder(input: { values: unknown; lines: unknown }): Pr
       items,
     };
     const order = await store.create(newOrder);
+
+    // Signed-in customers can keep the address for next time; never blocks the order.
+    if (viewer && input.saveAddress === true) {
+      try {
+        const account = await accountStore();
+        const existing = (await account?.addresses(viewer.id)) ?? [];
+        await account?.saveAddress(viewer.id, { ...v.shipping, phone: newOrder.phone, isDefault: existing.length === 0 });
+      } catch (err) {
+        console.error("[checkout] address not saved", err);
+      }
+    }
 
     // 4. Payment
     const origin = await siteOrigin();

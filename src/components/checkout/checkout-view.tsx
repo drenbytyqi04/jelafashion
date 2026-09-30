@@ -39,6 +39,7 @@ import type {
   PaymentMethodId,
   ShippingZone,
 } from "@/lib/commerce/types";
+import type { SavedAddress } from "@/lib/account/types";
 import { formatPrice } from "@/lib/format";
 import { duration, ease } from "@/lib/motion";
 import {
@@ -60,11 +61,17 @@ import { DiscountField, SummaryLines, TotalsTable } from "./order-summary";
 
 export type CountryOption = { code: string; name: string; callingCode: string };
 
+/** Signed-in customer's details for prefilling; null for guests. */
+export type CheckoutAccount = { email: string; phoneCountry: string | null; phone: string | null; addresses: SavedAddress[] };
+
 type Props = {
   zones: ShippingZone[];
   methods: PaymentMethodConfig[];
   countries: CountryOption[];
   defaultCountry: string;
+  account: CheckoutAccount | null;
+  /** Account page with a return to checkout, for the sign-in prompt. */
+  signInHref: string;
 };
 
 const METHOD_ICONS: Record<PaymentMethodId, ReactNode> = {
@@ -111,6 +118,19 @@ const FIELD_ORDER = [
   "terms",
 ];
 
+function addressValues(a: SavedAddress | null, country: string) {
+  return {
+    firstName: a?.firstName ?? "",
+    lastName: a?.lastName ?? "",
+    line1: a?.line1 ?? "",
+    line2: a?.line2 ?? "",
+    city: a?.city ?? "",
+    postalCode: a?.postalCode ?? "",
+    region: a?.region ?? "",
+    country: a?.country ?? country,
+  };
+}
+
 function flatten(
   errors: FieldErrors,
   prefix = "",
@@ -129,6 +149,8 @@ export function CheckoutView({
   methods,
   countries,
   defaultCountry,
+  account,
+  signInHref,
 }: Props) {
   const t = useTranslations("checkout");
   const tf = useTranslations("forms");
@@ -149,7 +171,12 @@ export function CheckoutView({
   const [placing, startPlacing] = useTransition();
   const [leaving, setLeaving] = useState(false);
 
-  const firstZone = zoneForCountry(zones, defaultCountry);
+  const savedAddresses = account?.addresses ?? [];
+  const initialAddress = savedAddresses.find((a) => a.isDefault) ?? savedAddresses[0] ?? null;
+  const [addressChoice, setAddressChoice] = useState<string>(initialAddress?.id ?? "new");
+  const [saveAddress, setSaveAddress] = useState(true);
+  const initialCountry = initialAddress?.country ?? defaultCountry;
+  const firstZone = zoneForCountry(zones, initialCountry);
   const {
     register,
     control,
@@ -161,20 +188,11 @@ export function CheckoutView({
     resolver: zodResolver(checkoutSchema),
     mode: "onTouched",
     defaultValues: {
-      email: "",
-      phoneCountry: defaultCountry,
-      phone: "",
+      email: account?.email ?? "",
+      phoneCountry: account?.phoneCountry ?? initialCountry,
+      phone: account?.phone ?? "",
       marketing: false,
-      shipping: {
-        firstName: "",
-        lastName: "",
-        line1: "",
-        line2: "",
-        city: "",
-        postalCode: "",
-        region: "",
-        country: defaultCountry,
-      },
+      shipping: addressValues(initialAddress, initialCountry),
       shippingRateId: firstZone?.rates[0]?.id ?? "",
       paymentMethod: undefined,
       billingSame: true,
@@ -237,6 +255,7 @@ export function CheckoutView({
       const res = await placeOrder({
         values: { ...values, discountCode: discount?.code },
         lines,
+        saveAddress: Boolean(account) && addressChoice === "new" && saveAddress,
       });
       if (res.ok) {
         setLeaving(true);
@@ -459,9 +478,24 @@ export function CheckoutView({
               aria-labelledby="checkout-contact"
               className="flex flex-col gap-6"
             >
-              <h2 id="checkout-contact" className={sectionTitle}>
-                {t("contact")}
-              </h2>
+              <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+                <h2 id="checkout-contact" className={sectionTitle}>
+                  {t("contact")}
+                </h2>
+                {account ? (
+                  <p className="text-small text-stone">{t("signedInAs", { email: account.email })}</p>
+                ) : (
+                  <p className="text-small text-stone">
+                    {t.rich("signInPrompt", {
+                      link: (chunks) => (
+                        <a href={signInHref} className="link-underline text-ink">
+                          {chunks}
+                        </a>
+                      ),
+                    })}
+                  </p>
+                )}
+              </div>
               <Input
                 id={fieldId("email")}
                 type="email"
@@ -511,7 +545,37 @@ export function CheckoutView({
               <h2 id="checkout-delivery" className={cn(sectionTitle, "mb-6")}>
                 {t("delivery")}
               </h2>
+              {savedAddresses.length > 0 && (
+                <Select
+                  id="checkout-saved-address"
+                  label={t("savedAddress")}
+                  className="mb-6"
+                  value={addressChoice}
+                  onChange={(e) => {
+                    const choice = e.target.value;
+                    setAddressChoice(choice);
+                    const a = savedAddresses.find((x) => x.id === choice) ?? null;
+                    const next = addressValues(a, getValues("shipping.country"));
+                    for (const [key, value] of Object.entries(next)) {
+                      setValue(`shipping.${key as keyof typeof next}`, value, { shouldValidate: Boolean(a) });
+                    }
+                    if (a?.phone && !getValues("phone")) setValue("phone", a.phone);
+                  }}
+                  options={[
+                    ...savedAddresses.map((a) => ({ value: a.id, label: `${a.firstName} ${a.lastName}, ${a.line1}, ${a.city}` })),
+                    { value: "new", label: t("newAddress") },
+                  ]}
+                />
+              )}
               {addressFields("shipping")}
+              {account && addressChoice === "new" && (
+                <Checkbox
+                  className="mt-4"
+                  label={t("saveAddress")}
+                  checked={saveAddress}
+                  onChange={(e) => setSaveAddress(e.target.checked)}
+                />
+              )}
             </section>
 
             <section

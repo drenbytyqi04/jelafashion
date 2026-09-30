@@ -10,9 +10,13 @@ import { pick } from "@/lib/catalog/types";
 import { cn } from "@/lib/cn";
 import { duration, ease } from "@/lib/motion";
 import { formatMeasure, parseMeasure, toCm, toUnit, type Unit } from "@/lib/units";
+import { myMeasurementProfiles, saveMeasurementProfile } from "@/app/actions/account";
+import type { MeasurementProfile } from "@/lib/account/types";
 import { useSavedMeasurements } from "@/stores/saved-measurements";
+import { toast } from "@/stores/toast";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { Textarea } from "@/components/ui/textarea";
 import { useLenisLock } from "@/components/motion/use-scroll-lock";
@@ -72,6 +76,11 @@ export function MeasurementWizard({
   const [editing, setEditing] = useState(false);
   const [notes, setNotes] = useState("");
   const [remember, setRemember] = useState(true);
+  // Signed-in customers: their named profiles (null while signed out or unknown).
+  const [accountProfiles, setAccountProfiles] = useState<MeasurementProfile[] | null>(null);
+  const [fromProfile, setFromProfile] = useState<MeasurementProfile | null>(null);
+  const [saveToAccount, setSaveToAccount] = useState(true);
+  const [profileName, setProfileName] = useState("");
   const [leaveOpen, setLeaveOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const closingRef = useRef(false);
@@ -91,6 +100,8 @@ export function MeasurementWizard({
     setConfirmed({});
     setEditing(false);
     setNotes("");
+    setFromProfile(null);
+    setProfileName("");
   }, []);
 
   const goTo = useCallback(
@@ -164,6 +175,31 @@ export function MeasurementWizard({
     return () => window.clearTimeout(id);
   }, [open, current]);
 
+  // Ask the server once per opening whether she is signed in and has saved profiles.
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    myMeasurementProfiles()
+      .then((profiles) => !cancelled && setAccountProfiles(profiles))
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [open]);
+
+  function startWithProfile(p: MeasurementProfile) {
+    const prefill: Record<string, number> = {};
+    for (const d of definitions) if (p.measurements[d.id] != null) prefill[d.id] = p.measurements[d.id];
+    setFromProfile(p);
+    setProfileName(p.name);
+    setValues(prefill);
+    setUnit(p.unit);
+    setDir(1);
+    setStep(0);
+    const first = definitions[0];
+    setDraft(prefill[first.id] != null ? formatMeasure(toUnit(prefill[first.id], p.unit), locale) : "");
+  }
+
   function start(useSavedValues: boolean) {
     if (useSavedValues) {
       const prefill: Record<string, number> = {};
@@ -230,7 +266,20 @@ export function MeasurementWizard({
 
   function confirmAll() {
     const measurements = definitions.map((d) => ({ id: d.id, cm: Math.round(values[d.id] * 10) / 10, label: d.label }));
-    if (remember) saved.save(Object.fromEntries(measurements.map((m) => [m.id, m.cm])), unit);
+    const byId = Object.fromEntries(measurements.map((m) => [m.id, m.cm]));
+    if (accountProfiles !== null) {
+      if (saveToAccount) {
+        const name = profileName.trim() || t("defaultProfileName");
+        // Merged, so a dress that asks fewer measurements never erases the others.
+        void saveMeasurementProfile({
+          id: fromProfile?.id,
+          name,
+          unit,
+          notes: notes.trim() || fromProfile?.notes || undefined,
+          measurements: { ...fromProfile?.measurements, ...byId },
+        }).then((res) => res.ok && toast({ title: t("savedToAccount", { name }) }));
+      }
+    } else if (remember) saved.save(byId, unit);
     onComplete({ measurements, unit, notes: notes.trim() });
     closingRef.current = true;
     if (window.history.state?.jfWizard) window.history.back();
@@ -375,7 +424,17 @@ export function MeasurementWizard({
                                 </div>
                               </fieldset>
                               <div className="mt-auto flex flex-col gap-3 pt-8">
-                                {hasSaved && (
+                                {accountProfiles && accountProfiles.length > 0 && (
+                                  <div className="flex flex-col gap-3">
+                                    <p className="label text-stone">{t("accountProfiles")}</p>
+                                    {accountProfiles.slice(0, 3).map((p) => (
+                                      <Button key={p.id} onClick={() => startWithProfile(p)} className="w-full">
+                                        {t("useProfile", { name: p.name })}
+                                      </Button>
+                                    ))}
+                                  </div>
+                                )}
+                                {hasSaved && !accountProfiles?.length && (
                                   <>
                                     <Button onClick={() => start(true)} className="w-full">
                                       {t("useSaved")}
@@ -383,7 +442,11 @@ export function MeasurementWizard({
                                     <p className="text-small text-stone">{t("savedNote")}</p>
                                   </>
                                 )}
-                                <Button variant={hasSaved ? "secondary" : "primary"} onClick={() => start(false)} className="w-full">
+                                <Button
+                                  variant={hasSaved || accountProfiles?.length ? "secondary" : "primary"}
+                                  onClick={() => start(false)}
+                                  className="w-full"
+                                >
                                   {t("start")}
                                 </Button>
                               </div>
@@ -491,12 +554,32 @@ export function MeasurementWizard({
                                 value={notes}
                                 onChange={(e) => setNotes(e.target.value)}
                               />
-                              <Checkbox
-                                className="mt-2"
-                                label={t("remember")}
-                                checked={remember}
-                                onChange={(e) => setRemember(e.target.checked)}
-                              />
+                              {accountProfiles !== null ? (
+                                <div className="mt-2">
+                                  <Checkbox
+                                    label={t("saveToAccount")}
+                                    checked={saveToAccount}
+                                    onChange={(e) => setSaveToAccount(e.target.checked)}
+                                  />
+                                  {saveToAccount && (
+                                    <Input
+                                      className="mt-3"
+                                      label={t("profileName")}
+                                      value={profileName}
+                                      placeholder={t("defaultProfileName")}
+                                      maxLength={60}
+                                      onChange={(e) => setProfileName(e.target.value)}
+                                    />
+                                  )}
+                                </div>
+                              ) : (
+                                <Checkbox
+                                  className="mt-2"
+                                  label={t("remember")}
+                                  checked={remember}
+                                  onChange={(e) => setRemember(e.target.checked)}
+                                />
+                              )}
                               <div className="mt-auto pt-6">
                                 <Button onClick={confirmAll} className="w-full">
                                   {t("confirmAdd")}

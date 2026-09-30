@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getCategories, getHeroContent, getNewIn, getTestimonials } from "@/lib/catalog/repository";
+import { getCategories, getHeroContent, getMarquee, getNewIn, getTestimonials } from "@/lib/catalog/repository";
 import type { Locale } from "@/lib/catalog/types";
 import { pick } from "@/lib/catalog/types";
 import { Button } from "@/components/ui/button";
@@ -30,13 +30,15 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const locale = raw as Locale;
   setRequestLocale(locale);
   const t = await getTranslations("home");
-  const [hero, categories, newIn, testimonials] = await Promise.all([
+  const [hero, categories, newIn, testimonials, marqueeContent] = await Promise.all([
     getHeroContent(),
     getCategories(),
     getNewIn(8),
     getTestimonials(),
+    getMarquee(),
   ]);
-  const marquee = t.raw("marquee") as string[];
+  // Edited in the admin panel; the copy in messages is the fallback.
+  const marquee = marqueeContent?.[locale]?.length ? marqueeContent[locale] : (t.raw("marquee") as string[]);
 
   return (
     <>

@@ -385,7 +385,13 @@
     "remember": "Mbaji mend në këtë pajisje",
     "confirmAdd": "Konfirmo dhe shto në shportë",
     "added": "U shtua në shportë",
-    "addedText": "{name}, i qepur sipas masave të tua"
+    "addedText": "{name}, i qepur sipas masave të tua",
+    "accountProfiles": "Masat e tua të ruajtura",
+    "useProfile": "Përdor “{name}”",
+    "saveToAccount": "Ruaji në llogarinë time",
+    "profileName": "Emri për këto masa",
+    "savedToAccount": "U ruajtën në llogarinë tënde si “{name}”.",
+    "defaultProfileName": "Masat e mia"
   },
   "checkout": {
     "metaTitle": "Pagesa",
@@ -473,7 +479,12 @@
       "shipping": "Dërgesa për këtë shtet nuk është e mundur për momentin. Na shkruaj dhe e rregullojmë.",
       "unavailable": "Pagesa nuk është e disponueshme për momentin. Na shkruaj në WhatsApp dhe porosinë e marrim personalisht.",
       "failure": "Porosia nuk u krye dhe nuk u tërhoq asnjë pagesë. Provo sërish."
-    }
+    },
+    "saveAddress": "Ruaje këtë adresë në llogarinë time",
+    "savedAddress": "Adresë e ruajtur",
+    "newAddress": "Adresë e re",
+    "signedInAs": "Ke hyrë si {email}",
+    "signInPrompt": "Ke llogari? <link>Hyr</link> për të përdorur adresat e ruajtura."
   },
   "order": {
     "metaTitle": "Porosia {number}",
@@ -594,5 +605,95 @@
       "text": "Do të jesh ndër të parat që sheh koleksionet e reja nga atelja jonë në Prizren.",
       "cta": "Shiko koleksionin"
     }
+  },
+  "auth": {
+    "title": "Hyr në llogari",
+    "intro": "Shkruaj email-in dhe të dërgojmë një lidhje për të hyrë. Pa fjalëkalim për të mbajtur mend.",
+    "email": "Email-i",
+    "sendLink": "Më dërgo lidhjen",
+    "linkSent": "Kontrollo email-in {email} dhe hape lidhjen për të hyrë.",
+    "differentEmail": "Përdor një email tjetër",
+    "google": "Vazhdo me Google",
+    "or": "ose",
+    "failure": "Nuk arritëm ta dërgojmë lidhjen. Provo sërish pas pak.",
+    "unavailable": "Llogaritë nuk janë të disponueshme për momentin.",
+    "linkInvalid": "Kjo lidhje ka skaduar ose është përdorur tashmë. Kërko një të re.",
+    "guestNote": "Ke porositur pa llogari? Hyr me të njëjtin email dhe porositë do t'i gjesh këtu.",
+    "signOut": "Dil",
+    "linkEmail": {
+      "subject": "Lidhja për të hyrë në Jela Fashion",
+      "heading": "Hyr në Jela Fashion",
+      "text": "Hape këtë lidhje brenda 30 minutash për të hyrë. Nëse nuk e kërkove ti, mund ta injorosh këtë email.",
+      "cta": "Hyr"
+    }
+  },
+  "account": {
+    "metaTitle": "Llogaria ime",
+    "title": "Llogaria ime",
+    "greeting": "Mirë se erdhe, {name}.",
+    "greetingAnon": "Mirë se erdhe.",
+    "signedInAs": "Ke hyrë si {email}",
+    "nav": {
+      "orders": "Porositë",
+      "addresses": "Adresat",
+      "measurements": "Masat",
+      "profile": "Profili"
+    },
+    "orders": {
+      "empty": "Ende nuk ke porosi.",
+      "emptyText": "Kur të porosisësh, porosia shfaqet këtu me statusin dhe detajet e pagesës.",
+      "placedOn": "Bërë më {date}",
+      "view": "Shiko porosinë {number}"
+    },
+    "addresses": {
+      "intro": "Adresat e ruajtura plotësohen vetë te pagesa.",
+      "empty": "Ende nuk ke adresa të ruajtura.",
+      "add": "Shto një adresë",
+      "edit": "Ndrysho",
+      "delete": "Fshij",
+      "confirmDelete": "Ta fshijmë këtë adresë? Ky veprim nuk kthehet mbrapsht.",
+      "default": "Kryesore",
+      "makeDefault": "Përdore si adresën time kryesore",
+      "save": "Ruaj adresën",
+      "cancel": "Anulo",
+      "saved": "Adresa u ruajt.",
+      "deleted": "Adresa u fshi.",
+      "newTitle": "Adresë e re",
+      "editTitle": "Ndrysho adresën"
+    },
+    "measurements": {
+      "intro": "Masat e ruajtura plotësojnë udhëzuesin e masave për çdo fustan me një prekje.",
+      "empty": "Ende nuk ke masa të ruajtura. Ruaji në fund të udhëzuesit të masave ose shtoji këtu.",
+      "add": "Shto masa",
+      "edit": "Ndrysho",
+      "delete": "Fshij",
+      "confirmDelete": "T'i fshijmë këto masa? Ky veprim nuk kthehet mbrapsht.",
+      "name": "Emri",
+      "nameHint": "Për shembull: Masat e mia, Dasma 2027",
+      "defaultName": "Masat e mia",
+      "unit": "Njësia",
+      "required": "Kërkohen për çdo fustan",
+      "optional": "Kërkohen vetëm për disa fustane",
+      "save": "Ruaj masat",
+      "cancel": "Anulo",
+      "saved": "Masat u ruajtën.",
+      "deleted": "Masat u fshinë.",
+      "updated": "Përditësuar më {date}",
+      "count": "{count, plural, one {# masë} other {# masa}}",
+      "notes": "Shënime për ateljen",
+      "range": "Shkruaj një vlerë nga {min} deri në {max} {unit}.",
+      "invalid": "Shkruaj një numër, p.sh. 86 ose 86,5.",
+      "newTitle": "Masa të reja",
+      "editTitle": "Ndrysho masat"
+    },
+    "profile": {
+      "intro": "Si të të drejtohemi dhe si të të gjejmë për porositë e tua.",
+      "fullName": "Emri dhe mbiemri",
+      "phone": "Telefoni",
+      "language": "Gjuha e email-eve",
+      "save": "Ruaj ndryshimet",
+      "saved": "Ndryshimet u ruajtën."
+    },
+    "failure": "Nuk u ruajt. Provo sërish pas pak."
   }
 }

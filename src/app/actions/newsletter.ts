@@ -4,6 +4,7 @@ import { after } from "next/server";
 import { getLocale } from "next-intl/server";
 import type { Locale } from "@/lib/catalog/types";
 import { sendNewsletterWelcome } from "@/lib/email/notifications";
+import { localCatalog, mutateLocalDb } from "@/lib/local-db";
 import { siteOrigin } from "@/lib/site-origin";
 import { publicSupabase } from "@/lib/supabase/public-client";
 import { serviceSupabase } from "@/lib/supabase/service-client";
@@ -43,13 +44,18 @@ export async function subscribeToNewsletter(input: unknown): Promise<NewsletterR
     return { ok: true };
   }
 
-  const db = publicSupabase();
-  if (!db) {
-    // Supabase not configured (local preview): accept without storing; the welcome email
-    // lands in the dev outbox.
-    if (process.env.NODE_ENV !== "production") welcome();
+  if (localCatalog()) {
+    // Development database; the welcome email lands in the dev outbox.
+    const isNew = await mutateLocalDb((db) => {
+      if (db.newsletter.some((n) => n.email === email)) return false;
+      db.newsletter.push({ email, locale, createdAt: new Date().toISOString() });
+      return true;
+    });
+    if (isNew) welcome();
     return { ok: true };
   }
+  const db = publicSupabase();
+  if (!db) return { ok: true }; // sample-data preview: accepted, not stored
   const { error } = await db.rpc("subscribe_newsletter", { p_email: email, p_locale: locale, p_source: "footer" });
   if (error) {
     console.error("[newsletter] subscribe failed", error.message);

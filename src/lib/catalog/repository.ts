@@ -1,6 +1,8 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
+import { localCatalog, localMediaUrl, readLocalDb } from "@/lib/local-db";
 import { publicSupabase, storagePublicUrl } from "@/lib/supabase/public-client";
+import { localPublishedProducts } from "./local-source";
 import * as seed from "./seed-data";
 import type {
   CatalogCategory,
@@ -114,6 +116,7 @@ function fromSeed(): CatalogProduct[] {
 
 export const getCatalog = unstable_cache(
   async (): Promise<CatalogProduct[]> => {
+    if (localCatalog()) return localPublishedProducts();
     const db = publicSupabase();
     if (!db) return fromSeed();
     const { data, error } = await db
@@ -155,6 +158,13 @@ export const getCategories = unstable_cache(
 
 export const getTestimonials = unstable_cache(
   async (): Promise<Testimonial[]> => {
+    if (localCatalog()) {
+      const local = await readLocalDb();
+      return local.testimonials
+        .filter((t) => t.published)
+        .sort((a, b) => a.sort - b.sort)
+        .map((t) => ({ id: t.id, quote: t.quote, author: t.author, location: t.location }));
+    }
     const db = publicSupabase();
     if (!db) {
       return seed.testimonials.map((t, i) => ({ id: String(i), quote: t.quote, author: t.author, location: t.location }));
@@ -177,6 +187,15 @@ export const getHeroContent = unstable_cache(
       subtitle: HeroContent["subtitle"];
     };
     let value = fallback;
+    if (localCatalog()) {
+      const hero = (await readLocalDb()).hero;
+      return {
+        videoUrl: localMediaUrl("site-media", hero.videoPath),
+        posterUrl: localMediaUrl("site-media", hero.posterPath),
+        headline: hero.headline,
+        subtitle: hero.subtitle,
+      };
+    }
     if (db) {
       const { data, error } = await db.from("site_content").select("value").eq("key", "hero").maybeSingle();
       if (error) throw new Error(`Hero content query failed: ${error.message}`);
@@ -190,6 +209,20 @@ export const getHeroContent = unstable_cache(
     };
   },
   ["site-hero"],
+  { tags: [CATALOG_TAG], revalidate: REVALIDATE_SECONDS },
+);
+
+/** Marquee lines under the hero; null falls back to the copy in messages. */
+export const getMarquee = unstable_cache(
+  async (): Promise<{ sq: string[]; en: string[] } | null> => {
+    if (localCatalog()) return (await readLocalDb()).marquee;
+    const db = publicSupabase();
+    if (!db) return null;
+    const { data, error } = await db.from("site_content").select("value").eq("key", "marquee").maybeSingle();
+    if (error) throw new Error(`Marquee query failed: ${error.message}`);
+    return (data?.value as { sq: string[]; en: string[] } | undefined) ?? null;
+  },
+  ["site-marquee"],
   { tags: [CATALOG_TAG], revalidate: REVALIDATE_SECONDS },
 );
 

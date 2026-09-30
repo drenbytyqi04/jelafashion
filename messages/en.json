@@ -384,7 +384,13 @@
     "remember": "Remember on this device",
     "confirmAdd": "Confirm & add to cart",
     "added": "Added to your cart",
-    "addedText": "{name}, made to your measurements"
+    "addedText": "{name}, made to your measurements",
+    "accountProfiles": "Your saved measurements",
+    "useProfile": "Use “{name}”",
+    "saveToAccount": "Save to my account",
+    "profileName": "Name for these measurements",
+    "savedToAccount": "Saved to your account as “{name}”.",
+    "defaultProfileName": "My measurements"
   },
   "checkout": {
     "metaTitle": "Checkout",
@@ -472,7 +478,12 @@
       "shipping": "Shipping to this country isn't available at the moment. Write to us and we'll arrange it.",
       "unavailable": "Checkout isn't available right now. Write to us on WhatsApp and we'll take your order personally.",
       "failure": "Your order couldn't be placed and nothing was charged. Please try again."
-    }
+    },
+    "saveAddress": "Save this address to my account",
+    "savedAddress": "Saved address",
+    "newAddress": "A new address",
+    "signedInAs": "Signed in as {email}",
+    "signInPrompt": "Have an account? <link>Sign in</link> to use your saved addresses."
   },
   "order": {
     "metaTitle": "Order {number}",
@@ -593,5 +604,95 @@
       "text": "You'll be among the first to see new collections from our atelier in Prizren.",
       "cta": "Explore the collection"
     }
+  },
+  "auth": {
+    "title": "Sign in",
+    "intro": "Enter your email and we'll send you a link to sign in. No password to remember.",
+    "email": "Email",
+    "sendLink": "Send sign-in link",
+    "linkSent": "Check your inbox at {email} and open the link to sign in.",
+    "differentEmail": "Use a different email",
+    "google": "Continue with Google",
+    "or": "or",
+    "failure": "We couldn't send the link. Try again in a moment.",
+    "unavailable": "Accounts aren't available right now.",
+    "linkInvalid": "This sign-in link has expired or was already used. Request a new one.",
+    "guestNote": "Ordered as a guest? Sign in with the same email and your orders will be here.",
+    "signOut": "Sign out",
+    "linkEmail": {
+      "subject": "Your sign-in link for Jela Fashion",
+      "heading": "Sign in to Jela Fashion",
+      "text": "Open this link within 30 minutes to sign in. If you didn't ask for it, you can ignore this email.",
+      "cta": "Sign in"
+    }
+  },
+  "account": {
+    "metaTitle": "My account",
+    "title": "My account",
+    "greeting": "Welcome, {name}.",
+    "greetingAnon": "Welcome.",
+    "signedInAs": "Signed in as {email}",
+    "nav": {
+      "orders": "Orders",
+      "addresses": "Addresses",
+      "measurements": "Measurements",
+      "profile": "Profile"
+    },
+    "orders": {
+      "empty": "No orders yet.",
+      "emptyText": "When you order, it appears here with its status and payment details.",
+      "placedOn": "Placed {date}",
+      "view": "View order {number}"
+    },
+    "addresses": {
+      "intro": "Saved addresses fill in checkout for you.",
+      "empty": "No saved addresses yet.",
+      "add": "Add an address",
+      "edit": "Edit",
+      "delete": "Delete",
+      "confirmDelete": "Delete this address? This can't be undone.",
+      "default": "Default",
+      "makeDefault": "Use as my default address",
+      "save": "Save address",
+      "cancel": "Cancel",
+      "saved": "Address saved.",
+      "deleted": "Address deleted.",
+      "newTitle": "New address",
+      "editTitle": "Edit address"
+    },
+    "measurements": {
+      "intro": "Saved measurements fill in the measurement guide for any dress in one tap.",
+      "empty": "No saved measurements yet. Save them at the end of the measurement guide, or add them here.",
+      "add": "Add measurements",
+      "edit": "Edit",
+      "delete": "Delete",
+      "confirmDelete": "Delete these measurements? This can't be undone.",
+      "name": "Name",
+      "nameHint": "For example: My measurements, Wedding 2027",
+      "defaultName": "My measurements",
+      "unit": "Unit",
+      "required": "Asked for every dress",
+      "optional": "Asked for some dresses only",
+      "save": "Save measurements",
+      "cancel": "Cancel",
+      "saved": "Measurements saved.",
+      "deleted": "Measurements deleted.",
+      "updated": "Updated {date}",
+      "count": "{count, plural, one {# measurement} other {# measurements}}",
+      "notes": "Notes for the atelier",
+      "range": "Enter a value from {min} to {max} {unit}.",
+      "invalid": "Enter a number, like 86 or 86.5.",
+      "newTitle": "New measurements",
+      "editTitle": "Edit measurements"
+    },
+    "profile": {
+      "intro": "How we address you and reach you about your orders.",
+      "fullName": "Full name",
+      "phone": "Phone",
+      "language": "Language for emails",
+      "save": "Save changes",
+      "saved": "Changes saved."
+    },
+    "failure": "That didn't save. Try again in a moment."
   }
 }
