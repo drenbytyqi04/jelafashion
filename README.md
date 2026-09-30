@@ -35,11 +35,11 @@ npm run dev                  # http://localhost:3000 → redirects to /sq (or /e
 | `npm run qa:product`  | Product page, size guide, measurement wizard and cart flow in Playwright |
 | `npm run qa:checkout` | Checkout, bank-transfer and card (sandbox) orders, proof upload, emails |
 | `npm run qa:admin`    | Accounts and admin: sign-in, order workflow + emails, stock, print sheet, CSV, new product with photo, homepage, access control |
+| `npm run db:seed-sql` | Regenerate `supabase/seed.sql` from `src/lib/catalog/seed-data.ts`  |
 
 The `qa:checkout` and `qa:admin` suites need a server on the local development database
 (`npm run dev`, or `JF_LOCAL_DATA=1 npm start` for a production build). Start them with
 `.data/` and `.next/cache/fetch-cache` removed so the cache and the data agree.
-| `npm run db:seed-sql` | Regenerate `supabase/seed.sql` from `src/lib/catalog/seed-data.ts`  |
 
 `/sq/styleguide` shows every base component and token (development only).
 
@@ -267,7 +267,38 @@ src/proxy.ts               locale detection and redirects (Next 16 "proxy", form
 src/stores/                Zustand: cart and wishlist (persisted), UI, toasts
 ```
 
-## Deploying to Vercel
+## Launching on Vercel (Phase 7)
 
-Import the repository in Vercel, set the environment variables from `.env.example`, and
-deploy. No extra build settings are needed.
+1. **Import.** vercel.com → Add New → Project → import `drenbytyqi04/jelafashion`.
+   Framework: Next.js, no build settings. Set the production branch (Settings → Git) to
+   the branch that holds this code.
+2. **Environment variables** (Settings → Environment Variables, Production and Preview):
+   - Public: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (both in
+     `.env.example`), `NEXT_PUBLIC_WHATSAPP_NUMBER`, `NEXT_PUBLIC_CONTACT_EMAIL`, the
+     tracking IDs, `NEXT_PUBLIC_AUTH_GOOGLE` if Google is on.
+   - Secret (type *Sensitive*): `SUPABASE_SERVICE_ROLE_KEY` (Supabase → Project Settings →
+     API Keys → secret key), `RESEND_API_KEY`, `EMAIL_FROM`, `SHOP_NOTIFICATION_EMAIL`,
+     `PAYSERA_PROJECT_ID`, `PAYSERA_SIGN_PASSWORD`, `PAYSERA_TEST_MODE`,
+     `META_CAPI_ACCESS_TOKEN`.
+   - Never set `JF_LOCAL_DATA`, `JF_LOCAL_ORDERS` or `JF_DEV_ADMINS` in Vercel.
+   - `NEXT_PUBLIC_SITE_URL`: leave empty until the domain is connected (the project's
+     production URL is used meanwhile), then `https://<domain>` and redeploy.
+3. **Supabase Auth** (Authentication → URL Configuration): Site URL = the production
+   URL; Redirect URLs: `https://<domain>/auth/callback` and
+   `https://*-<team>.vercel.app/auth/callback` for previews. Custom SMTP (Resend) as in
+   the accounts section.
+4. **First admin:** sign in at `/admin/login` with the atelier's email, then run the SQL
+   from the Supabase section, step 4.
+5. **Domain** (Settings → Domains): add it, point DNS as Vercel shows, then set
+   `NEXT_PUBLIC_SITE_URL` and the Supabase Site URL to it. In Resend verify the same
+   domain so emails come from it.
+6. **Paysera:** each payment sends its own callback URL
+   (`/api/payments/paysera/callback`), so nothing to configure there beyond the project
+   ID and password. Test with `PAYSERA_TEST_MODE=true`, then set it to `false`.
+7. **Before announcing:** replace the sample products, prices and shipping rates in the
+   admin; fill every `[PLACEHOLDER]` (legal pages, IBAN, testimonials, year founded);
+   place one real order per payment method; check Meta Events Manager (Test events) and
+   GA4 DebugView; submit `https://<domain>/sitemap.xml` in Google Search Console.
+
+Without `SUPABASE_SERVICE_ROLE_KEY` the shop browses normally but checkout says it is
+unavailable, so the site can go up before payments are ready.

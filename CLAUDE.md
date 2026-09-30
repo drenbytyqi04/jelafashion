@@ -149,9 +149,12 @@ with self-drawing measurement lines.
    Without Supabase secrets the site runs on `.data/db.json` (`src/lib/local-db.ts`).
    `npm run qa:admin` drives accounts, the order workflow, stock and catalog edits.
 6. Tracking, consent, SEO, performance and accessibility pass, plus the remaining
-   storefront pages. **Done — awaiting approval.** Every tag goes through `track()`
+   storefront pages. **Done.** Every tag goes through `track()`
    (`src/lib/tracking/track.ts`) and waits for consent (`src/stores/consent.ts`); page
    metadata comes from `pageMetadata()` in `src/lib/seo.ts`.
+7. Launch on Vercel: import, environment variables, Supabase Auth URLs, first admin,
+   domain, real content. **In progress — the owner imports the project** (the Vercel
+   connector cannot create projects); the checklist is in README "Launching on Vercel".
 
 After each phase: run the dev server, check 375px and desktop, run the pre-delivery
 checklist in MASTER.md, fix all errors, then **stop and wait for approval**.
