@@ -33,7 +33,12 @@ npm run dev                  # http://localhost:3000 → redirects to /sq (or /e
 | `npm run typecheck`   | TypeScript, no emit                                                 |
 | `npm run qa`          | Playwright screenshots, overflow and axe checks against a running server (`BASE`, `OUT` env vars) |
 | `npm run qa:product`  | Product page, size guide, measurement wizard and cart flow in Playwright |
-| `npm run qa:checkout` | Checkout, bank-transfer and card (sandbox) orders, proof upload, emails; needs a server without Supabase secrets (`JF_LOCAL_ORDERS=1 npm start` for a production build) |
+| `npm run qa:checkout` | Checkout, bank-transfer and card (sandbox) orders, proof upload, emails |
+| `npm run qa:admin`    | Accounts and admin: sign-in, order workflow + emails, stock, print sheet, CSV, new product with photo, homepage, access control |
+
+The `qa:checkout` and `qa:admin` suites need a server on the local development database
+(`npm run dev`, or `JF_LOCAL_DATA=1 npm start` for a production build). Start them with
+`.data/` and `.next/cache/fetch-cache` removed so the cache and the data agree.
 | `npm run db:seed-sql` | Regenerate `supabase/seed.sql` from `src/lib/catalog/seed-data.ts`  |
 
 `/sq/styleguide` shows every base component and token (development only).
@@ -51,6 +56,8 @@ The schema lives in `supabase/migrations/` (apply in filename order):
 | `…_storage.sql`                 | buckets `product-images`, `site-media` (public) and `payment-proofs` (private) |
 | `…_hardening.sql`               | advisor fixes: `is_admin()` moved to a private schema, trigger functions not callable over the API, one policy per role/action, FK indexes |
 | `…_orders.sql`                  | orders (JF-1001…, secret access token), items with measurement snapshots, payment proofs, status history, Paysera callbacks, atomic `redeem_discount()` |
+| `…_accounts.sql`                | customers' saved addresses and named measurement profiles (owner-only), email index for guest orders |
+| `…_stock.sql`                   | atomic `adjust_stock()`: in-stock sizes are taken at checkout and returned on cancellation |
 
 Row Level Security is on for every table: visitors read published catalog rows only,
 admins manage everything, discount codes and the newsletter list are never public.
@@ -72,7 +79,7 @@ For local development and Vercel set `NEXT_PUBLIC_SUPABASE_URL` and
      and run `supabase/seed.sql` in the SQL editor; or
    - paste each migration file, then `seed.sql`, into the SQL editor in order.
 3. Copy the project URL and anon key into `.env.local` (and Vercel).
-4. Make your first admin: sign up once (Phase 5), then in the SQL editor run
+4. Make your first admin: sign in once at `/admin/login`, then in the SQL editor run
    `update public.profiles set role = 'admin' where id = (select id from auth.users where email = 'you@example.com');`
 
 `seed.sql` is **sample data**: replace the products, prices, shipping rates and every
@@ -118,10 +125,10 @@ callback URL is sent with every payment, so nothing has to be entered in Paysera
 `NEXT_PUBLIC_SITE_URL` to the live domain so return and callback links point there.
 
 **Without credentials (development)** everything still runs: orders go to
-`.data/orders.json`, proofs to `.data/payment-proofs/`, emails are written as HTML to
+`.data/db.json`, proofs to `.data/payment-proofs/`, emails are written as HTML to
 `.data/emails/`, and "Card" opens a local sandbox page that simulates Paysera. None of
 these fallbacks exist in a production deployment (checkout says it is unavailable
-instead), except under `JF_LOCAL_ORDERS=1`, which is for local QA only.
+instead), except under `JF_LOCAL_DATA=1`, which is for local QA only.
 
 **Emails** (`src/emails/`, copy in `messages/*.json` → `emails`) are sent in the language
 the customer ordered in: order confirmation (with payment instructions and upload link for
@@ -131,6 +138,44 @@ addresses only). The atelier gets Albanian alerts for new orders, proofs and car
 **Before launch**: replace `[IBAN]`, `[BENEFICIARY]`, `[RECIPIENT FULL NAME]`,
 `[WISE EMAIL]` and the other placeholders in `payment_methods`, and set real shipping
 rates.
+
+## Accounts and admin (Phase 5)
+
+**Customers** sign in without a password: an email link, plus Google when enabled.
+`/sq/llogaria` (`/en/account`) shows their orders (including ones placed as a guest with
+the same email), saved addresses, measurement profiles and profile. Checkout prefills the
+signed-in customer's details and saved address, and the measurement wizard offers and
+saves account profiles.
+
+**The admin panel** is at `/admin` (Albanian, never indexed), for accounts whose
+`profiles.role` is `admin`. It covers the dashboard, orders (status workflow Awaiting
+payment → Paid → In production → Shipped → Delivered / Cancelled, each change emailed to
+the customer; payment proofs; printable measurement sheet; CSV export), products (text in
+both languages, photos, colours, sizes and stock, required measurements, SEO),
+collections, homepage (hero text, video and poster, marquee, testimonials), discount codes,
+shipping zones, payment method details, customers and the newsletter list (CSV).
+
+Stock: in-stock sizes are taken when an order is placed and returned when it is
+cancelled. Photos, videos and payment proofs upload straight from the browser to
+Supabase Storage with one-time signed URLs (Vercel functions accept at most 4.5 MB per
+request); proofs are checked by content afterwards.
+
+**Supabase Auth setup** (Dashboard → Authentication)
+
+1. URL Configuration: Site URL = your domain; add `https://<domain>/auth/callback`
+   (and your Vercel preview URL pattern) to Redirect URLs.
+2. Emails: the default sender is rate-limited; set custom SMTP (Resend works:
+   `smtp.resend.com`, port 465, user `resend`, password = an API key). Recommended:
+   in the "Magic link" template, set the link to
+   `{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=email` (the redirect already
+   points at `/auth/callback?next=…`), so the link also works when opened in a
+   different browser than the one that asked.
+3. Google (optional): enable the provider with a Google Cloud OAuth client, then set
+   `NEXT_PUBLIC_AUTH_GOOGLE=true` to show the button.
+4. First admin: sign in once at `/admin/login`, then run the SQL from step 4 above.
+
+In development without Supabase, sign-in links land in `.data/emails/`, and
+`admin@example.com` (or the addresses in `JF_DEV_ADMINS`) signs in as admin.
 
 ## Structure
 
@@ -147,6 +192,13 @@ src/lib/payments/          PaymentProvider interface, Paysera signing and verifi
 src/lib/email/, src/emails/ Resend sender (dev outbox), notifications, React Email templates
 src/components/checkout/   checkout form and order summary
 src/components/order/      order page: payment details, proof upload, card status
+src/app/admin/             admin panel (own root layout; (panel) group is admin-only)
+src/components/admin/      admin UI primitives and editors
+src/components/account/    sign-in, account shell, addresses, measurements, profile
+src/lib/auth/              data access layer (getViewer, requireAdmin), local dev sessions
+src/lib/account/           account store (customer's own session, RLS)
+src/lib/admin/             catalog admin store (Supabase service role or local file)
+src/lib/local-db.ts        development database (.data/db.json) seeded from sample data
 src/lib/catalog/           seed data, types, cached repository (Supabase or sample), filters
 src/components/home/       the 13 home sections
 src/components/collection/ collection page, filters, skeleton

@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { ReactNode } from "react";
 import { routing } from "@/i18n/routing";
+import { cormorant, manrope } from "@/app/fonts";
 import { site } from "@/lib/site";
 import { introSeenScript } from "@/components/motion/intro-loader";
 import { MotionProvider } from "@/components/motion/motion-provider";
@@ -15,20 +15,6 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { StoreHydrator } from "@/components/layout/store-hydrator";
 import { Toaster } from "@/components/ui/toaster";
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500"],
-  style: ["normal", "italic"],
-  variable: "--font-cormorant",
-  display: "swap",
-});
-
-// Manrope is variable: one file covers 400–600.
-const manrope = Manrope({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-manrope",
-  display: "swap",
-});
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

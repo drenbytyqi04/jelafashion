@@ -21,6 +21,9 @@ export function authMode(): AuthMode {
  * request. Reads cookies, so any page using it renders on demand.
  */
 export const getViewer = cache(async (): Promise<Viewer | null> => {
+  // Always read cookies first: pages that ask "who is this?" must render per request, even
+  // in a build where no auth is configured (otherwise they would be prerendered signed out).
+  const store = await cookies();
   const mode = authMode();
   if (mode === "supabase") {
     const supabase = await sessionSupabase();
@@ -39,7 +42,6 @@ export const getViewer = cache(async (): Promise<Viewer | null> => {
     };
   }
   if (mode === "local") {
-    const store = await cookies();
     const u = await localSessionUser(store.get(LOCAL_SESSION_COOKIE)?.value);
     return u ? { id: u.id, email: u.email, fullName: u.fullName, phone: u.phone, locale: u.locale, role: u.role } : null;
   }

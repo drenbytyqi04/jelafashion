@@ -3,7 +3,8 @@
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState, useTransition, type FormEvent } from "react";
-import { uploadPaymentProof } from "@/app/actions/payment-proof";
+import { finishProofUpload, startProofUpload, uploadPaymentProof, type ProofResult } from "@/app/actions/payment-proof";
+import { putToSignedUrl } from "@/lib/storage/upload-client";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/ui/file-upload";
 import { Input } from "@/components/ui/input";
@@ -20,16 +21,31 @@ export function ProofUpload({ token, cash }: { token: string; cash: boolean }) {
   const [sent, setSent] = useState(false);
   const [pending, startTransition] = useTransition();
 
+  /** Straight to storage when Supabase hands out a signed URL; through the server otherwise. */
+  async function upload(f: File): Promise<ProofResult> {
+    const start = await startProofUpload({ token, contentType: f.type, size: f.size });
+    if (!start.ok) return start;
+    if (start.ticket.mode === "signed") {
+      try {
+        await putToSignedUrl(start.ticket.signedUrl, f);
+      } catch {
+        return { ok: false, error: "failure" };
+      }
+      return finishProofUpload({ token, path: start.ticket.path, fileName: f.name, reference, senderName: sender });
+    }
+    const data = new FormData();
+    data.set("token", token);
+    data.set("file", f);
+    data.set("reference", reference);
+    data.set("senderName", sender);
+    return uploadPaymentProof(data);
+  }
+
   function submit(e: FormEvent) {
     e.preventDefault();
     if (!file) return setError(t("proofFileRequired"));
-    const data = new FormData();
-    data.set("token", token);
-    data.set("file", file);
-    data.set("reference", reference);
-    data.set("senderName", sender);
     startTransition(async () => {
-      const res = await uploadPaymentProof(data);
+      const res = await upload(file);
       if (!res.ok) {
         setError(
           res.error === "type" ? tu("typeError") : res.error === "size" ? tu("sizeError", { size: 10 }) : res.error === "file" ? t("proofFileRequired") : t("proofFailure"),

@@ -50,6 +50,11 @@ do $$ begin
 exception when insufficient_privilege then null;
 end $$;
 do $$ begin
+  perform public.adjust_stock((select id from public.products where slug = 'nata'), 'M', 5);
+  raise exception 'anon can change stock';
+exception when insufficient_privilege then null;
+end $$;
+do $$ begin
   perform public.subscribe_newsletter('not-an-email');
   raise exception 'invalid email accepted';
 exception when invalid_parameter_value then null;

@@ -140,11 +140,14 @@ with self-drawing measurement lines.
 3. Product page, cart, measurement wizard. **Done.** `npm run qa:product`
    drives the full purchase and wizard flow. The standard size chart in
    `src/lib/catalog/size-chart.ts` must be confirmed by the atelier.
-4. Checkout, payment providers, proof upload, emails. **Done — awaiting approval.**
+4. Checkout, payment providers, proof upload, emails. **Done.**
    Orders are priced only on the server (`src/app/actions/checkout.ts`); storage goes
    through `orderStore()` (Supabase service role, or `.data/` locally). Paysera has a
    local sandbox when unconfigured. `npm run qa:checkout` drives both payment paths.
-5. Customer accounts and admin panel.
+5. Customer accounts and admin panel. **Done — awaiting approval.** Passwordless sign-in
+   (`src/lib/auth/viewer.ts` is the only identity check); admin at `/admin` in Albanian.
+   Without Supabase secrets the site runs on `.data/db.json` (`src/lib/local-db.ts`).
+   `npm run qa:admin` drives accounts, the order workflow, stock and catalog edits.
 6. Tracking, consent, SEO, performance and accessibility pass.
 
 After each phase: run the dev server, check 375px and desktop, run the pre-delivery

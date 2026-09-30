@@ -12,7 +12,14 @@ export type ProofFile = { bytes: Uint8Array; contentType: string; fileName: stri
 export type ProofDownload = { kind: "url"; url: string } | { kind: "bytes"; bytes: Uint8Array; contentType: string; fileName: string };
 export type OrderListFilter = { status?: OrderStatus; query?: string; limit?: number; offset?: number };
 export type StatusChange = { note?: string | null; trackingNumber?: string | null; trackingCarrier?: string | null };
-export type OrderStats = { byStatus: Record<OrderStatus, number>; paidThisMonthCents: number; ordersThisMonth: number };
+export type OrderStats = {
+  byStatus: Record<OrderStatus, number>;
+  ordersToday: number;
+  ordersThisWeek: number;
+  paidThisMonthCents: number;
+  /** Paid or in production with at least one made-to-measure dress. */
+  customInProgress: number;
+};
 
 /**
  * Where orders live. Supabase in production (service role, server only); the local
@@ -31,6 +38,8 @@ export interface OrderStore {
   /** Any other status change (the caller checks the workflow). Null if the status moved meanwhile. */
   setStatus(id: string, from: OrderStatus, to: OrderStatus, change: StatusChange): Promise<Order | null>;
   addProof(orderId: string, file: ProofFile, reference: string | null, senderName: string | null): Promise<PaymentProof>;
+  /** Records a proof already uploaded straight to storage (signed upload). */
+  attachProof(orderId: string, proof: Omit<PaymentProof, "createdAt">): Promise<PaymentProof>;
   proofDownload(orderId: string, index: number): Promise<ProofDownload | null>;
   recordCallback(orderId: string | null, provider: string, payload: unknown, verified: boolean): Promise<void>;
   /** A customer's orders: placed while signed in, or as a guest with her verified email. */
@@ -49,9 +58,11 @@ const emptyByStatus = (): Record<OrderStatus, number> => ({
   cancelled: 0,
 });
 
-function monthStart() {
+function periodStarts() {
   const d = new Date();
-  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1)).toISOString();
+  const day = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+  const week = new Date(day.getTime() - ((day.getUTCDay() + 6) % 7) * 86_400_000); // Monday
+  return { today: day.toISOString(), week: week.toISOString(), month: new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1)).toISOString() };
 }
 
 // ---------------------------------------------------------------------------------------
@@ -229,7 +240,7 @@ class SupabaseOrderStore implements OrderStore {
       await this.db.from("orders").delete().eq("id", orderId);
       throw new Error(`Order items insert failed: ${itemsError.message}`);
     }
-    await this.db.from("order_events").insert({ order_id: orderId, status: "awaiting_payment", note: "Order placed" });
+    await this.db.from("order_events").insert({ order_id: orderId, status: "awaiting_payment", note: "Porosia u bë" });
     const order = await this.getById(orderId);
     if (!order) throw new Error("Order vanished after insert");
     return order;
@@ -295,6 +306,16 @@ class SupabaseOrderStore implements OrderStore {
     };
   }
 
+  async attachProof(orderId: string, p: Omit<PaymentProof, "createdAt">) {
+    const { data, error } = await this.db
+      .from("payment_proofs")
+      .insert({ order_id: orderId, storage_path: p.path, file_name: p.fileName, content_type: p.contentType, reference: p.reference, sender_name: p.senderName })
+      .select("created_at")
+      .single();
+    if (error) throw new Error(`Proof insert failed: ${error.message}`);
+    return { ...p, createdAt: data.created_at };
+  }
+
   async proofDownload(orderId: string, index: number): Promise<ProofDownload | null> {
     const order = await this.getById(orderId);
     const proof = order?.proofs[index];
@@ -338,23 +359,33 @@ class SupabaseOrderStore implements OrderStore {
   }
 
   async stats() {
-    const { data, error } = await this.db.from("orders").select("status, total_cents, paid_at, created_at");
+    const { data, error } = await this.db.from("orders").select("status, total_cents, paid_at, created_at, order_items (size)");
     if (error) throw new Error(`Order stats failed: ${error.message}`);
-    return computeStats(data.map((r) => ({ status: r.status, totalCents: r.total_cents, paidAt: r.paid_at, createdAt: r.created_at })));
+    return computeStats(
+      data.map((r) => ({
+        status: r.status,
+        totalCents: r.total_cents,
+        paidAt: r.paid_at,
+        createdAt: r.created_at,
+        items: (r.order_items as { size: string }[]).map((i) => ({ size: i.size })),
+      })),
+    );
   }
 }
 
-function computeStats(rows: { status: OrderStatus; totalCents: number; paidAt: string | null; createdAt: string }[]): OrderStats {
-  const since = monthStart();
-  const byStatus = emptyByStatus();
-  let paidThisMonthCents = 0;
-  let ordersThisMonth = 0;
+function computeStats(
+  rows: { status: OrderStatus; totalCents: number; paidAt: string | null; createdAt: string; items: { size: string }[] }[],
+): OrderStats {
+  const since = periodStarts();
+  const stats: OrderStats = { byStatus: emptyByStatus(), ordersToday: 0, ordersThisWeek: 0, paidThisMonthCents: 0, customInProgress: 0 };
   for (const r of rows) {
-    byStatus[r.status]++;
-    if (r.createdAt >= since) ordersThisMonth++;
-    if (r.paidAt && r.paidAt >= since && r.status !== "cancelled") paidThisMonthCents += r.totalCents;
+    stats.byStatus[r.status]++;
+    if (r.createdAt >= since.today) stats.ordersToday++;
+    if (r.createdAt >= since.week) stats.ordersThisWeek++;
+    if (r.paidAt && r.paidAt >= since.month && r.status !== "cancelled") stats.paidThisMonthCents += r.totalCents;
+    if ((r.status === "paid" || r.status === "in_production") && r.items.some((i) => i.size === "custom")) stats.customInProgress++;
   }
-  return { byStatus, paidThisMonthCents, ordersThisMonth };
+  return stats;
 }
 
 // ---------------------------------------------------------------------------------------
@@ -397,7 +428,7 @@ class LocalOrderStore implements OrderStore {
         trackingCarrier: null,
         createdAt: now,
         proofs: [],
-        events: [{ status: "awaiting_payment", note: "Order placed", createdAt: now }],
+        events: [{ status: "awaiting_payment", note: "Porosia u bë", createdAt: now }],
       };
       db.orders.push(order);
       return strip(order);
@@ -444,6 +475,14 @@ class LocalOrderStore implements OrderStore {
     await writeFile(path.join(PROOF_DIR, rel), file.bytes);
     return mutateLocalDb((db) => {
       const proof = { path: rel, fileName: file.fileName, contentType: file.contentType, reference, senderName, createdAt: new Date().toISOString() };
+      db.orders.find((o) => o.id === orderId)?.proofs.push(proof);
+      return proof;
+    });
+  }
+
+  attachProof(orderId: string, p: Omit<PaymentProof, "createdAt">) {
+    return mutateLocalDb((db) => {
+      const proof = { ...p, createdAt: new Date().toISOString() };
       db.orders.find((o) => o.id === orderId)?.proofs.push(proof);
       return proof;
     });

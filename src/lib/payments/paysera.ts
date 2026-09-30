@@ -1,6 +1,7 @@
 import "server-only";
 import { createHash, createVerify, timingSafeEqual } from "node:crypto";
 import type { Order } from "@/lib/commerce/types";
+import { localDataEnabled } from "@/lib/local-db";
 
 // Paysera "Checkout" (payment initiation) protocol v1.6:
 //   request:  data = base64url(query string), sign = md5(data + sign password)
@@ -15,10 +16,10 @@ export function payseraConfigured() {
 
 /**
  * Local stand-in for Paysera (see /api/payments/paysera/sandbox): only while Paysera is not
- * configured, and never in a real production deployment (JF_LOCAL_ORDERS=1 is for local QA).
+ * configured, and never in a real production deployment (JF_LOCAL_DATA=1 is for local QA).
  */
 export function payseraSandbox() {
-  return !payseraConfigured() && (process.env.NODE_ENV !== "production" || process.env.JF_LOCAL_ORDERS === "1");
+  return !payseraConfigured() && localDataEnabled();
 }
 
 export const payseraTestMode = () => process.env.PAYSERA_TEST_MODE === "true";

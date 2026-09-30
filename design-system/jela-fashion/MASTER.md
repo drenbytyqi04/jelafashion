@@ -293,6 +293,16 @@ resolved.
 22. **Emails fall back to Georgia** for headings: web fonts are unreliable in Gmail and
     Outlook. Ivory ground, champagne hairline under the wordmark, champagne buttons.
 
+23. **Admin copy lives in the admin components, in Albanian only** (Phase 5): the panel is
+    the atelier's tool, not customer-facing, so it isn't translated and its strings are
+    not in `messages/`. Shared UI (inputs, upload, toasts) still reads `messages/sq.json`.
+24. **Passwordless sign-in** (Phase 5): an email link (and optional Google) instead of
+    passwords. Fewer steps on mobile, nothing to forget, no password database to protect.
+25. **Admin headings in Manrope** (pages/admin.md): the global serif heading style is
+    overridden inside the panel; only the sidebar wordmark stays in Cormorant.
+26. **Print sheet without colour tint** (Phase 5): the product placeholder on the A4
+    measurement sheet is neutral, per "white, ink only".
+
 ### ui-ux-pro-max reconciliation
 
 The generator classified the project as "E-commerce Luxury". Its output and what happened

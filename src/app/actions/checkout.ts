@@ -1,17 +1,19 @@
 "use server";
 
 import { parsePhoneNumberFromString, type CountryCode } from "libphonenumber-js/min";
+import { updateTag } from "next/cache";
 import { after } from "next/server";
 import { getLocale } from "next-intl/server";
 import { getPathname } from "@/i18n/navigation";
 import { accountStore } from "@/lib/account/store";
 import { getViewer } from "@/lib/auth/viewer";
-import { getCatalog, getMeasurementDefinitions } from "@/lib/catalog/repository";
+import { CATALOG_TAG, getCatalog, getMeasurementDefinitions } from "@/lib/catalog/repository";
 import type { Locale } from "@/lib/catalog/types";
 import { pick } from "@/lib/catalog/types";
 import { getPaymentMethods, getShippingZones } from "@/lib/commerce/config";
 import { orderStore } from "@/lib/commerce/order-store";
 import { orderTotals, zoneForCountry } from "@/lib/commerce/pricing";
+import { moveStock } from "@/lib/commerce/stock";
 import type { Discount, NewOrder, OrderItem } from "@/lib/commerce/types";
 import { sendOrderConfirmation, sendShopNewOrder } from "@/lib/email/notifications";
 import { isOffline, paymentProvider } from "@/lib/payments/providers";
@@ -153,6 +155,11 @@ export async function placeOrder(input: { values: unknown; lines: unknown; saveA
       items,
     };
     const order = await store.create(newOrder);
+    const inStock = new Set(catalog.filter((p) => p.availability === "in_stock").map((p) => p.id));
+    if (items.some((i) => i.productId && inStock.has(i.productId) && i.size !== "custom")) {
+      await moveStock(order.items, inStock, -1);
+      updateTag(CATALOG_TAG);
+    }
 
     // Signed-in customers can keep the address for next time; never blocks the order.
     if (viewer && input.saveAddress === true) {
