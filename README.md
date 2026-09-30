@@ -271,7 +271,9 @@ src/stores/                Zustand: cart and wishlist (persisted), UI, toasts
 ## Launching on Vercel (Phase 7)
 
 1. **Import.** vercel.com → Add New → Project → import `drenbytyqi04/jelafashion`.
-   Framework: Next.js, no build settings. Set the production branch (Settings → Git) to
+   Framework: Next.js, no build settings. `vercel.json` pins the functions to Frankfurt
+   (`fra1`), next to the Supabase project (EU Central), so every database round trip
+   stays in Europe. Set the production branch (Settings → Git) to
    the branch that holds this code.
 2. **Environment variables** (Settings → Environment Variables, Production and Preview):
    - Public: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (both in
