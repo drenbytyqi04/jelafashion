@@ -52,6 +52,10 @@ type ProductRow = {
   }[];
   product_sizes: { size: Size; stock: number }[];
   product_measurements: { measurement_id: string }[];
+  seo_title_sq: string | null;
+  seo_title_en: string | null;
+  seo_description_sq: string | null;
+  seo_description_en: string | null;
 };
 
 const SIZE_ORDER: Size[] = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -85,6 +89,10 @@ function fromRow(r: ProductRow): CatalogProduct {
       }),
     sizes: [...r.product_sizes].sort((a, b) => SIZE_ORDER.indexOf(a.size) - SIZE_ORDER.indexOf(b.size)),
     measurements: r.product_measurements.map((m) => m.measurement_id),
+    seo: {
+      title: { sq: r.seo_title_sq ?? "", en: r.seo_title_en ?? "" },
+      description: { sq: r.seo_description_sq ?? "", en: r.seo_description_en ?? "" },
+    },
   };
 }
 
@@ -111,6 +119,7 @@ function fromSeed(): CatalogProduct[] {
     images: [],
     sizes: SIZE_ORDER.filter((s) => s in p.sizes).map((s) => ({ size: s, stock: p.sizes[s] ?? 0 })),
     measurements: p.measurements,
+    seo: { title: { sq: "", en: "" }, description: { sq: "", en: "" } },
   }));
 }
 
@@ -124,6 +133,7 @@ export const getCatalog = unstable_cache(
       .select(
         `id, slug, category_id, name_sq, name_en, description_sq, description_en, fabric_care_sq, fabric_care_en,
          price_cents, availability, production_weeks, length, sleeves, silhouette, featured, published_at, created_at,
+         seo_title_sq, seo_title_en, seo_description_sq, seo_description_en,
          product_colors (id, name_sq, name_en, hex, family, sort),
          product_images (storage_path, alt_sq, alt_en, width, height, color_id, sort),
          product_sizes (size, stock),

@@ -3,7 +3,10 @@ import { Link } from "@/i18n/navigation";
 import { getCategories, getHeroContent, getMarquee, getNewIn, getTestimonials } from "@/lib/catalog/repository";
 import type { Locale } from "@/lib/catalog/types";
 import { pick } from "@/lib/catalog/types";
+import { absoluteUrl, localizedPath, pageMetadata } from "@/lib/seo";
+import { site } from "@/lib/site";
 import { Button } from "@/components/ui/button";
+import { JsonLd } from "@/components/seo/json-ld";
 import { IntroLoader } from "@/components/motion/intro-loader";
 import { Marquee } from "@/components/motion/marquee";
 import { RevealText } from "@/components/motion/reveal-text";
@@ -21,6 +24,44 @@ import { Testimonials } from "@/components/home/testimonials";
 
 // Prerendered, refreshed at most every 5 minutes (and on demand via the catalog tag).
 export const revalidate = 300;
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const locale = (await params).locale as Locale;
+  const t = await getTranslations({ locale, namespace: "meta" });
+  return pageMetadata({ locale, href: "/", title: t("title"), description: t("description"), absoluteTitle: true });
+}
+
+/** Who we are, for search engines: only confirmed facts (name, city, Instagram). */
+function homeJsonLd(locale: Locale) {
+  const home = absoluteUrl(localizedPath(locale, "/"));
+  const org = {
+    "@type": ["Organization", "ClothingStore"],
+    "@id": `${absoluteUrl("/")}#atelier`,
+    name: site.name,
+    url: home,
+    logo: absoluteUrl("/icon.svg"),
+    image: absoluteUrl(`/${locale}/opengraph-image`),
+    sameAs: [site.instagramUrl],
+    address: { "@type": "PostalAddress", addressLocality: site.city, addressCountry: "XK" },
+    areaServed: "Worldwide",
+    currenciesAccepted: "EUR",
+    ...(site.email && { email: site.email }),
+    ...(site.whatsappNumber && { telephone: site.whatsappNumber }),
+  };
+  const website = {
+    "@type": "WebSite",
+    name: site.name,
+    url: home,
+    inLanguage: locale,
+    publisher: { "@id": org["@id"] },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${absoluteUrl(localizedPath(locale, "/search"))}?q={query}`,
+      "query-input": "required name=query",
+    },
+  };
+  return { "@context": "https://schema.org", "@graph": [org, website] };
+}
 
 // Sections follow design-system/jela-fashion/pages/home.md:
 // DESIRE (hero, marquee, categories) → COLLECTION (new in, bridal) → PERFECT FIT (made to
@@ -42,6 +83,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <>
+      <JsonLd data={homeJsonLd(locale)} />
       <IntroLoader />
       <section className="hero on-image relative flex min-h-svh items-end overflow-hidden bg-stone text-white">
         <div className="absolute inset-0">

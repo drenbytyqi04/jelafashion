@@ -22,6 +22,7 @@ export function pageMetadata({
   description,
   image,
   noindex,
+  absoluteTitle,
   type = "website",
 }: {
   locale: Locale;
@@ -30,25 +31,30 @@ export function pageMetadata({
   description?: string;
   image?: { url: string; width?: number; height?: number; alt?: string } | null;
   noindex?: boolean;
+  /** Use the title as is, without the " | Jela Fashion" suffix (home page). */
+  absoluteTitle?: boolean;
   type?: "website" | "article";
 }): Metadata {
   const languages = Object.fromEntries(routing.locales.map((l) => [l, localizedPath(l, href)]));
   const url = localizedPath(locale, href);
+  const full = absoluteTitle ? title : `${title} | ${site.name}`;
   return {
-    title,
+    title: absoluteTitle ? { absolute: title } : title,
     description,
     alternates: { canonical: url, languages: { ...languages, "x-default": languages.sq } },
     openGraph: {
       type,
       url,
-      title: `${title} | ${site.name}`,
+      title: full,
       description,
       siteName: site.name,
       locale: OG_LOCALE[locale],
       alternateLocale: routing.locales.filter((l) => l !== locale).map((l) => OG_LOCALE[l]),
-      ...(image && { images: [image] }),
+      // A page's own openGraph replaces the inherited one, image included: fall back to
+      // the shared preview (app/[locale]/opengraph-image) explicitly.
+      images: [image ?? { url: `/${locale}/opengraph-image`, width: 1200, height: 630, alt: site.name }],
     },
-    twitter: { card: "summary_large_image", title: `${title} | ${site.name}`, description },
+    twitter: { card: "summary_large_image", title: full, description },
     ...(noindex && { robots: { index: false, follow: true } }),
   };
 }

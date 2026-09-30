@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Jela Fashion | Fustane nusërie dhe mbrëmjeje të punuara me dorë, Prizren",
-    "description": "Fustane nusërie, mbrëmjeje dhe të shkurtra, të punuara me dorë në një atele në Prizren. Në masat standarde ose të qepura sipas masave të tua, me dërgesë në mbarë botën."
+    "description": "Fustane nusërie, mbrëmjeje dhe të shkurtra, të punuara me dorë në një atelje në Prizren. Në masat standarde ose të qepura sipas masave të tua, me dërgesë në mbarë botën."
   },
   "common": {
     "skipToContent": "Kalo te përmbajtja",
@@ -1186,5 +1186,35 @@
     "title": "Koleksionet e reja, së pari te ti.",
     "text": "Pak letra në sezon: fustane të reja, atelja në punë, dhe asgjë që nuk e ke kërkuar.",
     "later": "Jo tani"
+  },
+  "seo": {
+    "home": {
+      "description": "Fustane nusërie, mbrëmjeje dhe të shkurtra, të punuara me dorë në një atelje në Prizren. Në masat standarde ose të qepura sipas masave të tua, me dërgesë në mbarë botën."
+    },
+    "shop": {
+      "title": "Dyqani: fustane nusërie, mbrëmjeje dhe të shkurtra",
+      "description": "Gjithë koleksioni i Jela Fashion: fustane nusërie, mbrëmjeje dhe të shkurtra, të punuara me dorë në Prizren, në masat standarde ose sipas masave të tua."
+    },
+    "newIn": {
+      "title": "Të rejat",
+      "description": "Fustanet më të reja nga atelja Jela Fashion në Prizren, të punuara me dorë."
+    },
+    "bridal": {
+      "title": "Fustane nusërie në Prizren, me dorë dhe sipas masave",
+      "description": "Fustane nusërie të punuara me dorë në Prizren, në masat XS–XXL ose të qepura sipas masave të tua. Dërgesë në mbarë botën."
+    },
+    "evening": {
+      "title": "Fustane mbrëmjeje në Kosovë, me dorë dhe sipas masave",
+      "description": "Fustane mbrëmjeje të punuara me dorë në Prizren, në masat standarde ose me porosi sipas masave të tua, me dërgesë në Kosovë dhe në mbarë botën."
+    },
+    "short": {
+      "title": "Fustane të shkurtra, të punuara me dorë",
+      "description": "Fustane të shkurtra për ceremoni dhe mbrëmje, të punuara me dorë në Prizren, në masat standarde ose sipas masave të tua."
+    },
+    "product": {
+      "bridal": "Fustan nusërie",
+      "evening": "Fustan mbrëmjeje",
+      "short": "Fustan i shkurtër"
+    }
   }
 }

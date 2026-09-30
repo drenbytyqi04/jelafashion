@@ -31,6 +31,8 @@ export type CatalogProduct = {
   sizes: { size: Size; stock: number }[];
   /** Conditional measurement ids required on top of the always-required set. */
   measurements: string[];
+  /** Search snippet overrides from the admin; empty strings fall back to name/description. */
+  seo: { title: Bilingual; description: Bilingual };
 };
 
 export type CatalogCategory = { id: CategoryId; name: Bilingual; intro: Bilingual; bannerUrl: string | null };

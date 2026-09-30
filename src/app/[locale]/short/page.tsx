@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CollectionPage } from "@/components/collection/collection-page";
 import type { Locale } from "@/lib/catalog/types";
+import { pageMetadata } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -9,9 +10,9 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
-  const t = await getTranslations({ locale: locale as Locale, namespace: "collection" });
-  return { title: t("category.short") };
+  const locale = (await params).locale as Locale;
+  const t = await getTranslations({ locale, namespace: "seo.short" });
+  return pageMetadata({ locale, href: "/short", title: t("title"), description: t("description") });
 }
 
 export default async function Page({ params, searchParams }: Props) {

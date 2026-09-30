@@ -6,7 +6,9 @@ import { routing } from "@/i18n/routing";
 import { getCatalog, getCategories, getProduct, getProductMeasurements } from "@/lib/catalog/repository";
 import type { CatalogProduct, Locale } from "@/lib/catalog/types";
 import { pick } from "@/lib/catalog/types";
+import { absoluteUrl, breadcrumbJsonLd, pageMetadata, type StaticHref } from "@/lib/seo";
 import { site, whatsappHref } from "@/lib/site";
+import { JsonLd } from "@/components/seo/json-ld";
 import { Accordion } from "@/components/ui/accordion";
 import { ProductGallery } from "@/components/product/product-gallery";
 import { ProductRail } from "@/components/product/product-rail";
@@ -23,15 +25,23 @@ export async function generateStaticParams() {
   return routing.locales.flatMap((locale) => catalog.map((p) => ({ locale, slug: p.slug })));
 }
 
+const snippet = (text: string, max = 158) => (text.length <= max ? text : `${text.slice(0, text.lastIndexOf(" ", max - 1))}…`);
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const product = await getProduct(slug);
   if (!product) return {};
   const l = locale as Locale;
-  return {
-    title: pick(product.name, l),
-    description: pick(product.description, l),
-  };
+  const t = await getTranslations({ locale: l, namespace: "seo.product" });
+  const image = product.images[0];
+  return pageMetadata({
+    locale: l,
+    href: { pathname: "/dress/[slug]", params: { slug } },
+    // "Drita · Fustan nusërie": the name plus what it is, unless the admin wrote a title.
+    title: pick(product.seo.title, l) || `${pick(product.name, l)} · ${t(product.category)}`,
+    description: pick(product.seo.description, l) || snippet(pick(product.description, l)),
+    image: image ? { url: image.url, width: image.width ?? undefined, height: image.height ?? undefined, alt: pick(image.alt, l) } : null,
+  });
 }
 
 /** Card fields only for client rails: long copy stays on the server. */
@@ -59,10 +69,46 @@ export default async function ProductPage({ params }: Props) {
   const url = `${site.url}${getPathname({ href: { pathname: "/dress/[slug]", params: { slug } }, locale })}`;
   const wa = whatsappHref(t("whatsappMessage", { name, url }));
   const related = catalog.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
-  const categoryHref = product.category === "bridal" ? "/bridal" : product.category === "evening" ? "/evening" : "/short";
+  const categoryHref: StaticHref = product.category === "bridal" ? "/bridal" : product.category === "evening" ? "/evening" : "/short";
+  const tc = await getTranslations("pages");
+  const productLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name,
+    description: pick(product.description, locale),
+    sku: product.slug,
+    url,
+    category: category ? pick(category.name, locale) : undefined,
+    brand: { "@type": "Brand", name: site.name },
+    image: product.images.length ? product.images.map((i) => absoluteUrl(i.url)) : undefined,
+    color: product.colors.map((c) => pick(c.name, locale)).join(", ") || undefined,
+    offers: {
+      "@type": "Offer",
+      url,
+      price: (product.priceCents / 100).toFixed(2),
+      priceCurrency: "EUR",
+      // Made-to-order dresses are always orderable; in-stock ones while any size has stock.
+      availability:
+        product.availability === "made_to_order"
+          ? "https://schema.org/MadeToOrder"
+          : product.sizes.some((s) => s.stock > 0)
+            ? "https://schema.org/InStock"
+            : "https://schema.org/OutOfStock",
+      itemCondition: "https://schema.org/NewCondition",
+      seller: { "@type": "Organization", name: site.name },
+    },
+  };
 
   return (
     <>
+      <JsonLd data={productLd} />
+      <JsonLd
+        data={breadcrumbJsonLd(locale, [
+          { name: tc("home"), href: "/" },
+          ...(category ? [{ name: pick(category.name, locale), href: categoryHref }] : []),
+          { name, href: { pathname: "/dress/[slug]", params: { slug } } },
+        ])}
+      />
       {/* Full-bleed gallery on phones; inside the page container from tablet up. */}
       <div className="mx-auto w-full max-w-[90rem] pt-(--header-h) md:px-(--gutter) md:pt-[calc(var(--header-h)+32px)]">
         <nav aria-label={t("breadcrumb")} className="container-page py-4 md:px-0 md:pt-0">

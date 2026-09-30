@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Jela Fashion | Handmade bridal and evening dresses, Prizren",
-    "description": "Handmade bridal, evening and short dresses from an atelier in Prizren, Kosovo. Standard sizes or made to your measurements, shipped worldwide."
+    "description": "Bridal, evening and short dresses, handmade in an atelier in Prizren, Kosovo. In standard sizes or made to your measurements, shipped worldwide."
   },
   "common": {
     "skipToContent": "Skip to content",
@@ -1185,5 +1185,35 @@
     "title": "New collections, to you first.",
     "text": "A few letters a season: new dresses, the atelier at work, and nothing you didn't ask for.",
     "later": "Not now"
+  },
+  "seo": {
+    "home": {
+      "description": "Bridal, evening and short dresses, handmade in an atelier in Prizren, Kosovo. In standard sizes or made to your measurements, shipped worldwide."
+    },
+    "shop": {
+      "title": "Shop handmade bridal, evening and short dresses",
+      "description": "The whole Jela Fashion collection: bridal, evening and short dresses, handmade in Prizren, in standard sizes or made to your measurements."
+    },
+    "newIn": {
+      "title": "New in",
+      "description": "The newest handmade dresses from the Jela Fashion atelier in Prizren."
+    },
+    "bridal": {
+      "title": "Bridal dresses from Prizren, handmade and made to measure",
+      "description": "Handmade wedding dresses from Prizren, Kosovo, in sizes XS–XXL or made to your measurements. Shipped worldwide."
+    },
+    "evening": {
+      "title": "Evening dresses, handmade and made to measure",
+      "description": "Handmade evening dresses from Prizren, Kosovo, in standard sizes or made to measure, shipped worldwide."
+    },
+    "short": {
+      "title": "Short dresses, handmade in Prizren",
+      "description": "Short dresses for ceremonies and evenings, handmade in Prizren, in standard sizes or made to your measurements."
+    },
+    "product": {
+      "bridal": "Wedding dress",
+      "evening": "Evening dress",
+      "short": "Short dress"
+    }
   }
 }

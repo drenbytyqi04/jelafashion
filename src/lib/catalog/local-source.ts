@@ -26,6 +26,7 @@ export function toCatalogProduct(p: AdminProduct): CatalogProduct {
     }),
     sizes: p.sizes,
     measurements: p.measurements,
+    seo: { title: p.seoTitle, description: p.seoDescription },
   };
 }
 
