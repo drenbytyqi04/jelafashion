@@ -8,6 +8,13 @@ insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-000000000002', 'admin@test.local');
 update public.profiles set role = 'admin' where id = '00000000-0000-0000-0000-000000000002';
 update public.products set published = false where slug = 'era';
+-- Orders are written by the server (superuser/service role): one for the customer, one guest.
+insert into public.orders (id, user_id, email, phone, payment_method, subtotal_cents, shipping_cents, total_cents, shipping_method, shipping_address)
+values
+  ('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', 'customer@test.local', '+38344000000', 'bank_transfer', 50000, 500, 50500, '{}', '{}'),
+  ('10000000-0000-0000-0000-000000000002', null, 'guest@test.local', '+38344000001', 'wise', 40000, 500, 40500, '{}', '{}');
+insert into public.order_items (order_id, product_slug, name, size, quantity, unit_price_cents)
+values ('10000000-0000-0000-0000-000000000001', 'drita', 'Drita', 'M', 1, 50000);
 
 -- Anonymous visitor
 set local role anon;
@@ -29,6 +36,15 @@ exception when insufficient_privilege then null;
 end $$;
 do $$ begin
   if (select count(*) from public.newsletter_subscribers) > 0 then raise exception 'anon must not read the newsletter list'; end if;
+exception when insufficient_privilege then null;
+end $$;
+do $$ begin
+  if (select count(*) from public.orders) > 0 then raise exception 'anon must not read orders'; end if;
+exception when insufficient_privilege then null;
+end $$;
+do $$ begin
+  perform public.redeem_discount('MIRESEVINI10');
+  raise exception 'anon can redeem discount codes';
 exception when insufficient_privilege then null;
 end $$;
 do $$ begin
@@ -54,6 +70,10 @@ do $$ begin
   update public.profiles set full_name = 'Test Customer' where id = auth.uid();
   if (select full_name from public.profiles where id = auth.uid()) <> 'Test Customer' then raise exception 'customer cannot edit own profile'; end if;
   update public.profiles set full_name = 'Hacked' where id = '00000000-0000-0000-0000-000000000002';
+  if (select count(*) from public.orders) <> 1 then raise exception 'customer should see only own order'; end if;
+  if (select count(*) from public.order_items) <> 1 then raise exception 'customer should see own order items'; end if;
+  update public.orders set status = 'paid';
+  if exists (select 1 from public.orders where status = 'paid') then raise exception 'customer marked an order paid'; end if;
 end $$;
 do $$ begin
   update public.profiles set role = 'admin' where id = auth.uid();
@@ -72,6 +92,10 @@ do $$ begin
   update public.products set featured = true where slug = 'era';
   if not (select featured from public.products where slug = 'era') then raise exception 'admin cannot edit products'; end if;
   insert into public.testimonials (quote_sq, quote_en, author) values ('t', 't', 't');
+  if (select count(*) from public.orders) <> 2 then raise exception 'admin should see all orders'; end if;
+  update public.orders set status = 'paid' where id = '10000000-0000-0000-0000-000000000002';
+  if (select status from public.orders where id = '10000000-0000-0000-0000-000000000002') <> 'paid' then raise exception 'admin cannot update orders'; end if;
+  if (select count(*) from public.payment_callbacks) <> 0 then raise exception 'unexpected callbacks'; end if;
 end $$;
 
 rollback;

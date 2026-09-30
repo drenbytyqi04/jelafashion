@@ -1,4 +1,5 @@
 -- Local test shim: the minimum of Supabase's auth/storage schemas and roles needed to
+create extension if not exists pgcrypto;
 -- apply supabase/migrations to a plain Postgres. NEVER run this against a Supabase project.
 do $$ begin
   create role anon nologin; exception when duplicate_object then null; end $$;
