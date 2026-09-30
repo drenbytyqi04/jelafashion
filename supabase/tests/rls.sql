@@ -15,6 +15,8 @@ values
   ('10000000-0000-0000-0000-000000000002', null, 'guest@test.local', '+38344000001', 'wise', 40000, 500, 40500, '{}', '{}');
 insert into public.order_items (order_id, product_slug, name, size, quantity, unit_price_cents)
 values ('10000000-0000-0000-0000-000000000001', 'drita', 'Drita', 'M', 1, 50000);
+insert into public.measurement_profiles (user_id, name, measurements)
+values ('00000000-0000-0000-0000-000000000002', 'Admin profile', '{"bust": 88}');
 
 -- Anonymous visitor
 set local role anon;
@@ -72,8 +74,19 @@ do $$ begin
   update public.profiles set full_name = 'Hacked' where id = '00000000-0000-0000-0000-000000000002';
   if (select count(*) from public.orders) <> 1 then raise exception 'customer should see only own order'; end if;
   if (select count(*) from public.order_items) <> 1 then raise exception 'customer should see own order items'; end if;
+  insert into public.addresses (user_id, first_name, last_name, line1, city, country, is_default)
+  values (auth.uid(), 'Arta', 'K', 'Rruga 1', 'Prizren', 'XK', true);
+  insert into public.measurement_profiles (user_id, name, measurements) values (auth.uid(), 'Masat e mia', '{"bust": 90}');
+  if (select count(*) from public.measurement_profiles) <> 1 then raise exception 'customer sees other measurement profiles'; end if;
+  update public.measurement_profiles set name = 'Hacked' where user_id <> auth.uid();
   update public.orders set status = 'paid';
   if exists (select 1 from public.orders where status = 'paid') then raise exception 'customer marked an order paid'; end if;
+end $$;
+do $$ begin
+  insert into public.addresses (user_id, first_name, last_name, line1, city, country)
+  values ('00000000-0000-0000-0000-000000000002', 'X', 'Y', 'Z', 'Prizren', 'XK');
+  raise exception 'customer created an address for someone else';
+exception when insufficient_privilege then null;
 end $$;
 do $$ begin
   update public.profiles set role = 'admin' where id = auth.uid();
@@ -96,6 +109,8 @@ do $$ begin
   update public.orders set status = 'paid' where id = '10000000-0000-0000-0000-000000000002';
   if (select status from public.orders where id = '10000000-0000-0000-0000-000000000002') <> 'paid' then raise exception 'admin cannot update orders'; end if;
   if (select count(*) from public.payment_callbacks) <> 0 then raise exception 'unexpected callbacks'; end if;
+  if (select count(*) from public.addresses) <> 1 then raise exception 'admin should read addresses'; end if;
+  if exists (select 1 from public.measurement_profiles where name = 'Hacked') then raise exception 'customer edited another profile'; end if;
 end $$;
 
 rollback;
