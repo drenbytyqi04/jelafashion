@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import { usePathname } from "@/i18n/navigation";
 import { useConsentStore } from "@/stores/consent";
 import { Modal } from "@/components/ui/modal";
-import { NewsletterForm } from "./newsletter-form";
+import { LazyNewsletterForm } from "./lazy-newsletter-form";
 
 const KEY = "jf-newsletter-prompt";
 const DELAY_MS = 30_000;
-/** Never interrupts buying, signing in or an order page. */
-const QUIET = ["/checkout", "/cart", "/account", "/order", "/search"];
+/** Never interrupts choosing a dress, buying, signing in or an order page. */
+const QUIET = ["/dress", "/checkout", "/cart", "/account", "/order", "/search"];
 
 function seen() {
   try {
@@ -20,7 +20,10 @@ function seen() {
   }
 }
 
-/** Offered once per device, after 30 seconds and a scroll, once the cookie choice is made. */
+/**
+ * Offered once per device, after 30 seconds and a scroll, once the cookie choice is made,
+ * and never over an open dialog.
+ */
 export function NewsletterPopup() {
   const t = useTranslations("newsletterPopup");
   const pathname = usePathname();
@@ -34,6 +37,8 @@ export function NewsletterPopup() {
     let timeUp = false;
     const show = () => {
       if (!scrolled || !timeUp || seen()) return;
+      // Never on top of the menu, cart, wizard or another dialog: wait for the next scroll.
+      if (document.querySelector('[role="dialog"]')) return;
       try {
         localStorage.setItem(KEY, new Date().toISOString());
       } catch {}
@@ -58,7 +63,7 @@ export function NewsletterPopup() {
 
   return (
     <Modal open={open && !quiet} onOpenChange={setOpen} title={t("title")} description={t("text")}>
-      <NewsletterForm source="popup" onSubscribed={() => setOpen(false)} />
+      <LazyNewsletterForm source="popup" onSubscribed={() => setOpen(false)} />
       <button type="button" onClick={() => setOpen(false)} className="mt-2 flex min-h-11 items-center text-small text-stone">
         <span className="link-underline">{t("later")}</span>
       </button>

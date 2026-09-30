@@ -177,6 +177,51 @@ request); proofs are checked by content afterwards.
 In development without Supabase, sign-in links land in `.data/emails/`, and
 `admin@example.com` (or the addresses in `JF_DEV_ADMINS`) signs in as admin.
 
+## Tracking, consent and SEO (Phase 6)
+
+**Consent.** On a first visit a cookie banner offers *Accept all*, *Decline* and
+*Settings* with equal weight (necessary / analytics / marketing). The choice is stored on
+the device (`jf-consent` in localStorage; bump its version in `src/stores/consent.ts` to
+ask everyone again) and can be changed from the footer ("Cookie settings") or the Cookies
+page. Nothing optional loads before a choice.
+
+**Tags.** Set the IDs in Vercel (see `.env.example`); an empty ID switches that tag off.
+
+| Variable | Tag | Consent |
+| --- | --- | --- |
+| `NEXT_PUBLIC_GA4_ID` | Google Analytics 4 (Consent Mode v2) | analytics |
+| `NEXT_PUBLIC_META_PIXEL_ID` | Meta Pixel | marketing |
+| `META_CAPI_ACCESS_TOKEN` (server) | Meta Conversions API, Purchase | marketing |
+| `NEXT_PUBLIC_TIKTOK_PIXEL_ID` | TikTok Pixel | marketing |
+
+Events: page views, `view_item`, `add_to_wishlist`, `add_to_cart`, `begin_checkout`,
+`purchase` and `lead` (newsletter, contact form), mapped to each tag's own names. The
+purchase fires once per order, from the order page, with
+`event_id = purchase-<order number>`; the server sends the same event to the Conversions
+API (hashed email, phone and name, `fbp`/`fbc` cookies), so Meta counts it once. While
+testing, put the Events Manager test code in `META_CAPI_TEST_EVENT_CODE`.
+
+**SEO.** Every page has its own title, description, canonical URL, `hreflang` for `sq`,
+`en` and `x-default`, and Open Graph/Twitter tags (a branded image is generated per
+language; a dress uses its first photo). JSON-LD: Organization + ClothingStore + WebSite on
+the home page, Product and BreadcrumbList on dresses, FAQPage on the FAQ. `/sitemap.xml`
+lists every page in both languages; `/robots.txt` keeps out the admin, account, cart,
+checkout, order, search and wishlist pages. Dress titles and descriptions can be overridden per
+product in the admin (SEO section).
+
+**Pages added.** Made to Measure, Size guide, Atelier (about), Contact (form, WhatsApp,
+map slot), FAQ, Shipping (rates from the shipping zones), Returns, Privacy, Terms,
+Cookies, Wishlist and Search. Legal pages carry `[PLACEHOLDER]`s (company name, address,
+business number, return window…) for the atelier and its lawyer to fill in; nothing
+legal is invented. A floating WhatsApp button appears once `NEXT_PUBLIC_WHATSAPP_NUMBER`
+is set (hidden on dress pages, which have their own, and during checkout). The newsletter
+offer appears once per device after 30 seconds and a scroll, never on dress pages, in the
+cart, checkout or account, and never over an open dialog.
+
+**Performance.** Headline fonts are preloaded and the italic is not; the newsletter
+form's validation code loads only when the footer comes near. Measure with Lighthouse
+against a production build (`npm run build && npm start`), mobile preset.
+
 ## Structure
 
 ```
@@ -211,7 +256,12 @@ src/components/ui/         Button, Input, Textarea, Select, Checkbox, RadioGroup
 src/components/motion/     MotionProvider (Lenis), RevealText, RevealImage, Parallax,
                            Marquee, Magnetic, IntroLoader
 src/components/layout/     SiteHeader, MobileMenu, CartDrawer, SiteFooter, NewsletterForm,
-                           LanguageSwitcher
+                           LanguageSwitcher, WhatsApp bubble, newsletter popup
+src/components/consent/    cookie banner and preferences (src/stores/consent.ts)
+src/lib/tracking/          tag IDs, track() event bus, Meta Conversions API
+src/components/tracking/   GA4 / Meta / TikTok loaders, purchase tracker
+src/lib/seo.ts             pageMetadata() (canonical, hreflang, OG), JSON-LD helpers
+src/app/sitemap.ts, robots.ts, [locale]/opengraph-image.tsx
 src/i18n/                  routing (localized slugs), navigation, request config
 src/proxy.ts               locale detection and redirects (Next 16 "proxy", formerly middleware)
 src/stores/                Zustand: cart and wishlist (persisted), UI, toasts

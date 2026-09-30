@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft, Check, Pencil, TriangleAlert, X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { Dialog } from "radix-ui";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
@@ -320,7 +320,7 @@ export function MeasurementWizard({
           {open && (
             <Dialog.Portal forceMount>
               <Dialog.Content asChild forceMount aria-describedby={undefined}>
-                <motion.div
+                <m.div
                   data-lenis-prevent
                   className="wizard fixed inset-0 z-50 flex flex-col overflow-y-auto bg-ivory focus:outline-none"
                   initial={{ opacity: 0 }}
@@ -367,7 +367,7 @@ export function MeasurementWizard({
                       )}
                     >
                       <AnimatePresence mode="popLayout" initial={false}>
-                        <motion.div
+                        <m.div
                           key={step === summaryStep ? "summary" : view}
                           className="absolute inset-0 flex items-center justify-center p-4"
                           initial={{ opacity: 0 }}
@@ -380,14 +380,14 @@ export function MeasurementWizard({
                             measurementId={current?.id}
                             className="h-full w-auto"
                           />
-                        </motion.div>
+                        </m.div>
                       </AnimatePresence>
                     </div>
 
                     {/* Step content */}
                     <div className="relative flex flex-1 flex-col overflow-hidden md:overflow-visible">
                       <AnimatePresence mode="wait" initial={false}>
-                        <motion.div key={`${step}-${editing}`} className="container-page flex flex-1 flex-col pb-[max(1rem,env(safe-area-inset-bottom))] pt-6 md:px-0 md:pt-0" {...slide}>
+                        <m.div key={`${step}-${editing}`} className="container-page flex flex-1 flex-col pb-[max(1rem,env(safe-area-inset-bottom))] pt-6 md:px-0 md:pt-0" {...slide}>
                           {step === INTRO && (
                             <div className="flex flex-1 flex-col">
                               <h2 className="font-serif text-h3">{t("introTitle")}</h2>
@@ -587,11 +587,11 @@ export function MeasurementWizard({
                               </div>
                             </div>
                           )}
-                        </motion.div>
+                        </m.div>
                       </AnimatePresence>
                     </div>
                   </div>
-                </motion.div>
+                </m.div>
               </Dialog.Content>
             </Dialog.Portal>
           )}

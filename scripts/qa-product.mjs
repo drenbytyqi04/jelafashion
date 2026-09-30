@@ -12,6 +12,11 @@ const axe = async (p, label) => {
 };
 
 const ctx = await browser.newContext({ viewport: { width: 375, height: 812 } });
+// Cookie choice already made: these suites test buying, not the banner (qa.mjs covers it).
+await ctx.addInitScript(() => {
+  if (!localStorage.getItem("jf-consent"))
+    localStorage.setItem("jf-consent", JSON.stringify({ state: { analytics: false, marketing: false, decidedAt: "2026-01-01T00:00:00.000Z" }, version: 1 }));
+});
 const p = await ctx.newPage();
 const errors = [];
 p.on("console", (m) => m.type() === "error" && !/OuterLayoutRouter|404/.test(m.text()) && errors.push(m.text().slice(0, 200)));

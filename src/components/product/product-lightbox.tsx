@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
-import { motion, useMotionValue } from "motion/react";
+import { m, useMotionValue } from "motion/react";
 import { Dialog } from "radix-ui";
 import { useLocale, useTranslations } from "next-intl";
 import { useRef, useState, type PointerEvent } from "react";
@@ -140,22 +140,22 @@ export function ProductLightbox({
             style={{ cursor: zoomed ? "grab" : "zoom-in" }}
           >
             {index !== null && (
-              <motion.div
+              <m.div
                 key={index}
                 className="absolute inset-0 flex items-center justify-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: duration.ui, ease: ease.couture }}
               >
-                <motion.div
+                <m.div
                   className="h-full max-h-full w-auto"
                   style={{ x, y, aspectRatio: "3 / 4" }}
                   animate={{ scale: zoomed ? ZOOM : 1 }}
                   transition={{ duration: duration.ui, ease: ease.couture }}
                 >
                   <ProductMedia product={product} locale={locale} index={index} sizes="100vw" className="h-full" />
-                </motion.div>
-              </motion.div>
+                </m.div>
+              </m.div>
             )}
           </div>
           {count > 1 && (

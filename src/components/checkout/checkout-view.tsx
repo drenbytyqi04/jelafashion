@@ -8,7 +8,7 @@ import {
   Landmark,
   Send,
 } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
 import {
   useEffect,
@@ -453,7 +453,7 @@ export function CheckoutView({
           </button>
           <AnimatePresence initial={false}>
             {summaryOpen && (
-              <motion.div
+              <m.div
                 id={summaryId}
                 key="summary"
                 initial={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
@@ -465,7 +465,7 @@ export function CheckoutView({
                 className="overflow-hidden"
               >
                 <div className="container-page pb-8 pt-2">{summary}</div>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
         </div>

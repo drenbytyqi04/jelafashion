@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { useId, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { duration, ease } from "@/lib/motion";
@@ -104,7 +104,7 @@ export function RadioGroup({
               {variant === "card" && option.content && (
                 <AnimatePresence initial={false}>
                   {checked && (
-                    <motion.div
+                    <m.div
                       key="content"
                       initial={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
                       animate={reduce ? { opacity: 1 } : { height: "auto", opacity: 1 }}
@@ -115,7 +115,7 @@ export function RadioGroup({
                       <div className="border-t border-hairline px-5 pb-5 pt-4 text-small">
                         {option.content}
                       </div>
-                    </motion.div>
+                    </m.div>
                   )}
                 </AnimatePresence>
               )}

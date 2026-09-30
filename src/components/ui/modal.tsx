@@ -1,7 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { Dialog } from "radix-ui";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
@@ -32,7 +32,7 @@ export function Modal({ open, onOpenChange, title, description, children, action
         {open && (
           <Dialog.Portal forceMount>
             <Dialog.Overlay asChild forceMount>
-              <motion.div
+              <m.div
                 className="fixed inset-0 z-50 bg-ink/40"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -42,7 +42,7 @@ export function Modal({ open, onOpenChange, title, description, children, action
             </Dialog.Overlay>
             <div className="pointer-events-none fixed inset-0 z-50 flex items-end justify-center md:items-center md:p-6">
               <Dialog.Content asChild forceMount>
-                <motion.div
+                <m.div
                   data-lenis-prevent
                   className={cn(
                     "pointer-events-auto relative max-h-[90dvh] w-full overflow-y-auto border-t border-hairline bg-ivory px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-10 focus:outline-none md:max-w-[560px] md:border md:p-12",
@@ -67,7 +67,7 @@ export function Modal({ open, onOpenChange, title, description, children, action
                   )}
                   {children && <div className="mt-6">{children}</div>}
                   {actions && <div className="mt-8 flex flex-col gap-3 md:flex-row-reverse">{actions}</div>}
-                </motion.div>
+                </m.div>
               </Dialog.Content>
             </div>
           </Dialog.Portal>

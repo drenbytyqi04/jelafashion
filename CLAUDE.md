@@ -144,11 +144,14 @@ with self-drawing measurement lines.
    Orders are priced only on the server (`src/app/actions/checkout.ts`); storage goes
    through `orderStore()` (Supabase service role, or `.data/` locally). Paysera has a
    local sandbox when unconfigured. `npm run qa:checkout` drives both payment paths.
-5. Customer accounts and admin panel. **Done — awaiting approval.** Passwordless sign-in
+5. Customer accounts and admin panel. **Done.** Passwordless sign-in
    (`src/lib/auth/viewer.ts` is the only identity check); admin at `/admin` in Albanian.
    Without Supabase secrets the site runs on `.data/db.json` (`src/lib/local-db.ts`).
    `npm run qa:admin` drives accounts, the order workflow, stock and catalog edits.
-6. Tracking, consent, SEO, performance and accessibility pass.
+6. Tracking, consent, SEO, performance and accessibility pass, plus the remaining
+   storefront pages. **Done — awaiting approval.** Every tag goes through `track()`
+   (`src/lib/tracking/track.ts`) and waits for consent (`src/stores/consent.ts`); page
+   metadata comes from `pageMetadata()` in `src/lib/seo.ts`.
 
 After each phase: run the dev server, check 375px and desktop, run the pre-delivery
 checklist in MASTER.md, fix all errors, then **stop and wait for approval**.

@@ -1,7 +1,7 @@
 "use client";
 
 import { Heart, Search, User, X } from "lucide-react";
-import { AnimatePresence, motion, type Variants } from "motion/react";
+import { AnimatePresence, m, type Variants } from "motion/react";
 import { Dialog } from "radix-ui";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -47,7 +47,7 @@ export function MobileMenu() {
         {open && (
           <Dialog.Portal forceMount>
             <Dialog.Content asChild forceMount aria-describedby={undefined}>
-              <motion.div
+              <m.div
                 data-lenis-prevent
                 className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-ivory text-ink focus:outline-none nav:hidden"
                 initial={{ opacity: 0 }}
@@ -69,7 +69,7 @@ export function MobileMenu() {
                   <span />
                 </div>
 
-                <motion.nav
+                <m.nav
                   aria-label={t("nav.primary")}
                   className="container-page flex flex-1 flex-col pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-8"
                   variants={list}
@@ -78,7 +78,7 @@ export function MobileMenu() {
                 >
                   <ul className="flex flex-col">
                     {bigLinks.map((l) => (
-                      <motion.li key={l.key} variants={item}>
+                      <m.li key={l.key} variants={item}>
                         <Link
                           href={l.href}
                           onClick={close}
@@ -86,11 +86,11 @@ export function MobileMenu() {
                         >
                           {t(`nav.${l.key}`)}
                         </Link>
-                      </motion.li>
+                      </m.li>
                     ))}
                   </ul>
 
-                  <motion.div variants={item} className="mt-10">
+                  <m.div variants={item} className="mt-10">
                     <p className="label mb-4 text-stone">{t("menu.collections")}</p>
                     <ul className="grid grid-cols-3 gap-3">
                       {categoryNav.map((c) => (
@@ -102,9 +102,9 @@ export function MobileMenu() {
                         </li>
                       ))}
                     </ul>
-                  </motion.div>
+                  </m.div>
 
-                  <motion.ul variants={item} className="mt-10 flex flex-col border-t border-hairline pt-4">
+                  <m.ul variants={item} className="mt-10 flex flex-col border-t border-hairline pt-4">
                     {(
                       [
                         { href: "/search", label: t("common.search"), Icon: Search },
@@ -119,9 +119,9 @@ export function MobileMenu() {
                         </Link>
                       </li>
                     ))}
-                  </motion.ul>
+                  </m.ul>
 
-                  <motion.div
+                  <m.div
                     variants={item}
                     className="mt-auto flex items-center justify-between gap-4 border-t border-hairline pt-4"
                   >
@@ -137,9 +137,9 @@ export function MobileMenu() {
                         {t("common.whatsapp")}
                       </Link>
                     )}
-                  </motion.div>
-                </motion.nav>
-              </motion.div>
+                  </m.div>
+                </m.nav>
+              </m.div>
             </Dialog.Content>
           </Dialog.Portal>
         )}

@@ -1,11 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { ReactNode } from "react";
 import { routing } from "@/i18n/routing";
-import { cormorant, manrope } from "@/app/fonts";
+import { cormorant, cormorantItalic, manrope } from "@/app/fonts";
 import { site } from "@/lib/site";
 import { introSeenScript } from "@/components/motion/intro-loader";
 import { MotionProvider } from "@/components/motion/motion-provider";
@@ -16,6 +15,7 @@ import { StoreHydrator } from "@/components/layout/store-hydrator";
 import { NewsletterPopup } from "@/components/layout/newsletter-popup";
 import { WhatsAppBubble } from "@/components/layout/whatsapp-bubble";
 import { ConsentBanner } from "@/components/consent/consent-banner";
+import { consentPendingScript } from "@/components/consent/pending-script";
 import { TrackingScripts } from "@/components/tracking/tracking-scripts";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -53,11 +53,11 @@ export default async function LocaleLayout({
 
   return (
     // The intro loader's inline script sets data attributes on <html> before hydration.
-    <html lang={locale} className={`${cormorant.variable} ${manrope.variable}`} suppressHydrationWarning>
+    <html lang={locale} className={`${cormorant.variable} ${cormorantItalic.variable} ${manrope.variable}`} suppressHydrationWarning>
       <head>
-        <Script id="intro-seen" strategy="beforeInteractive">
-          {introSeenScript}
-        </Script>
+        {/* Plain inline script, not next/script: it must run before first paint (next/script's
+            beforeInteractive defers inline code until the Next runtime boots). */}
+        <script dangerouslySetInnerHTML={{ __html: `${introSeenScript}${consentPendingScript}` }} />
       </head>
       <body>
         <NextIntlClientProvider>

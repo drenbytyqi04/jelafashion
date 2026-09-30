@@ -8,7 +8,7 @@ import { trackingIds } from "./ids";
 // the same event_id, so Meta counts one purchase even when the browser event is blocked.
 // Personal data is normalised and SHA-256 hashed before it leaves the server.
 
-const GRAPH_VERSION = process.env.META_GRAPH_VERSION ?? "v21.0";
+const GRAPH_VERSION = process.env.META_GRAPH_VERSION || "v21.0";
 const sha = (v: string | null | undefined) => (v ? createHash("sha256").update(v.trim().toLowerCase()).digest("hex") : undefined);
 
 export const metaCapiEnabled = () => Boolean(trackingIds.metaPixel && process.env.META_CAPI_ACCESS_TOKEN);

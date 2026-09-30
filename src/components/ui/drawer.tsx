@@ -1,7 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { Dialog } from "radix-ui";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
@@ -62,7 +62,7 @@ export function Drawer({
         {open && (
           <Dialog.Portal forceMount>
             <Dialog.Overlay asChild forceMount>
-              <motion.div
+              <m.div
                 className="fixed inset-0 z-50 bg-ink/40"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -71,7 +71,7 @@ export function Drawer({
               />
             </Dialog.Overlay>
             <Dialog.Content asChild forceMount>
-              <motion.div
+              <m.div
                 data-lenis-prevent
                 className={cn(
                   "fixed z-50 flex flex-col border-hairline bg-ivory focus:outline-none",
@@ -107,7 +107,7 @@ export function Drawer({
                     {footer}
                   </div>
                 )}
-              </motion.div>
+              </m.div>
             </Dialog.Content>
           </Dialog.Portal>
         )}

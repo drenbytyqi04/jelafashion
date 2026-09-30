@@ -164,9 +164,10 @@ export function CollectionView({
       <div className="lg:col-span-9">
         {/* Results bar */}
         <div className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-          <p className="nums text-small text-stone" aria-live="polite">
+          {/* The count heads the grid, so card titles (h3) sit under an h2. */}
+          <h2 className="nums font-sans text-small text-stone" aria-live="polite">
             {t("results", { count: results.length })}
-          </p>
+          </h2>
           <div className="ml-auto flex items-center gap-4">
             <Select
               label={<span className="sr-only">{t("sortBy")}</span>}

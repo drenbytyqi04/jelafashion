@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "motion/react";
+import { m, useScroll, useTransform } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { useReducedMotionSafe } from "@/components/motion/use-reduced-motion-safe";
@@ -36,9 +36,9 @@ export function Parallax({
 
   return (
     <div ref={ref} className={cn("relative overflow-hidden", className)}>
-      <motion.div style={active ? { y, scale: 1 + (amount * 2) / 100 } : undefined} className="h-full w-full">
+      <m.div style={active ? { y, scale: 1 + (amount * 2) / 100 } : undefined} className="h-full w-full">
         {children}
-      </motion.div>
+      </m.div>
     </div>
   );
 }

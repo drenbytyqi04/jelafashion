@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useSpring } from "motion/react";
+import { m, useScroll, useSpring } from "motion/react";
 import { useRef } from "react";
 import { useReducedMotionSafe } from "@/components/motion/use-reduced-motion-safe";
 
@@ -13,7 +13,7 @@ export function TapeLine() {
 
   return (
     <div ref={ref} aria-hidden className="absolute bottom-0 left-0 top-1 w-px bg-hairline">
-      <motion.div
+      <m.div
         className="h-full w-full origin-top bg-champagne"
         style={reduce ? { scaleY: 1 } : { scaleY }}
       />

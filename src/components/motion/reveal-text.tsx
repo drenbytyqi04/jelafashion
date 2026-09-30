@@ -1,11 +1,11 @@
 "use client";
 
-import { motion, type Variants } from "motion/react";
+import { m, type Variants } from "motion/react";
 import { cn } from "@/lib/cn";
 import { duration, ease, staggerFor } from "@/lib/motion";
 import { useReducedMotionSafe } from "@/components/motion/use-reduced-motion-safe";
 
-const MOTION_TAGS = { h1: motion.h1, h2: motion.h2, h3: motion.h3, p: motion.p } as const;
+const MOTION_TAGS = { h1: m.h1, h2: m.h2, h3: m.h3, p: m.p } as const;
 type Tag = keyof typeof MOTION_TAGS;
 
 type Props = {
@@ -70,10 +70,10 @@ export function RevealText({ lines, as: Tag = "h2", id, className, delay = 0, im
     >
       {lines.map((text, i) => (
         <span key={i} className="block overflow-hidden pb-[0.08em] -mb-[0.08em]">
-          <motion.span className="block will-change-transform" variants={line} custom={i}>
+          <m.span className="block will-change-transform" variants={line} custom={i}>
             {text}
             {i < lines.length - 1 ? " " : null}
-          </motion.span>
+          </m.span>
         </span>
       ))}
     </MotionTag>

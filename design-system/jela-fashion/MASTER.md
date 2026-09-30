@@ -303,6 +303,27 @@ resolved.
 26. **Print sheet without colour tint** (Phase 5): the product placeholder on the A4
     measurement sheet is neutral, per "white, ink only".
 
+27. **Search is a page, not an overlay** (Phase 6): the header's search icon opens
+    `/search`, which works without JavaScript, can be shared and keeps the back button
+    meaningful. The field is focused on arrival, so it feels like an overlay on mobile.
+28. **Cookie banner rendered on the server** (Phase 6): a tiny inline script marks a
+    first visit before paint, so the banner appears with the page instead of popping in
+    after hydration (no layout shift, no flash for returning visitors). Accept and
+    decline have equal weight; no dark patterns.
+29. **Floating WhatsApp button hidden on dress pages and in checkout** (Phase 6): the dress
+    page has its own prefilled WhatsApp link beside the sticky add-to-cart, and checkout
+    is focus mode. It also waits until the cookie choice is made, so the two never stack.
+30. **Legal pages carry placeholders** (Phase 6): company name, address, business number,
+    return window and similar are `[PLACEHOLDER]`s for the atelier and its lawyer; no
+    legal fact is invented.
+31. **Italic Cormorant is not preloaded** (Phase 6): it appears only in testimonial quotes
+    far below the fold. The three upright weights stay preloaded for the headlines and the
+    wordmark.
+32. **Newsletter prompt stays out of the purchase path** (Phase 6): not on dress pages,
+    cart, checkout, account or order pages, and never over an open dialog (menu, cart,
+    wizard). The cookie banner sits below dialogs (z-45) so it never covers the wizard's
+    or the menu's controls.
+
 ### ui-ux-pro-max reconciliation
 
 The generator classified the project as "E-commerce Luxury". Its output and what happened

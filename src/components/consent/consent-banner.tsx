@@ -59,10 +59,12 @@ export function ConsentBanner() {
 
   return (
     <>
-      {hydrated && !decidedAt && !preferencesOpen && (
+      {/* Server-rendered and shown by CSS until hydration; then React decides. Above the
+          header and sticky bars, below dialogs (z-50): the menu, wizard and drawers cover it. */}
+      {(!hydrated || (!decidedAt && !preferencesOpen)) && (
         <section
           aria-labelledby="consent-title"
-          className="fixed inset-x-0 bottom-0 z-[60] border-t border-hairline bg-ivory px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5 md:inset-x-auto md:bottom-6 md:left-6 md:max-w-md md:border md:p-6"
+          className={`${hydrated ? "" : "consent-ssr "}fixed inset-x-0 bottom-0 z-45 border-t border-hairline bg-ivory px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5 md:inset-x-auto md:bottom-6 md:left-6 md:max-w-md md:border md:p-6`}
         >
           <h2 id="consent-title" className="font-serif text-[1.375rem] leading-tight">
             {t("title")}

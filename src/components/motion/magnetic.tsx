@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
+import { m, useMotionValue, useReducedMotion, useSpring } from "motion/react";
 import { useEffect, useRef, useState, type PointerEvent, type ReactNode } from "react";
 
 const MAX_PULL = 6;
@@ -36,7 +36,7 @@ export function Magnetic({ children, className }: { children: ReactNode; classNa
   }
 
   return (
-    <motion.span
+    <m.span
       ref={ref}
       onPointerMove={onMove}
       onPointerLeave={reset}
@@ -44,6 +44,6 @@ export function Magnetic({ children, className }: { children: ReactNode; classNa
       className={className}
     >
       {children}
-    </motion.span>
+    </m.span>
   );
 }

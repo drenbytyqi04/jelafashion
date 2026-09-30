@@ -27,6 +27,11 @@ const lines = [
 
 async function newPage(width, cartLines) {
   const ctx = await browser.newContext({ viewport: { width, height: 900 } });
+  // Cookie choice already made: these suites test buying, not the banner (qa.mjs covers it).
+  await ctx.addInitScript(() => {
+    if (!localStorage.getItem("jf-consent"))
+      localStorage.setItem("jf-consent", JSON.stringify({ state: { analytics: false, marketing: false, decidedAt: "2026-01-01T00:00:00.000Z" }, version: 1 }));
+  });
   await ctx.addInitScript((value) => {
     if (!sessionStorage.getItem("jf-qa-seeded")) {
       localStorage.setItem("jf-cart", value);

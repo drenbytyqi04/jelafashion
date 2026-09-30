@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import type { Locale, Testimonial } from "@/lib/catalog/types";
@@ -35,7 +35,7 @@ export function Testimonials({ items }: { items: Testimonial[] }) {
             className="grid min-h-[14rem] lg:min-h-[16rem]"
           >
             <AnimatePresence mode="wait" initial={false}>
-              <motion.figure
+              <m.figure
                 key={item.id}
                 className="[grid-area:1/1]"
                 initial={{ opacity: 0, y: 12 }}
@@ -43,14 +43,14 @@ export function Testimonials({ items }: { items: Testimonial[] }) {
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: duration.ui, ease: ease.couture }}
               >
-                <blockquote className="font-serif text-[clamp(1.75rem,1.4rem+1.5vw,2.75rem)] font-light italic leading-snug">
+                <blockquote className="font-serif-italic text-[clamp(1.75rem,1.4rem+1.5vw,2.75rem)] font-light italic leading-snug">
                   “{pick(item.quote, locale)}”
                 </blockquote>
                 <figcaption className="mt-6 text-small text-stone">
                   {item.author}
                   {item.location && <>, {item.location}</>}
                 </figcaption>
-              </motion.figure>
+              </m.figure>
             </AnimatePresence>
           </div>
           {items.length > 1 && (

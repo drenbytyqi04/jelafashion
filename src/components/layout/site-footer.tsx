@@ -5,7 +5,7 @@ import { site, whatsappHref } from "@/lib/site";
 import { Accordion } from "@/components/ui/accordion";
 import { InstagramIcon, WhatsAppIcon } from "@/components/icons/brand-icons";
 import { LanguageSwitcher } from "./language-switcher";
-import { NewsletterForm } from "./newsletter-form";
+import { LazyNewsletterForm } from "./lazy-newsletter-form";
 import { CookieSettingsLink } from "@/components/consent/cookie-settings-link";
 
 type FooterLink = { label: string; href: StaticPathname } | { label: string; external: string; icon?: "instagram" | "whatsapp" };
@@ -80,7 +80,7 @@ export function SiteFooter() {
           <p className="mt-3 text-body text-stone">{t("newsletter.text")}</p>
         </div>
         <div className="lg:col-span-6 lg:col-start-7">
-          <NewsletterForm />
+          <LazyNewsletterForm />
         </div>
       </div>
 
