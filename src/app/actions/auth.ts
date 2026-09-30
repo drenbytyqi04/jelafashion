@@ -10,6 +10,7 @@ import { SimpleEmail } from "@/emails/simple-email";
 import { createLinkToken, LOCAL_SESSION_COOKIE } from "@/lib/auth/local-session";
 import { authMode, safeNext } from "@/lib/auth/viewer";
 import { siteOrigin } from "@/lib/site-origin";
+import { withinRateLimit } from "@/lib/security/rate-limit";
 import { sessionSupabase } from "@/lib/supabase/server-client";
 
 const requestSchema = z.object({
@@ -29,6 +30,7 @@ const callbackUrl = (origin: string, next: string) => `${origin}/auth/callback?n
 export async function requestSignInLink(input: unknown): Promise<AuthResult> {
   const parsed = requestSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: (parsed.error.issues[0]?.message as "email") ?? "email" };
+  if (!(await withinRateLimit("signInLink"))) return { ok: false, error: "failure" };
   const { email, locale } = parsed.data;
   const next = safeNext(parsed.data.next, `/${locale}`);
   const origin = await siteOrigin();

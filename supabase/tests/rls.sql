@@ -55,6 +55,16 @@ do $$ begin
 exception when insufficient_privilege then null;
 end $$;
 do $$ begin
+  perform public.hit_rate_limit('contact:x', 1000, 60);
+  raise exception 'anon can touch rate limits';
+exception when insufficient_privilege then null;
+end $$;
+do $$ begin
+  perform 1 from public.rate_limits;
+  raise exception 'anon can read rate limits';
+exception when insufficient_privilege then null;
+end $$;
+do $$ begin
   perform public.subscribe_newsletter('not-an-email');
   raise exception 'invalid email accepted';
 exception when invalid_parameter_value then null;

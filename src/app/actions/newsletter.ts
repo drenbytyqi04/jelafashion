@@ -6,6 +6,7 @@ import type { Locale } from "@/lib/catalog/types";
 import { sendNewsletterWelcome } from "@/lib/email/notifications";
 import { localCatalog, mutateLocalDb } from "@/lib/local-db";
 import { siteOrigin } from "@/lib/site-origin";
+import { withinRateLimit } from "@/lib/security/rate-limit";
 import { publicSupabase } from "@/lib/supabase/public-client";
 import { serviceSupabase } from "@/lib/supabase/service-client";
 import { newsletterSchema } from "@/lib/validation/newsletter";
@@ -22,6 +23,7 @@ export async function subscribeToNewsletter(input: unknown): Promise<NewsletterR
   if (!parsed.success) {
     return { ok: false, field: "email", error: parsed.error.issues[0]?.message ?? "email" };
   }
+  if (!(await withinRateLimit("newsletter"))) return { ok: false, error: "failure" };
   const email = parsed.data.email.toLowerCase();
   const source = parsed.data.source ?? "footer";
   const locale = (await getLocale()) as Locale;

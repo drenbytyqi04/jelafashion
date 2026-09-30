@@ -7,6 +7,7 @@ import { getProduct } from "@/lib/catalog/repository";
 import { pick } from "@/lib/catalog/types";
 import { sendEmail, shopInbox } from "@/lib/email/send";
 import { siteOrigin } from "@/lib/site-origin";
+import { withinRateLimit } from "@/lib/security/rate-limit";
 import { contactSchema } from "@/lib/validation/contact";
 import { SimpleEmail } from "@/emails/simple-email";
 
@@ -14,13 +15,14 @@ export type ContactResult = { ok: true } | { ok: false; error: "invalid" | "fail
 
 /**
  * Contact form: the atelier gets the message (reply-to the sender), the sender gets a
- * short receipt in her language. A filled honeypot is accepted silently and dropped.
+ * short receipt in her language (without the message). Limited per address. A filled honeypot is accepted silently and dropped.
  */
 export async function sendContactMessage(input: unknown): Promise<ContactResult> {
   const parsed = contactSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "invalid" };
   const v = parsed.data;
   if (v.website) return { ok: true };
+  if (!(await withinRateLimit("contact"))) return { ok: false, error: "failure" };
   const to = shopInbox();
   if (!to) {
     console.error("[contact] no SHOP_NOTIFICATION_EMAIL or NEXT_PUBLIC_CONTACT_EMAIL configured");
@@ -60,7 +62,8 @@ export async function sendContactMessage(input: unknown): Promise<ContactResult>
       lang: locale,
       preview: own("emails.contact.receiptText"),
       heading: own("emails.contact.receiptHeading", { name: v.name.split(" ")[0] }),
-      paragraphs: [own("emails.contact.receiptText"), `${own("emails.contact.yourMessage")}:`, v.message],
+      // The message is not echoed back: otherwise the form could relay any text to any address.
+      paragraphs: [own("emails.contact.receiptText")],
       footer: own("emails.footer"),
       siteUrl: `${origin}/${locale}`,
     }),

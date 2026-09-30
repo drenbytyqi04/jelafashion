@@ -609,8 +609,7 @@
       "shopIntro": "A message arrived through the contact form.",
       "receiptSubject": "We received your message",
       "receiptHeading": "Thank you, {name}.",
-      "receiptText": "Your message has reached the atelier in Prizren. We'll reply personally, usually on the same channel you wrote from.",
-      "yourMessage": "Your message"
+      "receiptText": "Your message has reached the atelier in Prizren. We'll reply personally, usually on the same channel you wrote from."
     }
   },
   "auth": {

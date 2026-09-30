@@ -58,6 +58,7 @@ The schema lives in `supabase/migrations/` (apply in filename order):
 | `…_orders.sql`                  | orders (JF-1001…, secret access token), items with measurement snapshots, payment proofs, status history, Paysera callbacks, atomic `redeem_discount()` |
 | `…_accounts.sql`                | customers' saved addresses and named measurement profiles (owner-only), email index for guest orders |
 | `…_stock.sql`                   | atomic `adjust_stock()`: in-stock sizes are taken at checkout and returned on cancellation |
+| `…_rate_limits.sql`             | per-address counters for public forms (`hit_rate_limit()`, server only) |
 
 Row Level Security is on for every table: visitors read published catalog rows only,
 admins manage everything, discount codes and the newsletter list are never public.
@@ -302,3 +303,13 @@ src/stores/                Zustand: cart and wishlist (persisted), UI, toasts
 
 Without `SUPABASE_SERVICE_ROLE_KEY` the shop browses normally but checkout says it is
 unavailable, so the site can go up before payments are ready.
+
+**Security baseline.** Every response carries HSTS, `X-Content-Type-Options`,
+`Referrer-Policy`, `Permissions-Policy` and a framing policy (`next.config.ts`; no script
+CSP, because nonces would make every page render per request). Public forms are limited
+per client address (`src/lib/security/rate-limit.ts`): contact 5/hour, newsletter
+10/hour, sign-in links 5 per 15 minutes, discount checks 20 and orders 10 per 10 minutes,
+payment proofs 20/hour. Counters live in Postgres so all Vercel instances share them;
+local development and the QA suites run unmetered (`JF_RATE_LIMIT=1` turns the in-memory
+counter on). The contact receipt no longer repeats the message, so the form can't relay
+text to a stranger's inbox.

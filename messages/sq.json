@@ -610,8 +610,7 @@
       "shopIntro": "Ka ardhur një mesazh përmes formularit të kontaktit.",
       "receiptSubject": "E morëm mesazhin tënd",
       "receiptHeading": "Faleminderit, {name}.",
-      "receiptText": "Mesazhi yt arriti në ateljen tonë në Prizren. Do të të përgjigjemi personalisht.",
-      "yourMessage": "Mesazhi yt"
+      "receiptText": "Mesazhi yt arriti në ateljen tonë në Prizren. Do të të përgjigjemi personalisht."
     }
   },
   "auth": {

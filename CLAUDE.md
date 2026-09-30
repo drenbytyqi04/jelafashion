@@ -155,6 +155,8 @@ with self-drawing measurement lines.
 7. Launch on Vercel: import, environment variables, Supabase Auth URLs, first admin,
    domain, real content. **In progress — the owner imports the project** (the Vercel
    connector cannot create projects); the checklist is in README "Launching on Vercel".
+   Pre-launch hardening done: security headers, per-address rate limits on public
+   forms (`src/lib/security/rate-limit.ts`, migration `rate_limits`).
 
 After each phase: run the dev server, check 375px and desktop, run the pre-delivery
 checklist in MASTER.md, fix all errors, then **stop and wait for approval**.

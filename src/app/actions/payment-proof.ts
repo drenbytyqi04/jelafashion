@@ -8,6 +8,7 @@ import type { Order, PaymentProof } from "@/lib/commerce/types";
 import { OFFLINE_METHODS } from "@/lib/commerce/types";
 import { sendShopNewProof } from "@/lib/email/notifications";
 import { siteOrigin } from "@/lib/site-origin";
+import { withinRateLimit } from "@/lib/security/rate-limit";
 import { downloadObject, removeObject, uploadTicket, type UploadTicket } from "@/lib/storage/signed-upload";
 import { EXTENSIONS, sniffFile } from "@/lib/storage/sniff";
 
@@ -48,6 +49,7 @@ export async function startProofUpload(input: unknown): Promise<{ ok: true; tick
   const parsed = z.object({ token, contentType: z.string(), size: z.number().int().positive() }).safeParse(input);
   if (!parsed.success) return { ok: false, error: "failure" };
   if (!ACCEPTED.includes(parsed.data.contentType)) return { ok: false, error: "type" };
+  if (!(await withinRateLimit("proof"))) return { ok: false, error: "failure" };
   if (parsed.data.size > MAX_BYTES) return { ok: false, error: "size" };
   try {
     const opened = await openOrder(parsed.data.token);
@@ -100,6 +102,7 @@ export async function uploadPaymentProof(formData: FormData): Promise<ProofResul
     senderName: formData.get("senderName") ?? undefined,
   });
   if (!fields.success) return { ok: false, error: "failure" };
+  if (!(await withinRateLimit("proof"))) return { ok: false, error: "failure" };
   const file = formData.get("file");
   if (!(file instanceof File) || file.size === 0) return { ok: false, error: "file" };
   if (file.size > MAX_BYTES) return { ok: false, error: "size" };

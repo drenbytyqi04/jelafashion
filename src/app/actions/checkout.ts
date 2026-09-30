@@ -18,6 +18,7 @@ import type { Discount, NewOrder, OrderItem } from "@/lib/commerce/types";
 import { sendOrderConfirmation, sendShopNewOrder } from "@/lib/email/notifications";
 import { isOffline, paymentProvider } from "@/lib/payments/providers";
 import { siteOrigin } from "@/lib/site-origin";
+import { withinRateLimit } from "@/lib/security/rate-limit";
 import { addressSchema, cartLinesSchema, checkoutSchema } from "@/lib/validation/checkout";
 
 export type DiscountResult = { ok: true; discount: Discount } | { ok: false; error: "discountInvalid" | "unavailable" };
@@ -25,6 +26,8 @@ export type DiscountResult = { ok: true; discount: Discount } | { ok: false; err
 /** Checks a code for the live summary. Only placeOrder redeems it. */
 export async function checkDiscount(code: unknown): Promise<DiscountResult> {
   if (typeof code !== "string" || !/^[A-Za-z0-9_-]{3,32}$/.test(code.trim())) return { ok: false, error: "discountInvalid" };
+  // Limited so codes can't be guessed by trying thousands.
+  if (!(await withinRateLimit("discount"))) return { ok: false, error: "discountInvalid" };
   const store = orderStore();
   if (!store) return { ok: false, error: "unavailable" };
   const discount = await store.findDiscount(code.trim());
@@ -49,6 +52,7 @@ export async function placeOrder(input: { values: unknown; lines: unknown; saveA
   const values = checkoutSchema.safeParse(input?.values);
   const lines = cartLinesSchema.safeParse(input?.lines);
   if (!values.success || !lines.success) return { ok: false, error: "invalid" };
+  if (!(await withinRateLimit("order"))) return { ok: false, error: "failure" };
   const v = values.data;
   const locale = (await getLocale()) as Locale;
 
