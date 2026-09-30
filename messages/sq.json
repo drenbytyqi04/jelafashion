@@ -604,6 +604,14 @@
       "heading": "Mirë se erdhe.",
       "text": "Do të jesh ndër të parat që sheh koleksionet e reja nga atelja jonë në Prizren.",
       "cta": "Shiko koleksionin"
+    },
+    "contact": {
+      "shopSubject": "Mesazh i ri nga {name} · {topic}",
+      "shopIntro": "Ka ardhur një mesazh përmes formularit të kontaktit.",
+      "receiptSubject": "E morëm mesazhin tënd",
+      "receiptHeading": "Faleminderit, {name}.",
+      "receiptText": "Mesazhi yt arriti në ateljen tonë në Prizren. Do të të përgjigjemi personalisht.",
+      "yourMessage": "Mesazhi yt"
     }
   },
   "auth": {
@@ -695,5 +703,462 @@
       "saved": "Ndryshimet u ruajtën."
     },
     "failure": "Nuk u ruajt. Provo sërish pas pak."
+  },
+  "pages": {
+    "breadcrumb": "Rruga e faqes",
+    "madeToMeasure": {
+      "metaTitle": "Fustane sipas masave",
+      "metaDescription": "Çdo fustan i koleksionit qepet sipas masave të tua në ateljen tonë në Prizren. Të udhëheqim masë për masë, me dërgesë në mbarë botën.",
+      "label": "Sipas masave",
+      "title": [
+        "Masat e tua.",
+        "Fustani yt."
+      ],
+      "intro": "Në masat standarde, trupi yt i përshtatet fustanit. Këtu ndodh e kundërta: fustani pritet dhe qepet sipas teje, me dorë, në Prizren.",
+      "stepsTitle": "Si funksionon",
+      "measureTitle": "Çfarë do të të kërkojmë",
+      "measureText": "Udhëzuesi të kërkon një masë në çdo ekran, me një ilustrim dhe një udhëzim të shkurtër për secilën. Centimetrat ose inçët i zgjedh një herë. Nëse një vlerë duket e pazakontë, të pyesim para se të vazhdosh.",
+      "alwaysTitle": "Për çdo fustan",
+      "extraTitle": "Për disa modele",
+      "extraText": "Për fustanet me mëngë ose me korse të puthitur, udhëzuesi shton vetëm masat që i duhen atij modeli.",
+      "tipsTitle": "Për masa të sakta",
+      "tips": [
+        "Përdor metër rrobaqepësie, jo metër ndërtimi.",
+        "Merr masat mbi të brendshme të lehta, jo mbi rroba të trasha.",
+        "Mbaje metrin të rrafshët dhe të puthitur, pa e shtrënguar.",
+        "Nëse mundesh, kërko ndihmë nga dikush tjetër.",
+        "Për gjatësitë deri në dysheme, vish këpucët që do të mbash."
+      ],
+      "timeTitle": "Sa zgjat",
+      "timeText": "Koha e punës shënohet te secili fustan. Fustani niset sapo të përfundojë, dhe koha e dërgesës llogaritet nga ai moment.",
+      "cta": "Zgjidh fustanin",
+      "sizeGuideCta": "Shiko udhëzuesin e masave"
+    },
+    "sizeGuide": {
+      "metaTitle": "Udhëzuesi i masave",
+      "metaDescription": "Tabela e masave standarde XS–XXL në centimetra dhe inç, dhe si t'i marrësh masat e tua saktë.",
+      "label": "Masat",
+      "howToTitle": "Si të marrësh masat",
+      "customTitle": "Mes dy masave?",
+      "customText": "Zgjidh «Masë e personalizuar» te fustani dhe e qepim sipas masave të tua.",
+      "customCta": "Si funksionon qepja sipas masave"
+    },
+    "atelier": {
+      "metaTitle": "Atelja",
+      "metaDescription": "Jela Fashion është atelje fustanesh nusërie dhe mbrëmjeje në Prizren. Çdo fustan punohet me dorë dhe mund të qepet sipas masave të tua.",
+      "label": "Atelja",
+      "title": [
+        "Punuar me dorë",
+        "në Prizren."
+      ],
+      "intro": "Jela Fashion është atelje fustanesh nusërie, mbrëmjeje dhe të shkurtra në Prizren. Çdo fustan pritet, qepet dhe përfundohet me dorë, në masat standarde ose sipas masave të tua.",
+      "chapters": [
+        {
+          "title": "Tavolina e ateljes",
+          "text": "Çdo fustan nis këtu: pëlhura zgjidhet me dorë, modeli pritet sipas masave, qëndisja vendoset pe pas peje dhe prova kontrollohet para se fustani të largohet nga Prizreni."
+        },
+        {
+          "title": "Sipas teje",
+          "text": "Masat standarde janë vetëm një pikënisje. Kur një fustan duhet të rrijë sikur të jetë qepur vetëm për ty, e qepim sipas masave të tua, masë pas mase."
+        },
+        {
+          "title": "Nga Prizreni në botë",
+          "text": "Fustanet tona udhëtojnë kudo që të jesh, të paketuara me kujdes nga duart që i qepën."
+        }
+      ],
+      "factsTitle": "Atelja me pak fjalë",
+      "facts": [
+        {
+          "label": "Themeluar",
+          "value": "[YEAR FOUNDED]"
+        },
+        {
+          "label": "Qyteti",
+          "value": "Prizren, Kosovë"
+        },
+        {
+          "label": "Mjeshtëria",
+          "value": "Punuar me dorë"
+        },
+        {
+          "label": "Masat",
+          "value": "XS–XXL dhe sipas masave"
+        },
+        {
+          "label": "Dërgesa",
+          "value": "Në mbarë botën"
+        }
+      ],
+      "quote": "[FOUNDER QUOTE]",
+      "quoteBy": "[FOUNDER NAME], themeluese",
+      "ctaTitle": "Eja t'i njohësh fustanet.",
+      "ctaText": "Na shkruaj për një fustan, për një provë ose për masat e tua. Të përgjigjemi personalisht.",
+      "ctaContact": "Shkruaji ateljes",
+      "ctaShop": "Shiko koleksionin"
+    },
+    "contact": {
+      "metaTitle": "Kontakti",
+      "metaDescription": "Shkruaji ateljes Jela Fashion në Prizren për masat, për një porosi ose për një konsultë me video, me formular, email ose WhatsApp.",
+      "label": "Kontakti",
+      "title": "Na shkruaj.",
+      "intro": "Për masat, për një porosi, ose thjesht për të pyetur nëse një fustan të rri mirë, të përgjigjemi personalisht.",
+      "name": "Emri",
+      "email": "Email-i",
+      "phone": "Telefoni",
+      "topic": "Tema",
+      "topics": {
+        "general": "Pyetje e përgjithshme",
+        "sizing": "Masat dhe prova",
+        "order": "Një porosi ekzistuese",
+        "video": "Konsultë me video"
+      },
+      "orderNumber": "Numri i porosisë",
+      "message": "Mesazhi",
+      "videoNote": "Shkruaj dy-tre orare që të përshtaten dhe ne e konfirmojmë njërin.",
+      "dressNote": "Rreth fustanit: {name}",
+      "privacyNote": "Të dhënat i përdorim vetëm për t'iu përgjigjur mesazhit tënd.",
+      "submit": "Dërgo mesazhin",
+      "sent": "Faleminderit. Mesazhi yt arriti në atelje dhe do të të përgjigjemi së shpejti.",
+      "failure": "Mesazhi nuk u dërgua. Provo sërish ose na shkruaj në WhatsApp.",
+      "channels": "Mënyra të tjera për të na gjetur",
+      "whatsapp": "WhatsApp",
+      "whatsappText": "Mënyra më e shpejtë për të na shkruar",
+      "emailTitle": "Email",
+      "instagram": "Instagram",
+      "visitTitle": "Atelja",
+      "address": "[STREET ADDRESS], Prizren, Kosovë",
+      "hoursTitle": "Orari",
+      "hours": "[OPENING HOURS]",
+      "showMap": "Shfaq hartën",
+      "mapNote": "Harta ngarkohet nga OpenStreetMap vetëm kur e kërkon ti.",
+      "mapTitle": "Harta e Prizrenit"
+    },
+    "faq": {
+      "metaTitle": "Pyetje të shpeshta",
+      "metaDescription": "Përgjigje për masat, fustanet sipas masave, kohën e punës, dërgesën në mbarë botën, pagesën dhe kthimet te Jela Fashion.",
+      "label": "Ndihmë",
+      "title": "Pyetjet e tua, të përgjigjura.",
+      "intro": "Nuk e gjen atë që kërkon? Na shkruaj dhe të përgjigjemi personalisht.",
+      "groups": [
+        {
+          "title": "Masat",
+          "items": [
+            {
+              "q": "Si ta zgjedh masën time?",
+              "a": "Krahaso masat e tua me udhëzuesin e masave. Nëse je mes dy masave ose jashtë tabelës, zgjidh «Masë e personalizuar» dhe fustani qepet sipas teje."
+            },
+            {
+              "q": "Si funksionon «Masë e personalizuar»?",
+              "a": "Pasi zgjedh fustanin, udhëzuesi të kërkon masat një nga një, me një ilustrim për secilën. Masat ruhen me porosinë dhe atelja i shqyrton para se të nisë punën."
+            },
+            {
+              "q": "Po sikur të gaboj një masë?",
+              "a": "Udhëzuesi të paralajmëron kur një vlerë duket e pazakontë. Nëse ke dyshime pasi ke porositur, na shkruaj sa më shpejt me numrin e porosisë."
+            }
+          ]
+        },
+        {
+          "title": "Porositë",
+          "items": [
+            {
+              "q": "Sa kohë duhet për një fustan?",
+              "a": "Koha e punës shënohet te secili fustan. Fustanet në stok nisen pak pas pagesës; ato me porosi dhe sipas masave nisen sapo të përfundojnë."
+            },
+            {
+              "q": "A mund ta ndryshoj ose ta anuloj porosinë?",
+              "a": "[CHANGE AND CANCELLATION POLICY]"
+            },
+            {
+              "q": "A mund të flas me dikë para se të porosis?",
+              "a": "Po. Na shkruaj në WhatsApp ose kërko një konsultë me video dhe të ndihmojmë me masën ose me zgjedhjen e fustanit."
+            }
+          ]
+        },
+        {
+          "title": "Dërgesa dhe pagesa",
+          "items": [
+            {
+              "q": "Ku dërgoni?",
+              "a": "Në mbarë botën. Tarifa dhe koha e dërgesës varen nga shteti dhe shfaqen te pagesa dhe te faqja e dërgesës."
+            },
+            {
+              "q": "Si mund të paguaj?",
+              "a": "Me kartelë përmes Paysera-s, me transfertë bankare, përmes Western Union, MoneyGram ose Ria, ose me Wise. Për pagesat pa kartelë, të dhënat shfaqen pas porosisë dhe mund ta ngarkosh faturën."
+            },
+            {
+              "q": "Në cilën monedhë janë çmimet?",
+              "a": "Në euro (EUR)."
+            }
+          ]
+        },
+        {
+          "title": "Kthimet",
+          "items": [
+            {
+              "q": "A mund ta kthej fustanin?",
+              "a": "Kushtet e plota janë te faqja e kthimeve, përfshirë ato për fustanet e qepura sipas masave të tua."
+            }
+          ]
+        }
+      ],
+      "moreTitle": "Ke ende një pyetje?",
+      "moreCta": "Shkruaji ateljes"
+    },
+    "shipping": {
+      "metaTitle": "Dërgesa",
+      "metaDescription": "Jela Fashion dërgon në mbarë botën nga Prizreni. Tarifat dhe koha e dërgesës për çdo rajon.",
+      "label": "Ndihmë",
+      "title": "Dërgesa në mbarë botën.",
+      "intro": "Çdo fustan niset nga Prizreni i paketuar me dorë. Tarifat dhe kohët më poshtë janë po ato të pagesës.",
+      "zone": "Rajoni",
+      "method": "Mënyra",
+      "price": "Çmimi",
+      "time": "Dorëzimi",
+      "days": "{min}–{max} ditë pune",
+      "free": "Falas",
+      "freeOver": "falas mbi {amount}",
+      "restOfWorld": "Çdo shtet tjetër",
+      "sections": [
+        {
+          "title": "Kur niset fustani",
+          "body": [
+            "Fustanet në stok nisen pasi të konfirmohet pagesa. Fustanet me porosi dhe ato sipas masave nisen sapo të përfundojnë; koha e punës shënohet te secili fustan, dhe koha e dërgesës llogaritet nga dita kur niset."
+          ]
+        },
+        {
+          "title": "Gjurmimi",
+          "body": [
+            "Kur porosia niset, ta dërgojmë numrin e gjurmimit me email, në gjuhën tënde. E gjen edhe te faqja e porosisë."
+          ]
+        },
+        {
+          "title": "Dogana dhe taksat e importit",
+          "body": [
+            "[CUSTOMS AND IMPORT DUTIES POLICY]"
+          ]
+        }
+      ]
+    },
+    "returns": {
+      "metaTitle": "Kthimet",
+      "metaDescription": "Kthimet dhe ndërrimet te Jela Fashion, për masat standarde dhe për fustanet sipas masave.",
+      "label": "Ndihmë",
+      "title": "Kthimet.",
+      "intro": "Nëse diçka nuk është siç duhet, na shkruaj së pari. E gjejmë bashkë zgjidhjen më të mirë.",
+      "sections": [
+        {
+          "title": "Masat standarde",
+          "body": [
+            "[RETURN POLICY: STANDARD SIZES]"
+          ]
+        },
+        {
+          "title": "Fustanet sipas masave",
+          "body": [
+            "[RETURN POLICY: MADE TO MEASURE]"
+          ]
+        },
+        {
+          "title": "Si të nisësh një kthim",
+          "body": [
+            "[HOW TO START A RETURN]"
+          ]
+        },
+        {
+          "title": "Rimbursimi",
+          "body": [
+            "[REFUND METHOD AND TIMING]"
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "metaTitle": "Politika e privatësisë",
+      "metaDescription": "Si i mbledh, i përdor dhe i mbron Jela Fashion të dhënat e tua personale.",
+      "label": "Ligjore",
+      "title": "Politika e privatësisë.",
+      "intro": "Kjo faqe shpjegon cilat të dhëna personale mbledhim kur e përdor këtë faqe, pse, dhe cilat janë të drejtat e tua.",
+      "updated": "Përditësuar më: [DATE]",
+      "sections": [
+        {
+          "title": "Kush jemi",
+          "body": [
+            "Kontrollues i të dhënave të tua është [COMPANY LEGAL NAME], [STREET ADDRESS], Prizren, Kosovë, numri i biznesit [BUSINESS NUMBER]. Kontakti: [EMAIL]."
+          ]
+        },
+        {
+          "title": "Çfarë mbledhim",
+          "body": [
+            "Kur porosit: emrin, email-in, telefonin, adresat e dërgesës dhe të faturimit, fustanet që zgjodhe dhe, për masat e personalizuara, masat e trupit dhe shënimet e tua.",
+            "Kur paguan pa kartelë: dëshminë e pagesës që ngarkon, referencën dhe emrin e dërguesit. Pagesat me kartelë i kryen Paysera; ne nuk i shohim kurrë të dhënat e kartelës.",
+            "Kur hap llogari: email-in dhe, nëse i shton, emrin, telefonin, adresat dhe masat e ruajtura.",
+            "Kur na shkruan ose abonohesh në newsletter: mesazhin, të dhënat e kontaktit dhe gjuhën."
+          ]
+        },
+        {
+          "title": "Pse i përdorim",
+          "body": [
+            "Për ta qepur dhe dërguar porosinë, për të konfirmuar pagesat, për t'iu përgjigjur pyetjeve të tua dhe, vetëm nëse pranove, për të të dërguar newsletter-in. Vetëm me pëlqimin tënd matim vizitat (Google Analytics) dhe efektin e reklamave (Meta, TikTok)."
+          ]
+        },
+        {
+          "title": "Kush i përpunon për ne",
+          "body": [
+            "Supabase (databaza dhe ruajtja e skedarëve, në BE), Vercel (hostimi), Resend (email-et), Paysera (pagesat me kartelë) dhe, me pëlqimin tënd, Google, Meta dhe TikTok. Secili i përpunon të dhënat vetëm për të ofruar shërbimin e vet."
+          ]
+        },
+        {
+          "title": "Sa kohë i mbajmë",
+          "body": [
+            "[RETENTION PERIODS]"
+          ]
+        },
+        {
+          "title": "Të drejtat e tua",
+          "body": [
+            "Mund të kërkosh qasje, korrigjim ose fshirje të të dhënave, të kundërshtosh përdorimin e tyre ose ta tërheqësh pëlqimin në çdo kohë, duke na shkruar në [EMAIL]. Zgjedhjet për cookies mund t'i ndryshosh kurdo te faqja e cookies."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "metaTitle": "Kushtet e shitjes",
+      "metaDescription": "Kushtet që vlejnë për porositë e bëra në faqen e Jela Fashion.",
+      "label": "Ligjore",
+      "title": "Kushtet e shitjes.",
+      "intro": "Këto kushte vlejnë për çdo porosi të bërë në këtë faqe. Të lutemi lexoji para se të porosisësh.",
+      "updated": "Përditësuar më: [DATE]",
+      "sections": [
+        {
+          "title": "Shitësi",
+          "body": [
+            "[COMPANY LEGAL NAME], [STREET ADDRESS], Prizren, Kosovë, numri i biznesit [BUSINESS NUMBER], email [EMAIL]."
+          ]
+        },
+        {
+          "title": "Porositë",
+          "body": [
+            "Porosia jote konfirmohet me email bashkë me numrin e saj. Vlejnë fustani, masa ose masat, çmimi dhe dërgesa që shfaqen te pagesa."
+          ]
+        },
+        {
+          "title": "Çmimet dhe pagesa",
+          "body": [
+            "Çmimet janë në euro (EUR). Mund të paguash me kartelë përmes Paysera-s, me transfertë bankare, përmes Western Union, MoneyGram ose Ria, ose me Wise. Puna për fustanin nis sapo të konfirmohet pagesa."
+          ]
+        },
+        {
+          "title": "Fustanet sipas masave",
+          "body": [
+            "Fustanet e personalizuara qepen sipas masave që shkruan ti. [MADE TO MEASURE TERMS]"
+          ]
+        },
+        {
+          "title": "Koha e punës dhe dërgesa",
+          "body": [
+            "Koha e punës shënohet te secili fustan; koha e dërgesës shfaqet te pagesa. [DELIVERY TERMS]"
+          ]
+        },
+        {
+          "title": "Kthimet",
+          "body": [
+            "Kthimet ndjekin politikën e kthimeve."
+          ]
+        },
+        {
+          "title": "Ligji i zbatueshëm",
+          "body": [
+            "[GOVERNING LAW AND DISPUTES]"
+          ]
+        }
+      ]
+    },
+    "cookies": {
+      "metaTitle": "Politika e cookies",
+      "metaDescription": "Cilat cookies dhe teknologji të ngjashme përdor faqja e Jela Fashion dhe si t'i ndryshosh zgjedhjet.",
+      "label": "Ligjore",
+      "title": "Politika e cookies.",
+      "intro": "Përdorim vetëm atë që i duhet faqes për të punuar, dhe matim vizitat ose reklamat vetëm nëse pranon.",
+      "change": "Ndrysho cilësimet e cookies",
+      "name": "Emri",
+      "purpose": "Qëllimi",
+      "groups": [
+        {
+          "title": "Të domosdoshme",
+          "text": "Gjithmonë aktive. Pa to faqja nuk punon.",
+          "rows": [
+            [
+              "NEXT_LOCALE",
+              "Mban mend gjuhën tënde."
+            ],
+            [
+              "sb-…-auth-token",
+              "Të mban brenda llogarisë."
+            ],
+            [
+              "jf-cart, jf-wishlist (local storage)",
+              "Shporta dhe fustanet e ruajtura, vetëm në këtë pajisje."
+            ],
+            [
+              "jf-measurements (local storage)",
+              "Masat që zgjodhe t'i mbash mend në këtë pajisje."
+            ],
+            [
+              "jf-consent (local storage)",
+              "Zgjedhjet e tua për cookies."
+            ]
+          ]
+        },
+        {
+          "title": "Analitike",
+          "text": "Vetëm me pëlqimin tënd. Na tregojnë si përdoret faqja, që ta përmirësojmë.",
+          "rows": [
+            [
+              "_ga, _ga_*",
+              "Google Analytics: numëron vizitat dhe faqet, pa të identifikuar."
+            ]
+          ]
+        },
+        {
+          "title": "Marketing",
+          "text": "Vetëm me pëlqimin tënd. Matin reklamat tona në Instagram, Facebook dhe TikTok.",
+          "rows": [
+            [
+              "_fbp, _fbc",
+              "Meta Pixel: lidh vizitat me reklamat tona në Instagram dhe Facebook."
+            ],
+            [
+              "_ttp",
+              "TikTok Pixel: lidh vizitat me reklamat tona në TikTok."
+            ]
+          ]
+        }
+      ]
+    },
+    "wishlist": {
+      "metaTitle": "Të preferuarat",
+      "title": "Të preferuarat",
+      "empty": "Ende nuk ke ruajtur asgjë.",
+      "emptyText": "Prek zemrën te çdo fustan për ta ruajtur këtu.",
+      "count": "{count, plural, one {# fustan} other {# fustane}}"
+    },
+    "search": {
+      "metaTitle": "Kërko",
+      "title": "Kërko",
+      "label": "Kërko në koleksion",
+      "placeholder": "Emri, ngjyra ose stili i fustanit",
+      "results": "{count, plural, =0 {Asnjë fustan} one {# fustan} other {# fustane}}",
+      "empty": "Asnjë fustan nuk përputhet me «{query}».",
+      "emptyText": "Provo një ngjyrë, një gjatësi ose një kategori, ose shfleto gjithë koleksionin.",
+      "suggestions": "Kërkime të shpeshta",
+      "suggestionList": [
+        "Nusëri",
+        "Mbrëmje",
+        "E zezë",
+        "Mëngë të gjata",
+        "Midi"
+      ]
+    },
+    "home": "Ballina"
   }
 }

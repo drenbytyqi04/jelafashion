@@ -603,6 +603,14 @@
       "heading": "Welcome.",
       "text": "You'll be among the first to see new collections from our atelier in Prizren.",
       "cta": "Explore the collection"
+    },
+    "contact": {
+      "shopSubject": "New message from {name} · {topic}",
+      "shopIntro": "A message arrived through the contact form.",
+      "receiptSubject": "We received your message",
+      "receiptHeading": "Thank you, {name}.",
+      "receiptText": "Your message has reached the atelier in Prizren. We'll reply personally, usually on the same channel you wrote from.",
+      "yourMessage": "Your message"
     }
   },
   "auth": {
@@ -694,5 +702,462 @@
       "saved": "Changes saved."
     },
     "failure": "That didn't save. Try again in a moment."
+  },
+  "pages": {
+    "breadcrumb": "Breadcrumb",
+    "madeToMeasure": {
+      "metaTitle": "Made to measure dresses",
+      "metaDescription": "Every dress in the collection can be made to your measurements in our Prizren atelier. We guide you one measurement at a time and ship worldwide.",
+      "label": "Made to measure",
+      "title": [
+        "Your Measurements.",
+        "Your Dress."
+      ],
+      "intro": "In a standard size, your body adapts to the dress. Here it is the other way round: the dress is cut and sewn to you, by hand, in Prizren.",
+      "stepsTitle": "How it works",
+      "measureTitle": "What we'll ask for",
+      "measureText": "The guide asks for one measurement per screen, each with an illustration and a short instruction. You choose centimetres or inches once. If a value looks unusual, we ask before you continue.",
+      "alwaysTitle": "For every dress",
+      "extraTitle": "For some designs",
+      "extraText": "For dresses with sleeves or a fitted bodice, the guide adds only the measurements that design needs.",
+      "tipsTitle": "For accurate measurements",
+      "tips": [
+        "Use a soft tailor's tape, not a builder's measure.",
+        "Measure over light underwear, not thick clothing.",
+        "Keep the tape flat and snug, never tight.",
+        "If you can, ask someone to help.",
+        "For lengths to the floor, wear the shoes you will wear."
+      ],
+      "timeTitle": "How long it takes",
+      "timeText": "The making time is shown on each dress. It ships as soon as it's finished, and delivery time counts from then.",
+      "cta": "Choose your dress",
+      "sizeGuideCta": "See the size guide"
+    },
+    "sizeGuide": {
+      "metaTitle": "Size guide",
+      "metaDescription": "Standard sizes XS–XXL in centimetres and inches, and how to take your measurements accurately.",
+      "label": "Sizing",
+      "howToTitle": "How to measure",
+      "customTitle": "Between two sizes?",
+      "customText": "Choose Custom size on the dress page and we'll make it to your measurements.",
+      "customCta": "How made to measure works"
+    },
+    "atelier": {
+      "metaTitle": "The atelier",
+      "metaDescription": "Jela Fashion is a bridal and evening dress atelier in Prizren. Every dress is handmade and can be made to your measurements.",
+      "label": "The atelier",
+      "title": [
+        "Handmade",
+        "in Prizren."
+      ],
+      "intro": "Jela Fashion is an atelier of bridal, evening and short dresses in Prizren. Every dress is cut, sewn and finished by hand, in standard sizes or to your measurements.",
+      "chapters": [
+        {
+          "title": "The atelier table",
+          "text": "Every dress begins here: the fabric chosen by hand, the pattern cut to your measurements, the embroidery placed stitch by stitch, the fit checked before it leaves Prizren."
+        },
+        {
+          "title": "Made for you",
+          "text": "Standard sizes are a starting point. When a dress should fit as if it were made only for you, we make it to your measurements, one measurement at a time."
+        },
+        {
+          "title": "From Prizren to the world",
+          "text": "Our dresses travel wherever you are, packed with care by the hands that made them."
+        }
+      ],
+      "factsTitle": "The atelier at a glance",
+      "facts": [
+        {
+          "label": "Founded",
+          "value": "[YEAR FOUNDED]"
+        },
+        {
+          "label": "City",
+          "value": "Prizren, Kosovo"
+        },
+        {
+          "label": "Craft",
+          "value": "Handmade"
+        },
+        {
+          "label": "Sizes",
+          "value": "XS–XXL and made to measure"
+        },
+        {
+          "label": "Shipping",
+          "value": "Worldwide"
+        }
+      ],
+      "quote": "[FOUNDER QUOTE]",
+      "quoteBy": "[FOUNDER NAME], founder",
+      "ctaTitle": "Come and meet the dresses.",
+      "ctaText": "Write to us about a dress, a fitting or your measurements. We answer personally.",
+      "ctaContact": "Contact the atelier",
+      "ctaShop": "Shop the Collection"
+    },
+    "contact": {
+      "metaTitle": "Contact",
+      "metaDescription": "Write to the Jela Fashion atelier in Prizren about sizing, an order or a video consultation, by form, email or WhatsApp.",
+      "label": "Contact",
+      "title": "Write to us.",
+      "intro": "About sizing, an order, or simply whether a dress would suit you, we answer personally.",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "topic": "Topic",
+      "topics": {
+        "general": "General question",
+        "sizing": "Sizing and fit",
+        "order": "An existing order",
+        "video": "Video consultation"
+      },
+      "orderNumber": "Order number",
+      "message": "Message",
+      "videoNote": "Suggest two or three times that suit you and we'll confirm one.",
+      "dressNote": "About the dress: {name}",
+      "privacyNote": "We use these details only to answer your message.",
+      "submit": "Send message",
+      "sent": "Thank you. Your message has reached the atelier and we'll reply soon.",
+      "failure": "The message didn't go through. Try again, or write to us on WhatsApp.",
+      "channels": "Other ways to reach us",
+      "whatsapp": "WhatsApp",
+      "whatsappText": "The quickest way to reach us",
+      "emailTitle": "Email",
+      "instagram": "Instagram",
+      "visitTitle": "The atelier",
+      "address": "[STREET ADDRESS], Prizren, Kosovo",
+      "hoursTitle": "Opening hours",
+      "hours": "[OPENING HOURS]",
+      "showMap": "Show the map",
+      "mapNote": "The map loads from OpenStreetMap only when you ask for it.",
+      "mapTitle": "Map of Prizren"
+    },
+    "faq": {
+      "metaTitle": "Frequently asked questions",
+      "metaDescription": "Answers about sizing, made to measure dresses, making time, worldwide shipping, payment and returns at Jela Fashion.",
+      "label": "Help",
+      "title": "Questions, answered.",
+      "intro": "Can't find what you're looking for? Write to us and we'll answer personally.",
+      "groups": [
+        {
+          "title": "Sizing",
+          "items": [
+            {
+              "q": "How do I choose my size?",
+              "a": "Compare your measurements with the size guide. If you're between two sizes or outside the chart, choose Custom size and the dress is made to you."
+            },
+            {
+              "q": "How does Custom size work?",
+              "a": "Once you choose the dress, the guide asks for your measurements one at a time, with an illustration for each. They're saved with your order and the atelier reviews them before work begins."
+            },
+            {
+              "q": "What if I get a measurement wrong?",
+              "a": "The guide warns you when a value looks unusual. If you have doubts after ordering, write to us as soon as possible with your order number."
+            }
+          ]
+        },
+        {
+          "title": "Orders",
+          "items": [
+            {
+              "q": "How long does a dress take?",
+              "a": "The making time is shown on each dress. Dresses in stock ship soon after payment; made-to-order and custom dresses ship as soon as they're finished."
+            },
+            {
+              "q": "Can I change or cancel my order?",
+              "a": "[CHANGE AND CANCELLATION POLICY]"
+            },
+            {
+              "q": "Can I talk to someone before ordering?",
+              "a": "Yes. Message us on WhatsApp or ask for a video consultation, and we'll help you with your size or choosing a dress."
+            }
+          ]
+        },
+        {
+          "title": "Shipping and payment",
+          "items": [
+            {
+              "q": "Where do you ship?",
+              "a": "Worldwide. The rate and delivery time depend on the country and are shown at checkout and on the shipping page."
+            },
+            {
+              "q": "How can I pay?",
+              "a": "By card through Paysera, by bank transfer, through Western Union, MoneyGram or Ria, or with Wise. For payments without a card, the details appear after you order and you can upload your receipt."
+            },
+            {
+              "q": "Which currency are prices in?",
+              "a": "Euro (EUR)."
+            }
+          ]
+        },
+        {
+          "title": "Returns",
+          "items": [
+            {
+              "q": "Can I return a dress?",
+              "a": "The full conditions are on the returns page, including those for dresses made to your measurements."
+            }
+          ]
+        }
+      ],
+      "moreTitle": "Still have a question?",
+      "moreCta": "Contact the atelier"
+    },
+    "shipping": {
+      "metaTitle": "Shipping",
+      "metaDescription": "Jela Fashion ships worldwide from Prizren. Rates and delivery times for every region.",
+      "label": "Help",
+      "title": "Shipping worldwide.",
+      "intro": "Every dress leaves Prizren packed by hand. Rates and times below come straight from checkout.",
+      "zone": "Region",
+      "method": "Method",
+      "price": "Price",
+      "time": "Delivery",
+      "days": "{min}–{max} business days",
+      "free": "Free",
+      "freeOver": "free over {amount}",
+      "restOfWorld": "Every other country",
+      "sections": [
+        {
+          "title": "When your dress ships",
+          "body": [
+            "Dresses in stock ship after payment is confirmed. Made-to-order and custom dresses ship as soon as they're finished; the making time is shown on each dress, and delivery time counts from the day it ships."
+          ]
+        },
+        {
+          "title": "Tracking",
+          "body": [
+            "When your order ships, we email you the tracking number in your language. It also appears on your order page."
+          ]
+        },
+        {
+          "title": "Customs and import duties",
+          "body": [
+            "[CUSTOMS AND IMPORT DUTIES POLICY]"
+          ]
+        }
+      ]
+    },
+    "returns": {
+      "metaTitle": "Returns",
+      "metaDescription": "Returns and exchanges at Jela Fashion, for standard sizes and made to measure dresses.",
+      "label": "Help",
+      "title": "Returns.",
+      "intro": "If something isn't right, write to us first. We'll find the best way forward together.",
+      "sections": [
+        {
+          "title": "Standard sizes",
+          "body": [
+            "[RETURN POLICY: STANDARD SIZES]"
+          ]
+        },
+        {
+          "title": "Made to measure",
+          "body": [
+            "[RETURN POLICY: MADE TO MEASURE]"
+          ]
+        },
+        {
+          "title": "How to start a return",
+          "body": [
+            "[HOW TO START A RETURN]"
+          ]
+        },
+        {
+          "title": "Refunds",
+          "body": [
+            "[REFUND METHOD AND TIMING]"
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "metaTitle": "Privacy policy",
+      "metaDescription": "How Jela Fashion collects, uses and protects your personal data.",
+      "label": "Legal",
+      "title": "Privacy policy.",
+      "intro": "This page explains which personal data we collect when you use this site, why, and what your rights are.",
+      "updated": "Last updated: [DATE]",
+      "sections": [
+        {
+          "title": "Who we are",
+          "body": [
+            "The controller of your data is [COMPANY LEGAL NAME], [STREET ADDRESS], Prizren, Kosovo, business number [BUSINESS NUMBER]. Contact: [EMAIL]."
+          ]
+        },
+        {
+          "title": "What we collect",
+          "body": [
+            "When you order: your name, email, phone, delivery and billing addresses, the dresses you chose and, for custom sizes, your body measurements and notes.",
+            "When you pay without a card: the proof of payment you upload, the reference and the sender's name. Card payments are handled by Paysera; we never see your card details.",
+            "When you create an account: your email and, if you add them, your name, phone, saved addresses and measurement profiles.",
+            "When you write to us or subscribe to the newsletter: your message, contact details and language."
+          ]
+        },
+        {
+          "title": "Why we use it",
+          "body": [
+            "To make and deliver your order, to confirm payments, to answer your questions and, only if you agreed, to send you the newsletter. With your consent, and only then, we measure visits (Google Analytics) and ad performance (Meta, TikTok)."
+          ]
+        },
+        {
+          "title": "Who processes it for us",
+          "body": [
+            "Supabase (database and file storage, EU region), Vercel (hosting), Resend (email), Paysera (card payments) and, with your consent, Google, Meta and TikTok. Each processes data only to provide its service."
+          ]
+        },
+        {
+          "title": "How long we keep it",
+          "body": [
+            "[RETENTION PERIODS]"
+          ]
+        },
+        {
+          "title": "Your rights",
+          "body": [
+            "You can ask to access, correct or delete your data, object to its use, or withdraw consent at any time, by writing to [EMAIL]. You can change your cookie choices at any time on the cookie page."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "metaTitle": "Terms of sale",
+      "metaDescription": "The terms that apply to orders placed on the Jela Fashion website.",
+      "label": "Legal",
+      "title": "Terms of sale.",
+      "intro": "These terms apply to every order placed on this site. Please read them before you order.",
+      "updated": "Last updated: [DATE]",
+      "sections": [
+        {
+          "title": "The seller",
+          "body": [
+            "[COMPANY LEGAL NAME], [STREET ADDRESS], Prizren, Kosovo, business number [BUSINESS NUMBER], email [EMAIL]."
+          ]
+        },
+        {
+          "title": "Orders",
+          "body": [
+            "Your order is confirmed by email with its number. The dress, size or measurements, price and delivery shown at checkout are the ones that apply."
+          ]
+        },
+        {
+          "title": "Prices and payment",
+          "body": [
+            "Prices are in euro (EUR). You can pay by card through Paysera, by bank transfer, through Western Union, MoneyGram or Ria, or with Wise. Work on your dress begins once payment is confirmed."
+          ]
+        },
+        {
+          "title": "Made to measure",
+          "body": [
+            "Custom dresses are made to the measurements you enter. [MADE TO MEASURE TERMS]"
+          ]
+        },
+        {
+          "title": "Making time and delivery",
+          "body": [
+            "The making time is shown on each dress; delivery times are shown at checkout. [DELIVERY TERMS]"
+          ]
+        },
+        {
+          "title": "Returns",
+          "body": [
+            "Returns follow the returns policy."
+          ]
+        },
+        {
+          "title": "Applicable law",
+          "body": [
+            "[GOVERNING LAW AND DISPUTES]"
+          ]
+        }
+      ]
+    },
+    "cookies": {
+      "metaTitle": "Cookie policy",
+      "metaDescription": "Which cookies and similar technologies the Jela Fashion site uses, and how to change your choices.",
+      "label": "Legal",
+      "title": "Cookie policy.",
+      "intro": "We use only what the site needs to work, and measure visits or ads only if you agree.",
+      "change": "Change cookie settings",
+      "name": "Name",
+      "purpose": "Purpose",
+      "groups": [
+        {
+          "title": "Necessary",
+          "text": "Always on. The site can't work without them.",
+          "rows": [
+            [
+              "NEXT_LOCALE",
+              "Remembers your language."
+            ],
+            [
+              "sb-…-auth-token",
+              "Keeps you signed in to your account."
+            ],
+            [
+              "jf-cart, jf-wishlist (local storage)",
+              "Your cart and saved dresses, on this device only."
+            ],
+            [
+              "jf-measurements (local storage)",
+              "Measurements you chose to remember on this device."
+            ],
+            [
+              "jf-consent (local storage)",
+              "Your cookie choices."
+            ]
+          ]
+        },
+        {
+          "title": "Analytics",
+          "text": "Only with your consent. Tell us how the site is used, so we can improve it.",
+          "rows": [
+            [
+              "_ga, _ga_*",
+              "Google Analytics: counts visits and pages, without identifying you."
+            ]
+          ]
+        },
+        {
+          "title": "Marketing",
+          "text": "Only with your consent. Measure our ads on Instagram, Facebook and TikTok.",
+          "rows": [
+            [
+              "_fbp, _fbc",
+              "Meta Pixel: links visits to our Instagram and Facebook ads."
+            ],
+            [
+              "_ttp",
+              "TikTok Pixel: links visits to our TikTok ads."
+            ]
+          ]
+        }
+      ]
+    },
+    "wishlist": {
+      "metaTitle": "Saved dresses",
+      "title": "Saved dresses",
+      "empty": "Nothing saved yet.",
+      "emptyText": "Tap the heart on any dress to keep it here.",
+      "count": "{count, plural, one {# dress} other {# dresses}}"
+    },
+    "search": {
+      "metaTitle": "Search",
+      "title": "Search",
+      "label": "Search the collection",
+      "placeholder": "Dress name, colour or style",
+      "results": "{count, plural, =0 {No dresses found} one {# dress} other {# dresses}}",
+      "empty": "No dress matches “{query}”.",
+      "emptyText": "Try a colour, a length or a category, or browse the whole collection.",
+      "suggestions": "Popular searches",
+      "suggestionList": [
+        "Bridal",
+        "Evening",
+        "Black",
+        "Long sleeves",
+        "Midi"
+      ]
+    },
+    "home": "Home"
   }
 }
