@@ -9,8 +9,9 @@ import { routing } from "@/i18n/routing";
 import { site } from "@/lib/site";
 import { introSeenScript } from "@/components/motion/intro-loader";
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { CheckoutFooter } from "@/components/layout/checkout-chrome";
+import { FooterSwitch, HeaderSwitch } from "@/components/layout/chrome-switch";
 import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
 import { StoreHydrator } from "@/components/layout/store-hydrator";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -77,11 +78,11 @@ export default async function LocaleLayout({
             >
               {t("skipToContent")}
             </a>
-            <SiteHeader />
+            <HeaderSwitch />
             <main id="main" tabIndex={-1} className="outline-none">
               {children}
             </main>
-            <SiteFooter />
+            <FooterSwitch site={<SiteFooter />} focus={<CheckoutFooter />} />
             <Toaster />
             <StoreHydrator />
           </MotionProvider>

@@ -30,6 +30,8 @@ type CartState = {
   add: (line: Omit<CartLine, "quantity">, quantity?: number) => void;
   setQuantity: (key: string, quantity: number) => void;
   remove: (key: string) => void;
+  /** Server corrections at checkout (new price, less stock). */
+  patch: (key: string, changes: Partial<Pick<CartLine, "priceEUR" | "quantity">>) => void;
   clear: () => void;
 };
 
@@ -69,6 +71,7 @@ export const useCartStore = create<CartState>()(
               : s.lines.map((l) => (l.key === key ? { ...l, quantity: Math.min(MAX_QUANTITY, quantity) } : l)),
         })),
       remove: (key) => set((s) => ({ lines: s.lines.filter((l) => l.key !== key) })),
+      patch: (key, changes) => set((s) => ({ lines: s.lines.map((l) => (l.key === key ? { ...l, ...changes } : l)) })),
       clear: () => set({ lines: [] }),
     }),
     {

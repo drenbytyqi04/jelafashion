@@ -28,6 +28,7 @@ export const routing = defineRouting({
     "/wishlist": { sq: "/te-preferuarat", en: "/wishlist" },
     "/cart": { sq: "/shporta", en: "/cart" },
     "/checkout": { sq: "/pagesa", en: "/checkout" },
+    "/order/[token]": { sq: "/porosia/[token]", en: "/order/[token]" },
     "/styleguide": "/styleguide",
   },
 });

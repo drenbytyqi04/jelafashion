@@ -281,6 +281,17 @@ resolved.
 18. **Wizard measured line in `gold-ink`, not champagne** (Phase 3): the line carries the
     step's meaning and sits on blush, where champagne is 1.8:1. `gold-ink` (4.3:1 on blush)
     meets the 3:1 rule for meaningful graphics and still reads as gold.
+19. **Payment method cards use Lucide icons, not brand logos** (Phase 4, overrides
+    pages/checkout.md "logo row"): card brand, WU/MoneyGram/Ria and Wise marks are
+    trademarks with their own usage rules and colours. A monochrome line icon at 70% ink
+    plus the names in the description keeps the page calm and legal. Real logos can be
+    added once the atelier has the providers' approved assets.
+20. **No magnetic pull on the checkout button** (Phase 4): pages/checkout.md allows no
+    motion beyond expand/collapse and the button state. The loading line stays.
+21. **Checkout header is in normal flow, not fixed** (Phase 4): focus mode has nothing to
+    reveal on scroll up, and a static header keeps the form's first field higher on mobile.
+22. **Emails fall back to Georgia** for headings: web fonts are unreliable in Gmail and
+    Outlook. Ivory ground, champagne hairline under the wordmark, champagne buttons.
 
 ### ui-ux-pro-max reconciliation
 

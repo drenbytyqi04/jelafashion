@@ -47,3 +47,6 @@ __pycache__/
 
 # playwright
 /test-results/
+
+# local order store and email outbox (dev without Supabase/Resend)
+/.data/
