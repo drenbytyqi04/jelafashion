@@ -153,8 +153,11 @@ with self-drawing measurement lines.
    (`src/lib/tracking/track.ts`) and waits for consent (`src/stores/consent.ts`); page
    metadata comes from `pageMetadata()` in `src/lib/seo.ts`.
 7. Launch on Vercel: import, environment variables, Supabase Auth URLs, first admin,
-   domain, real content. **In progress — the owner imports the project** (the Vercel
-   connector cannot create projects); the checklist is in README "Launching on Vercel".
+   domain, real content. **In progress.** Project `jelafashion` (prj_tTfjimgem0W3hWWJdRIC2r6r3Guq)
+   deploys every push to `claude/brave-carson-scsld1` to https://jelafashion.vercel.app,
+   functions in `fra1`. Public Supabase vars are set; the owner still adds the secrets
+   (service role, Resend, Paysera, CAPI) and the Supabase Auth URLs. The checklist is in
+   README "Launching on Vercel".
    Pre-launch hardening done: security headers, per-address rate limits on public
    forms (`src/lib/security/rate-limit.ts`, migration `rate_limits`).
 
