@@ -13,6 +13,7 @@ import { useUiStore } from "@/stores/ui";
 import { useLenisLock } from "@/components/motion/use-scroll-lock";
 import { WhatsAppIcon } from "@/components/icons/brand-icons";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
+import { siteImages } from "@/lib/site-images";
 import { LanguageSwitcher } from "./language-switcher";
 
 const bigLinks: { key: "shop" | "newIn" | "madeToMeasure" | "atelier" | "contact"; href: StaticPathname }[] = [
@@ -31,6 +32,8 @@ const item: Variants = {
   hidden: { opacity: 0, y: 28 },
   shown: { opacity: 1, y: 0, transition: { duration: duration.reveal, ease: ease.couture } },
 };
+
+const MENU_PHOTOS = { bridal: siteImages.categoryBridal, evening: siteImages.categoryEvening, short: siteImages.categoryShort } as const;
 
 export function MobileMenu() {
   const t = useTranslations();
@@ -96,7 +99,7 @@ export function MobileMenu() {
                       {categoryNav.map((c) => (
                         <li key={c.key}>
                           <Link href={c.href} onClick={close} className="group block">
-                            <ImagePlaceholder ratio="3/4" tone={c.tone} />
+                            <ImagePlaceholder ratio="3/4" tone={c.tone} src={MENU_PHOTOS[c.key]} sizes="30vw" position="top" />
                             <span className="label mt-3 block">{t(`nav.${c.key}`)}</span>
                           </Link>
                         </li>

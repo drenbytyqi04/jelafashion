@@ -4,6 +4,7 @@ import type { Locale } from "@/lib/catalog/types";
 import { pageMetadata } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
+import { siteImages } from "@/lib/site-images";
 import { ContentHeader } from "@/components/content/content-header";
 import { InstagramGrid } from "@/components/home/instagram-grid";
 import { Parallax } from "@/components/motion/parallax";
@@ -33,13 +34,13 @@ export default async function AtelierPage({ params }: Props) {
         <div className="col-span-3 lg:col-span-6">
           <RevealImage>
             <Parallax amount={6}>
-              <ImagePlaceholder ratio="3/4" tint="#E6DCCD" />
+              <ImagePlaceholder ratio="3/4" tint="#E6DCCD" src={siteImages.atelierMain} sizes="(min-width: 1024px) 45vw, 100vw" />
             </Parallax>
           </RevealImage>
         </div>
         <div className="col-span-2 col-start-3 -mt-24 lg:col-span-4 lg:col-start-6 lg:mt-24">
           <RevealImage>
-            <ImagePlaceholder ratio="3/4" tone="blush" />
+            <ImagePlaceholder ratio="3/4" tone="blush" src={siteImages.atelierDetail} sizes="(min-width: 1024px) 30vw, 60vw" />
           </RevealImage>
         </div>
       </section>

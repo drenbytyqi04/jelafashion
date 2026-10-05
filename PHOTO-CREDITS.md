@@ -1,6 +1,6 @@
 # Photo credits
 
-The product photos currently on the site are **illustrative stock photos from
+The photos currently on the site are **illustrative stock photos from
 [Unsplash](https://unsplash.com/license)** (free to use under the Unsplash License). They
 are not Jela Fashion dresses and must be replaced with the atelier's own photography in
 the admin (Products → photos) before advertising. Credits:
@@ -29,3 +29,36 @@ the admin (Products → photos) before advertising. Credits:
 - `era`: [Lauren Richmond](https://unsplash.com/photos/white-sleeveless-dress-near-brown-wooden-door-DnOgzmRYFeg)
 - `lule`: [Valerie Elash](https://unsplash.com/photos/woman-wearing-peach-colored-maxi-dress-o1Ic6JdypmA)
 - `lule`: [Valerie Elash](https://unsplash.com/photos/selective-focus-photography-of-woman-leaning-on-table-jBQdEiQNE24)
+
+## Site sections
+
+Hero, category tiles, editorial sections, lookbook, Instagram grid, atelier page and
+collection banners (`src/lib/site-images.ts`):
+
+- hero: [Lucas T Photography](https://unsplash.com/photos/elegant-woman-in-a-wedding-dress-under-an-arched-ceiling-wo-71CLQZ3M)
+- categoryBridal: [HACA Wedding Film](https://unsplash.com/photos/a-woman-in-a-white-wedding-dress-and-lace-gloves-rc0d_SudL9g)
+- categoryEvening: [Michael Kyule](https://unsplash.com/photos/woman-in-dramatic-black-gown-poses-outdoors-AIaYcpfB7jo)
+- categoryShort: [Chalo Garcia](https://unsplash.com/photos/woman-in-blue-sleeveless-dress-alcLDJ6QxD0)
+- bridalFeatureMain: [cindy baffour](https://unsplash.com/photos/selective-focus-photo-woman-wearing-wedding-veil-nMBZq4yy92k)
+- bridalFeatureDetail: [Diana Shchurova](https://unsplash.com/photos/black-and-white-woman-with-flowing-veil-looking-over-shoulder-aje7T6njuzk)
+- atelierStory: [alex jhonson](https://unsplash.com/photos/sewing-machine-and-hands-at-work-5zg-ZDesJAk)
+- atelierMain: [Darling Arias](https://unsplash.com/photos/threads-with-spools-beside-scissors-tX62O5F3AfU)
+- atelierDetail: [J Williams](https://unsplash.com/photos/gray-metal-tool-on-white-textile-Ns7QZxF198g)
+- finalCta: [Dan LeFebvre](https://unsplash.com/photos/white-wedding-dresses-J-3b5sj4yIE)
+- bannerBridal: [Petr Ovralov](https://unsplash.com/photos/woman-wearing-wedding-gown-white-holding-bouquet-qQ01rvKkE0w)
+- bannerEvening: [Mayur Roxan](https://unsplash.com/photos/woman-in-black-sequined-dress-KH1pJwGuBaU)
+- bannerShort: [Lera Kogan](https://unsplash.com/photos/woman-wearing-halter-dress-liHitLhjGO0)
+- bannerAll: [Lauro Rodríguez](https://unsplash.com/photos/a-woman-in-a-dress-XIzZ0eRDUuo)
+- bannerNewIn: [Nina Hill](https://unsplash.com/photos/woman-in-brown-dress-holding-white-flowers-fWb5KsV4gGY)
+- lookbook 1: [Ken's Vision](https://unsplash.com/photos/model-walks-down-a-runway-at-a-fashion-show-rRW3DVOFuIY)
+- lookbook 2: [Ben Iwara](https://unsplash.com/photos/a-woman-in-an-orange-dress-walking-down-a-runway-NLbnQLY4ZUo)
+- lookbook 3: [adriaan venner scheepers](https://unsplash.com/photos/a-person-in-a-white-dress-bCmq3hBUTXg)
+- lookbook 4: [Marina Nazina](https://unsplash.com/photos/woman-in-blue-dress-with-fabric-ZOdj2OLDtpQ)
+- lookbook 5: [Fotógrafo Samuel Cruz](https://unsplash.com/photos/woman-in-black-dress-on-a-winding-road-RLbyjddd2gY)
+- lookbook 6: [Aleksandra Sapozhnikova](https://unsplash.com/photos/woman-in-a-white-sheer-blouse-with-dramatic-sleeves-lWafUcIpB7o)
+- instagram 1: [Cate Bligh](https://unsplash.com/photos/white-floral-lace-sleeveless-dress-B_P6nONZk58)
+- instagram 2: [Thomas AE](https://unsplash.com/photos/woman-wearing-white-sheer-lace-wedding-gown-KRPCwGCzUJs)
+- instagram 3: [Katy Duclos](https://unsplash.com/photos/white-lace-wedding-dress-rmTkwrmd4dc)
+- instagram 4: [Zoltan Tasi](https://unsplash.com/photos/woman-wearing-white-floral-plunging-neckline-dress-close-up-photo-14adDCwxaZk)
+- instagram 5: [NIKITA SHIROKOV](https://unsplash.com/photos/woman-standing-beside-wall-holding-flowers-7wjxyiUvt4I)
+- instagram 6: [Brayden Prato](https://unsplash.com/photos/a-woman-in-a-white-dress-and-veil-smiling-jFj4lYq-ZRM)

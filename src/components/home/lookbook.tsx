@@ -4,6 +4,7 @@ import { useLenis } from "lenis/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
+import { siteImages } from "@/lib/site-images";
 
 const FRAMES = ["#EDE3D6", "#5C534C", "#EBD3CB", "#D9C3A0", "#1F4A3D", "#F4EDE1"];
 
@@ -89,7 +90,7 @@ export function Lookbook() {
                 : "w-[70%] shrink-0 snap-center lg:w-[30vw]"
             }
           >
-            <ImagePlaceholder ratio="3/4" tint={tint} pose={i % 2 ? "back" : "front"} />
+            <ImagePlaceholder ratio="3/4" tint={tint} pose={i % 2 ? "back" : "front"} src={siteImages.lookbook[i]} sizes="(min-width: 1024px) 35vw, 80vw" position="top" />
           </li>
         ))}
       </ul>

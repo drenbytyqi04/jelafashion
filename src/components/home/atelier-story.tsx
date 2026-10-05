@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
+import { siteImages } from "@/lib/site-images";
 import { Parallax } from "@/components/motion/parallax";
 import { RevealImage } from "@/components/motion/reveal-image";
 import { RevealText } from "@/components/motion/reveal-text";
@@ -14,7 +15,7 @@ export async function AtelierStory() {
         <div className="lg:order-2 lg:col-span-7 lg:col-start-6">
           <RevealImage>
             <Parallax amount={8}>
-              <ImagePlaceholder ratio="4/5" tint="#E6DCCD" />
+              <ImagePlaceholder ratio="4/5" tint="#E6DCCD" src={siteImages.atelierStory} sizes="(min-width: 1024px) 45vw, 100vw" />
             </Parallax>
           </RevealImage>
         </div>

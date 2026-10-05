@@ -5,8 +5,10 @@ import { pick } from "@/lib/catalog/types";
 import { cn } from "@/lib/cn";
 import { categoryNav } from "@/lib/nav";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
+import { siteImages } from "@/lib/site-images";
 
 const TINTS = { bridal: "#F4EDE1", evening: "#5C534C", short: "#EBD3CB" } as const;
+const PHOTOS = { bridal: siteImages.categoryBridal, evening: siteImages.categoryEvening, short: siteImages.categoryShort } as const;
 
 export async function CategoryTiles({ categories, locale }: { categories: CatalogCategory[]; locale: Locale }) {
   const t = await getTranslations("homeSections");
@@ -23,7 +25,7 @@ export async function CategoryTiles({ categories, locale }: { categories: Catalo
               <Link href={c.href} className="group block">
                 <div className="overflow-hidden">
                   <div className="transition-transform duration-[1200ms] ease-(--ease-couture) group-hover:scale-[1.04] motion-reduce:transition-none">
-                    <ImagePlaceholder ratio="3/4" tint={TINTS[c.key]} />
+                    <ImagePlaceholder ratio="3/4" tint={TINTS[c.key]} src={PHOTOS[c.key]} sizes="(min-width: 1024px) 33vw, 78vw" position="top" />
                   </div>
                 </div>
                 <span className="label relative mt-5 inline-block pb-2">

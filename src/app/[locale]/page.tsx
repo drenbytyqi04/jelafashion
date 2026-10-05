@@ -89,7 +89,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div className="absolute inset-0">
           <HeroMedia videoUrl={hero.videoUrl} posterUrl={hero.posterUrl} />
         </div>
-        <div aria-hidden className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-ink/55 to-transparent" />
+        <div aria-hidden className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-ink/70 via-ink/25 to-transparent" />
 
         <div className="container-page relative pb-[max(3rem,env(safe-area-inset-bottom))] lg:pb-20">
           <div className="lg:mx-auto lg:max-w-4xl lg:text-center">

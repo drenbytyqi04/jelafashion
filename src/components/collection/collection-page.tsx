@@ -5,9 +5,18 @@ import type { CatalogProduct, CategoryId, Locale } from "@/lib/catalog/types";
 import { pick } from "@/lib/catalog/types";
 import { RevealText } from "@/components/motion/reveal-text";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
+import { siteImages } from "@/lib/site-images";
 import { CollectionView } from "./collection-view";
 
 export type CollectionScope = { kind: "category"; category: CategoryId } | { kind: "all" } | { kind: "new-in" };
+
+const BANNER_PHOTO: Record<string, string> = {
+  bridal: siteImages.bannerBridal,
+  evening: siteImages.bannerEvening,
+  short: siteImages.bannerShort,
+  all: siteImages.bannerAll,
+  "new-in": siteImages.bannerNewIn,
+};
 
 const BANNER_TINT: Record<string, string> = {
   bridal: "#F4EDE1",
@@ -57,7 +66,7 @@ export async function CollectionPage({
     <>
       <header className="container-page pb-10 pt-[calc(var(--header-h)+24px)] lg:grid lg:grid-cols-12 lg:items-end lg:gap-6 lg:pb-20 lg:pt-[calc(var(--header-h)+48px)]">
         <div className="lg:order-2 lg:col-span-5 lg:col-start-8">
-          <ImagePlaceholder ratio="4/5" tint={BANNER_TINT[tintKey]} className="lg:aspect-[3/4]" />
+          <ImagePlaceholder ratio="4/5" tint={BANNER_TINT[tintKey]} className="lg:aspect-[3/4]" src={BANNER_PHOTO[tintKey]} sizes="(min-width: 1024px) 42vw, 100vw" priority position="top" />
         </div>
         <div className="mt-8 lg:order-1 lg:col-span-6 lg:mt-0 lg:pb-8">
           <span aria-hidden className="mb-8 block h-px w-16 bg-champagne" />

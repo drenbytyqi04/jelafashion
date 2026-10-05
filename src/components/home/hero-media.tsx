@@ -2,11 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
+import { siteImages } from "@/lib/site-images";
 
 type NetworkInformation = { saveData?: boolean; effectiveType?: string };
 
 /**
- * Hero video slot. Muted, looping, inline; the poster shows first. Autoplay is skipped on
+ * Hero video slot. Muted, looping, inline; the poster shows first (the admin's, or an
+ * illustrative photo until one is uploaded). Autoplay is skipped on
  * data-saver or slow connections and with reduced motion, leaving the poster.
  */
 export function HeroMedia({ videoUrl, posterUrl }: { videoUrl: string | null; posterUrl: string | null }) {
@@ -27,8 +29,10 @@ export function HeroMedia({ videoUrl, posterUrl }: { videoUrl: string | null; po
     if (play) ref.current?.play().catch(() => {});
   }, [play]);
 
+  // Without a video from the admin, the poster (or the illustrative photo) fills the frame.
+  const poster = posterUrl ?? siteImages.hero;
   if (!videoUrl) {
-    return <ImagePlaceholder ratio="9/16" tint="#6B645C" className="h-full !aspect-auto" />;
+    return <ImagePlaceholder ratio="9/16" tint="#6B645C" className="h-full !aspect-auto" src={poster} sizes="100vw" priority position="top" />;
   }
 
   return (
@@ -36,7 +40,7 @@ export function HeroMedia({ videoUrl, posterUrl }: { videoUrl: string | null; po
       ref={ref}
       className="h-full w-full object-cover"
       src={play ? videoUrl : undefined}
-      poster={posterUrl ?? undefined}
+      poster={poster}
       muted
       loop
       playsInline

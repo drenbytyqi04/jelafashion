@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/cn";
 
@@ -29,6 +30,11 @@ export function ImagePlaceholder({
   decorative = true,
   tint,
   pose = "front",
+  src,
+  alt = "",
+  sizes = "100vw",
+  priority,
+  position = "center",
 }: {
   ratio?: Ratio;
   tone?: Tone;
@@ -38,8 +44,30 @@ export function ImagePlaceholder({
   tint?: string;
   /** Alternate silhouette for a second (hover) image. */
   pose?: "front" | "back";
+  /** A photo for this slot: shown instead of the croquis, cropped to the same frame. */
+  src?: string | null;
+  /** Empty (the default) marks the photo decorative. */
+  alt?: string;
+  sizes?: string;
+  priority?: boolean;
+  /** object-position for the crop, e.g. "top" to keep a face in a tall frame. */
+  position?: "center" | "top";
 }) {
   const t = useTranslations("placeholder");
+  if (src) {
+    return (
+      <div className={cn("relative w-full overflow-hidden bg-linen", ratios[ratio], className)}>
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className={cn("object-cover", position === "top" ? "object-top" : "object-center")}
+        />
+      </div>
+    );
+  }
   return (
     <div
       role={decorative ? undefined : "img"}
