@@ -7,7 +7,11 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
     // Product and site images from Supabase Storage's public buckets.
-    remotePatterns: [{ protocol: "https", hostname: "*.supabase.co", pathname: "/storage/v1/object/public/**" }],
+    remotePatterns: [
+      { protocol: "https", hostname: "*.supabase.co", pathname: "/storage/v1/object/public/**" },
+      // Illustrative Unsplash photos used until the atelier's own photography is uploaded.
+      { protocol: "https", hostname: "images.unsplash.com", pathname: "/photo-*" },
+    ],
   },
   // Baseline security headers on every response. No script CSP: nonces would force every
   // page to render per request (no static pages, slower LCP), and the tag loaders are
