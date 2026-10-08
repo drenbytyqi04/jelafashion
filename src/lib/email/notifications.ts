@@ -157,8 +157,8 @@ async function shopAlert(kind: "newOrder" | "newProof" | "paid", order: Order, o
       label: t("emails.orderNumber", { number: order.number }),
       heading: subject,
       paragraphs: [intro, customer, ...extra],
-      // Until the admin panel (Phase 5) exists, the customer's page shows everything.
-      cta: { label: t("emails.viewOrder"), href: orderUrl(origin, order) },
+      // Straight to the order in the admin: measurements, proofs, status and print sheet.
+      cta: { label: t("emails.viewOrder"), href: `${origin}/admin/orders/${order.id}` },
       footer: t("emails.footer"),
       siteUrl: `${origin}/sq`,
     }),
