@@ -112,11 +112,13 @@ export type Order = {
   trackingNumber: string | null;
   trackingCarrier: string | null;
   createdAt: string;
+  /** When an admin first opened the order; null while it is new. */
+  seenAt: string | null;
   items: OrderItem[];
   proofs: PaymentProof[];
 };
 
 export type NewOrder = Omit<
   Order,
-  "id" | "number" | "accessToken" | "status" | "paidAt" | "paymentReference" | "trackingNumber" | "trackingCarrier" | "createdAt" | "proofs"
+  "id" | "number" | "accessToken" | "status" | "paidAt" | "paymentReference" | "trackingNumber" | "trackingCarrier" | "createdAt" | "seenAt" | "proofs"
 >;

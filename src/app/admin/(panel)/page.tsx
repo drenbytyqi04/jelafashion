@@ -5,15 +5,16 @@ import { orderStore } from "@/lib/commerce/order-store";
 import { formatDate, formatPrice } from "@/lib/format";
 import { PageHeader, Panel, StatusBadge, Table } from "@/components/admin/ui";
 import { Unavailable } from "@/components/admin/shared";
+import { NewOrders } from "@/components/admin/new-orders";
 
-export const metadata = { title: "Paneli" };
+export const metadata = { title: { absolute: "Paneli · Jela Fashion" } };
 
 export default async function AdminDashboard() {
   await requireAdmin();
   const orders = orderStore();
   const catalog = catalogAdminStore();
   if (!orders || !catalog) return <Unavailable />;
-  const [stats, latest, products] = await Promise.all([orders.stats(), orders.list({ limit: 8 }), catalog.products()]);
+  const [stats, latest, products, unseen] = await Promise.all([orders.stats(), orders.list({ limit: 8 }), catalog.products(), orders.unseen(10)]);
   const lowStock = products.flatMap((p) =>
     p.availability === "in_stock" ? p.sizes.filter((s) => s.stock <= 1).map((s) => ({ product: p, size: s.size, stock: s.stock })) : [],
   );
@@ -29,6 +30,7 @@ export default async function AdminDashboard() {
   return (
     <>
       <PageHeader title="Paneli" description="Pamja e përgjithshme e porosive dhe e stokut." />
+      <NewOrders orders={unseen.orders} total={unseen.total} />
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
         {tiles.map((t) => {
           const body = (

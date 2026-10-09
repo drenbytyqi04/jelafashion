@@ -59,6 +59,7 @@ The schema lives in `supabase/migrations/` (apply in filename order):
 | `…_accounts.sql`                | customers' saved addresses and named measurement profiles (owner-only), email index for guest orders |
 | `…_stock.sql`                   | atomic `adjust_stock()`: in-stock sizes are taken at checkout and returned on cancellation |
 | `…_rate_limits.sql`             | per-address counters for public forms (`hit_rate_limit()`, server only) |
+| `…_order_seen.sql`              | `orders.seen_at`: set when an admin first opens an order (new-order alerts) |
 
 Row Level Security is on for every table: visitors read published catalog rows only,
 admins manage everything, discount codes and the newsletter list are never public.
@@ -155,6 +156,12 @@ the customer; payment proofs; printable measurement sheet; CSV export), products
 both languages, photos, colours, sizes and stock, required measurements, SEO),
 collections, homepage (hero text, video and poster, marquee, testimonials), discount codes,
 shipping zones, payment method details, customers and the newsletter list (CSV).
+
+**New orders.** Until an admin opens it, an order counts as new: the dashboard shows it in
+"Porositë e reja" with everything needed to act (customer and contact, address, payment,
+each dress with its size or full measurements, notes, total, print sheet), the menu shows
+a red count, the browser tab title starts with the count, and the list marks it "E re".
+The panel refreshes itself every 30 seconds while it is open.
 
 Stock: in-stock sizes are taken when an order is placed and returned when it is
 cancelled. Photos, videos and payment proofs upload straight from the browser to

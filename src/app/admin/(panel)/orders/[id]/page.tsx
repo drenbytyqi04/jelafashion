@@ -7,6 +7,7 @@ import { formatDate, formatPrice } from "@/lib/format";
 import { formatMeasure, toUnit } from "@/lib/units";
 import { METHOD_LABELS, Unavailable } from "@/components/admin/shared";
 import { OrderActions } from "@/components/admin/order-actions";
+import { MarkSeen } from "@/components/admin/mark-seen";
 import { Btn, PageHeader, Panel, STATUS_LABELS, StatusBadge } from "@/components/admin/ui";
 
 export const metadata = { title: "Porosia" };
@@ -28,6 +29,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ id: str
 
   return (
     <>
+      <MarkSeen orderId={order.id} seen={order.seenAt !== null} />
       <p className="mb-2 text-[0.8125rem]">
         <Link href="/admin/orders" className="text-stone hover:text-ink">
           ← Porositë

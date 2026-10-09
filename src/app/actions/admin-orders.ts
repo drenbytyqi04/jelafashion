@@ -70,3 +70,9 @@ export async function changeOrderStatus(input: unknown): Promise<OrderActionResu
     return { ok: false, error: "Ndryshimi nuk u ruajt. Provo sërish." };
   }
 }
+
+/** Called when an admin opens an order: it stops counting as new. */
+export async function markOrderSeen(orderId: unknown): Promise<void> {
+  if (!(await adminOrNull()) || typeof orderId !== "string") return;
+  await orderStore()?.markSeen(orderId);
+}

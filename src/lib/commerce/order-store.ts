@@ -47,6 +47,10 @@ export interface OrderStore {
   list(filter: OrderListFilter): Promise<{ orders: Order[]; total: number }>;
   events(id: string): Promise<OrderEvent[]>;
   stats(): Promise<OrderStats>;
+  /** Orders no admin has opened yet, newest first (for the dashboard and the menu badge). */
+  unseen(limit?: number): Promise<{ orders: Order[]; total: number }>;
+  /** Marks an order as opened by an admin (first time only). */
+  markSeen(id: string): Promise<void>;
 }
 
 const emptyByStatus = (): Record<OrderStatus, number> => ({
@@ -94,6 +98,7 @@ type OrderRow = {
   tracking_number: string | null;
   tracking_carrier: string | null;
   created_at: string;
+  seen_at?: string | null;
   order_items?: {
     product_id: string | null;
     product_slug: string;
@@ -139,6 +144,7 @@ function fromRow(r: OrderRow): Order {
     trackingNumber: r.tracking_number,
     trackingCarrier: r.tracking_carrier,
     createdAt: r.created_at,
+    seenAt: r.seen_at ?? null,
     items: (r.order_items ?? []).map((i) => ({
       productId: i.product_id,
       productSlug: i.product_slug,
@@ -352,6 +358,23 @@ class SupabaseOrderStore implements OrderStore {
     return { orders: (data as OrderRow[]).map(fromRow), total: count ?? 0 };
   }
 
+  async unseen(limit = 10) {
+    const { data, error, count } = await this.db
+      .from("orders")
+      .select(ORDER_SELECT, { count: "exact" })
+      .is("seen_at", null)
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    if (error) throw new Error(`Unseen orders failed: ${error.message}`);
+    return { orders: (data as OrderRow[]).map(fromRow), total: count ?? 0 };
+  }
+
+  async markSeen(id: string) {
+    if (!UUID.test(id)) return;
+    const { error } = await this.db.from("orders").update({ seen_at: new Date().toISOString() }).eq("id", id).is("seen_at", null);
+    if (error) console.error("[orders] mark seen failed", error.message);
+  }
+
   async events(id: string) {
     const { data, error } = await this.db.from("order_events").select("status, note, created_at").eq("order_id", id).order("created_at");
     if (error) throw new Error(`Order events failed: ${error.message}`);
@@ -427,6 +450,7 @@ class LocalOrderStore implements OrderStore {
         trackingNumber: null,
         trackingCarrier: null,
         createdAt: now,
+        seenAt: null,
         proofs: [],
         events: [{ status: "awaiting_payment", note: "Porosia u bë", createdAt: now }],
       };
@@ -516,6 +540,18 @@ class LocalOrderStore implements OrderStore {
       .filter((o) => !term || o.number.toLowerCase().includes(term) || o.email.toLowerCase().includes(term))
       .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
     return { orders: all.slice(offset, offset + limit).map(strip), total: all.length };
+  }
+
+  async unseen(limit = 10) {
+    const all = (await readLocalDb()).orders.filter((o) => !o.seenAt).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    return { orders: all.slice(0, limit).map(strip), total: all.length };
+  }
+
+  async markSeen(id: string) {
+    await mutateLocalDb((db) => {
+      const o = db.orders.find((x) => x.id === id);
+      if (o && !o.seenAt) o.seenAt = new Date().toISOString();
+    });
   }
 
   async events(id: string) {

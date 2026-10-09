@@ -21,7 +21,7 @@ const ITEMS: { href: string; label: string; icon: ReactNode }[] = [
   { href: "/admin/newsletter", label: "Newsletter-i", icon: <Mail size={18} strokeWidth={1.5} /> },
 ];
 
-function NavList({ onNavigate }: { onNavigate?: () => void }) {
+function NavList({ onNavigate, unseenOrders = 0 }: { onNavigate?: () => void; unseenOrders?: number }) {
   const pathname = usePathname();
   const isActive = (href: string) => (href === "/admin" ? pathname === "/admin" : pathname.startsWith(href));
   return (
@@ -40,6 +40,12 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
             {isActive(item.href) && <span aria-hidden className="absolute inset-y-2 left-0 w-0.5 bg-champagne" />}
             <span aria-hidden>{item.icon}</span>
             {item.label}
+            {item.href === "/admin/orders" && unseenOrders > 0 && (
+              <span className="nums ml-auto rounded-full bg-error px-2 py-0.5 text-[0.6875rem] font-semibold text-white">
+                {unseenOrders}
+                <span className="sr-only"> porosi të reja</span>
+              </span>
+            )}
           </Link>
         </li>
       ))}
@@ -66,7 +72,7 @@ function Footer({ email }: { email: string }) {
   );
 }
 
-export function AdminNav({ email }: { email: string }) {
+export function AdminNav({ email, unseenOrders = 0 }: { email: string; unseenOrders?: number }) {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -75,13 +81,14 @@ export function AdminNav({ email }: { email: string }) {
           Jela Fashion
         </Link>
         <nav aria-label="Paneli" className="flex-1 overflow-y-auto">
-          <NavList />
+          <NavList unseenOrders={unseenOrders} />
         </nav>
         <Footer email={email} />
       </aside>
       <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-hairline bg-white px-4 lg:hidden">
-        <button type="button" onClick={() => setOpen(true)} aria-label="Hap menunë" aria-expanded={open} className="-ml-2 flex size-11 items-center justify-center">
+        <button type="button" onClick={() => setOpen(true)} aria-label={unseenOrders > 0 ? `Hap menunë (${unseenOrders} porosi të reja)` : "Hap menunë"} aria-expanded={open} className="relative -ml-2 flex size-11 items-center justify-center">
           <Menu aria-hidden size={20} strokeWidth={1.5} />
+          {unseenOrders > 0 && <span aria-hidden className="absolute right-2 top-2 size-2 rounded-full bg-error" />}
         </button>
         <Link href="/admin" className="wordmark text-[0.9375rem]">
           Jela Fashion
@@ -90,7 +97,7 @@ export function AdminNav({ email }: { email: string }) {
       </header>
       <Drawer open={open} onOpenChange={setOpen} side="left" title="Paneli" hideTitle>
         <nav aria-label="Paneli">
-          <NavList onNavigate={() => setOpen(false)} />
+          <NavList onNavigate={() => setOpen(false)} unseenOrders={unseenOrders} />
         </nav>
         <div className="mt-6">
           <Footer email={email} />

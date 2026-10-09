@@ -78,6 +78,7 @@ export default async function AdminOrders({ searchParams }: Props) {
                 <Link href={`/admin/orders/${o.id}`} className="nums font-medium underline-offset-4 hover:underline">
                   {o.number}
                 </Link>
+                {!o.seenAt && <span className="ml-2 rounded-admin bg-error px-1.5 py-0.5 text-[0.6875rem] font-semibold text-white">E re</span>}
               </td>
               <td className="nums whitespace-nowrap text-stone">{formatDate(o.createdAt, "sq")}</td>
               <td className="max-w-56">
