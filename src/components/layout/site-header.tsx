@@ -150,7 +150,7 @@ export function SiteHeader() {
               {count > 0 && (
                 <span
                   aria-hidden
-                  className="nums absolute right-1 top-1 flex size-[18px] items-center justify-center rounded-full bg-champagne text-[10px] font-semibold text-ink"
+                  className="nums absolute right-1 top-1 flex size-[18px] items-center justify-center rounded-full bg-champagne text-[11px] font-semibold text-ink"
                 >
                   {count > 9 ? "9+" : count}
                 </span>

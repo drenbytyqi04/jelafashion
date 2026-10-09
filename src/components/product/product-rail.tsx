@@ -11,7 +11,7 @@ export function ProductRail({ title, products, id }: { title: string; products: 
       </h2>
       <ul
         data-lenis-prevent-horizontal
-        className="flex snap-x snap-mandatory gap-3 overflow-x-auto px-(--gutter) pb-2 [scrollbar-width:none] lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible"
+        className="flex snap-x snap-mandatory scroll-px-(--gutter) gap-3 overflow-x-auto px-(--gutter) pb-2 [scrollbar-width:none] lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible"
       >
         {products.map((p) => (
           <li key={p.id} className="w-[62%] shrink-0 snap-start md:w-[38%] lg:w-auto">

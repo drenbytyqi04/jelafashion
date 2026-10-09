@@ -27,11 +27,11 @@ export function PaymentDetails({ rows }: { rows: { key: DetailKey; value: string
       {rows.map((r) => (
         <div
           key={r.key}
-          className="grid grid-cols-[minmax(0,7rem)_1fr_auto] items-center gap-3 border-t border-hairline py-1 first:border-t-0 sm:grid-cols-[minmax(0,9rem)_1fr_auto]"
+          className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 border-t border-hairline py-2 first:border-t-0 md:grid-cols-[minmax(0,9rem)_1fr_auto] md:py-1"
         >
           <dt className="text-small text-stone">{t(r.key)}</dt>
-          <dd className="nums min-w-0 break-words text-small text-ink">{r.value}</dd>
-          <dd className="-mr-3">
+          <dd className="nums col-start-1 min-w-0 break-words text-small text-ink md:col-start-auto">{r.value}</dd>
+          <dd className="-mr-3 col-start-2 row-span-2 row-start-1 md:col-start-auto md:row-span-1 md:row-start-auto">
             {r.copy ? (
               <button
                 type="button"

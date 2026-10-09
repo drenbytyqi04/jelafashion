@@ -29,7 +29,7 @@ export function LanguageSwitcher({ className, onNavigate }: { className?: string
               aria-label={t(`languages.${locale}`)}
               onClick={onNavigate}
               className={cn(
-                "label flex min-h-11 min-w-9 items-center justify-center px-1",
+                "label flex min-h-11 min-w-11 items-center justify-center px-1",
                 locale === current ? "underline decoration-champagne decoration-1 underline-offset-[6px]" : "opacity-70 hover:opacity-100",
               )}
             >

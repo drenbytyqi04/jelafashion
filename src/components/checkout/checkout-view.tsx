@@ -520,7 +520,7 @@ export function CheckoutView({
               />
               <fieldset>
                 <legend className="sr-only">{t("phone")}</legend>
-                <div className="grid grid-cols-[minmax(0,8.5rem)_minmax(0,1fr)] gap-3">
+                <div className="grid grid-cols-[minmax(0,10rem)_minmax(0,1fr)] gap-3">
                   <Controller
                     control={control}
                     name="phoneCountry"

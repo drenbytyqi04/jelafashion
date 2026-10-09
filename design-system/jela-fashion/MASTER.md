@@ -353,3 +353,7 @@ to each part:
 | UX: cancellable transitions, easing direction, 1–2 animated elements per view | **Adopted** | Motion |
 | Next.js: next/image, next/font, Server Actions + validation, `updateTag`, Suspense | **Adopted** | Next.js implementation rules |
 | Checklist: 375/768/1024/1440, no content under fixed nav, no horizontal scroll | **Adopted** | Checklist |
+25. **Testimonials section removed from the home page** (Phase 7, at the owner's request):
+    placeholder reviews (`[REVIEW TEXT]`) read as empty on a live site, and inventing
+    reviews is not allowed. The component, data and admin editor stay; re-add
+    `<Testimonials>` to `src/app/[locale]/page.tsx` once real reviews exist.

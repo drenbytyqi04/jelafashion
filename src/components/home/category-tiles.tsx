@@ -17,7 +17,7 @@ export async function CategoryTiles({ categories, locale }: { categories: Catalo
       <h2 id="categories-title" className="sr-only">
         {t("categoriesTitle")}
       </h2>
-      <ul className="container-page flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 [scrollbar-width:none] lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible">
+      <ul className="container-page flex snap-x snap-mandatory scroll-px-(--gutter) gap-3 overflow-x-auto pb-2 [scrollbar-width:none] lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible">
         {categoryNav.map((c, i) => {
           const category = categories.find((x) => x.id === c.key);
           return (

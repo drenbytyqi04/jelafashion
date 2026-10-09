@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getCategories, getHeroContent, getMarquee, getNewIn, getTestimonials } from "@/lib/catalog/repository";
+import { getCategories, getHeroContent, getMarquee, getNewIn } from "@/lib/catalog/repository";
 import type { Locale } from "@/lib/catalog/types";
 import { pick } from "@/lib/catalog/types";
 import { absoluteUrl, localizedPath, pageMetadata } from "@/lib/seo";
@@ -20,7 +20,6 @@ import { InstagramGrid } from "@/components/home/instagram-grid";
 import { Lookbook } from "@/components/home/lookbook";
 import { MadeToMeasure } from "@/components/home/made-to-measure";
 import { NewInCarousel } from "@/components/home/new-in-carousel";
-import { Testimonials } from "@/components/home/testimonials";
 
 // Prerendered, refreshed at most every 5 minutes (and on demand via the catalog tag).
 export const revalidate = 300;
@@ -65,17 +64,17 @@ function homeJsonLd(locale: Locale) {
 
 // Sections follow design-system/jela-fashion/pages/home.md:
 // DESIRE (hero, marquee, categories) → COLLECTION (new in, bridal) → PERFECT FIT (made to
-// measure) → TRUST (lookbook, atelier, testimonials, consultation) → ORDER (instagram, CTA).
+// measure) → TRUST (lookbook, atelier, consultation; testimonials removed at the
+// atelier's request until real reviews exist) → ORDER (instagram, CTA).
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: raw } = await params;
   const locale = raw as Locale;
   setRequestLocale(locale);
   const t = await getTranslations("home");
-  const [hero, categories, newIn, testimonials, marqueeContent] = await Promise.all([
+  const [hero, categories, newIn, marqueeContent] = await Promise.all([
     getHeroContent(),
     getCategories(),
     getNewIn(8),
-    getTestimonials(),
     getMarquee(),
   ]);
   // Edited in the admin panel; the copy in messages is the fallback.
@@ -137,7 +136,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </div>
       <Lookbook />
       <AtelierStory />
-      <Testimonials items={testimonials} />
       <Consultation />
       <InstagramGrid />
       <FinalCta />

@@ -111,16 +111,16 @@ export default async function ProductPage({ params }: Props) {
       />
       {/* Full-bleed gallery on phones; inside the page container from tablet up. */}
       <div className="mx-auto w-full max-w-[90rem] pt-(--header-h) md:px-(--gutter) md:pt-[calc(var(--header-h)+32px)]">
-        <nav aria-label={t("breadcrumb")} className="container-page py-4 md:px-0 md:pt-0">
-          <ol className="flex flex-wrap items-center gap-2 text-small text-stone">
+        <nav aria-label={t("breadcrumb")} className="container-page py-1 md:px-0 md:pt-0">
+          <ol className="flex flex-wrap items-center gap-x-2 text-small text-stone">
             <li>
-              <Link href="/" className="hover:text-ink">
+              <Link href="/" className="inline-flex min-h-11 items-center hover:text-ink">
                 {t("home")}
               </Link>
             </li>
             <li aria-hidden>/</li>
             <li>
-              <Link href={categoryHref} className="hover:text-ink">
+              <Link href={categoryHref} className="inline-flex min-h-11 items-center hover:text-ink">
                 {category ? pick(category.name, locale) : product.category}
               </Link>
             </li>

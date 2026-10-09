@@ -86,7 +86,7 @@ with self-drawing measurement lines.
   category thumbnails, language switcher and WhatsApp.
 - **Home** (13 sections): hero video, marquee, 3 category tiles, New In carousel, bridal
   feature, Made to Measure (key trust section, 3 steps), pinned lookbook, atelier story,
-  testimonials (`[REVIEW TEXT]`), consultation (WhatsApp + video call), Instagram grid,
+  testimonials (removed for now, see MASTER.md decision 25), consultation (WhatsApp + video call), Instagram grid,
   final CTA, newsletter + footer. Bilingual copy lives in the i18n messages.
 - **Storefront**: collection (URL-synced filters, sort, grid toggle, load more,
   skeletons, editorial banner), product page (gallery + zoom, swatches, XS–XXL + Custom

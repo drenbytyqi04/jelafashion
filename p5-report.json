@@ -1,0 +1,53 @@
+{
+  "stock": {
+    "before": 3,
+    "afterOrder": 1,
+    "afterSecondOrder": 0,
+    "afterCancel": 1
+  },
+  "order": "JF-1001",
+  "customerSeesGuestOrder": 1,
+  "customerAdminRedirect": "/admin/login?denied=1",
+  "customerProtectedStatuses": [
+    404,
+    404
+  ],
+  "adminLanding": "/admin",
+  "axe:admin-dashboard": [],
+  "axe:admin-orders": [],
+  "axe:admin-order": [],
+  "flow": [
+    "E paguar",
+    "Në punim",
+    "E nisur"
+  ],
+  "shipWithoutTracking": null,
+  "statusEmails": [
+    "order-paid.html",
+    "order-in_production.html",
+    "order-shipped.html"
+  ],
+  "sheetRows": 11,
+  "csv": {
+    "status": 200,
+    "header": "number,created_at,status,payment_method,email,phone,first_n",
+    "rows": 1
+  },
+  "productSaved": "/admin/products/da2943fd-188d-48a3-a8db-564be8de50b1",
+  "axe:admin-product": [],
+  "discounts": [
+    "MIRESEVINI10",
+    "VERA25"
+  ],
+  "page:collections": "Koleksionet",
+  "page:shipping": "Zonat e dërgesës",
+  "page:payments": "Mënyrat e pagesës",
+  "page:customers": "Klientët",
+  "page:newsletter": "Newsletter-i",
+  "axe:admin-newsletter": [],
+  "adminOverflow375": 0,
+  "newProductOnShop": "Mëngjesi",
+  "newProductImage": 2,
+  "marqueeOnHome": 2,
+  "errors": []
+}

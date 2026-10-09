@@ -44,7 +44,7 @@ export function SearchView({ index, initialQuery }: { index: { product: CatalogP
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t("placeholder")}
-            className="min-w-0 flex-1 bg-transparent font-serif text-h3 placeholder:text-stone/60 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
+            className="min-h-11 min-w-0 flex-1 bg-transparent font-serif text-h3 placeholder:text-stone/60 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
           />
           {query && (
             <button

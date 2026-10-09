@@ -79,7 +79,7 @@ export function Lookbook() {
         tabIndex={0}
         aria-labelledby="lookbook-title"
         data-lenis-prevent-horizontal
-        className="flex snap-x snap-mandatory gap-3 overflow-x-auto px-(--gutter) pb-2 [scrollbar-width:none] lg:w-max lg:snap-none lg:gap-6 lg:overflow-visible lg:will-change-transform"
+        className="flex snap-x snap-mandatory scroll-px-(--gutter) gap-3 overflow-x-auto px-(--gutter) pb-2 [scrollbar-width:none] lg:w-max lg:snap-none lg:gap-6 lg:overflow-visible lg:will-change-transform"
       >
         {FRAMES.map((tint, i) => (
           <li

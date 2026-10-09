@@ -1,0 +1,46 @@
+{
+  "overflow375": 0,
+  "axe:checkout-375": [],
+  "errorSummary": "Korrigjo 8 fusha për të vazhduar:Plotëso këtë fushë.Plotëso këtë fushë.Plotëso këtë fushë.Plotëso këtë fushë.Plotëso këtë fushë.Plotëso këtë fushë.Zgjidh si dës",
+  "discountInvalid": "Ky kod nuk është i vlefshëm ose ka skaduar.",
+  "discountApplied": "Kodi MIRESEVINI10 u zbatua.",
+  "phoneError": "Shkruaj një numër telefoni të vlefshëm për prefiksin e zgjedhur.",
+  "totalBeforeOrder": "EUR1.247 €",
+  "bankOrderUrl": "/sq/porosia/86c07c97799bba9e8ff8419fe2931443507a40778ffa7d3d",
+  "bankOrderHeading": "Faleminderit, Arta.",
+  "bankStatus": [
+    "JF-1001",
+    "Në pritje të pagesës",
+    "Dërgo dëshminë",
+    "Dërgesa te",
+    "Dërgesa",
+    "Mënyra e pagesës",
+    "Vazhdo blerjen"
+  ],
+  "axe:order-bank-375": [],
+  "cartAfterOrder": 0,
+  "proofSent": "Faleminderit. E morëm dëshminë dhe pagesën do ta konfirmojmë së shpejti.",
+  "proofListed": "fatura.png· TRX-5521",
+  "fakeFileError": [
+    "Ky lloj skedari nuk pranohet. Ngarko JPG, PNG ose PDF.",
+    "",
+    ""
+  ],
+  "errors375": [],
+  "overflow1440": 0,
+  "axe:checkout-1440": [],
+  "deRates": 2,
+  "cardButton": "Pay now",
+  "sandboxTitle": "Pay €750",
+  "cancelledText": "The card payment was cancelled and nothing was charged. You can try again.",
+  "paidStatus": 1,
+  "axe:order-paid-1440": [],
+  "errors1440": [],
+  "tamperedMessage": "Disa çmime ose masa kanë ndryshuar që kur i shtove. Shporta u përditësua; kontrolloje dhe bëj porosinë sërish.",
+  "tamperedPriceNow": 690,
+  "outbox": [
+    "newsletter-welcome.html",
+    "order-confirmation.html",
+    "order-confirmation.html"
+  ]
+}

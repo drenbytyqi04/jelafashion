@@ -32,13 +32,15 @@ export async function ContentHeader({
     <header className="container-page pt-[calc(var(--header-h)+32px)] lg:pt-[calc(var(--header-h)+56px)]">
       <JsonLd data={breadcrumbJsonLd(locale, all)} />
       <nav aria-label={t("breadcrumb")}>
-        <ol className="flex flex-wrap items-center gap-2 text-small text-stone">
+        <ol className="flex flex-wrap items-center gap-x-2 text-small text-stone">
           {all.map((c, i) => (
             <li key={i} className="flex items-center gap-2">
               {i > 0 && <span aria-hidden>/</span>}
               {i < all.length - 1 ? (
-                <Link href={c.href} className="link-quiet">
+                <Link href={c.href} className="inline-flex min-h-11 items-center">
+                  <span className="link-quiet">
                   {c.name}
+                  </span>
                 </Link>
               ) : (
                 <span aria-current="page">{c.name}</span>

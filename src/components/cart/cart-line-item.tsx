@@ -109,7 +109,7 @@ export function CartLineItem({ line, compact, onNavigate }: { line: CartLine; co
             type="button"
             onClick={() => remove(line.key)}
             aria-label={t("remove", { name: line.name })}
-            className="flex min-h-11 items-center gap-1 text-small text-stone hover:text-ink"
+            className="flex min-h-11 min-w-11 items-center justify-center gap-1 text-small text-stone hover:text-ink"
           >
             <X aria-hidden size={14} strokeWidth={1.25} />
             <span className="max-md:sr-only">{tc("remove")}</span>
