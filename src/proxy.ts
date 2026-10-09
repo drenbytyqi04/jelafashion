@@ -14,7 +14,15 @@ const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? process
  * never waits on the auth server. Authorization itself happens in the data access layer.
  */
 export default async function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, searchParams } = request.nextUrl;
+  // A sign-in link whose redirect wasn't allowed lands on the Site URL itself (/?code=…):
+  // finish it at the callback instead of dropping it on the home page.
+  if (pathname === "/" && (searchParams.has("code") || searchParams.has("token_hash"))) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/auth/callback";
+    if (!url.searchParams.has("next")) url.searchParams.set("next", "/admin");
+    return NextResponse.redirect(url);
+  }
   // The admin panel (Albanian only) and auth callbacks live outside the locale segment.
   const response = pathname.startsWith("/admin") || pathname.startsWith("/auth") ? NextResponse.next({ request }) : intl(request);
 
