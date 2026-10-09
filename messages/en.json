@@ -621,6 +621,7 @@
     "differentEmail": "Use a different email",
     "google": "Continue with Google",
     "or": "or",
+    "rateLimited": "Too many links have been sent for now. Try again in about an hour.",
     "failure": "We couldn't send the link. Try again in a moment.",
     "unavailable": "Accounts aren't available right now.",
     "linkInvalid": "This sign-in link has expired or was already used. Request a new one.",

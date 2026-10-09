@@ -622,6 +622,7 @@
     "differentEmail": "Përdor një email tjetër",
     "google": "Vazhdo me Google",
     "or": "ose",
+    "rateLimited": "Janë dërguar shumë lidhje për momentin. Provo sërish pas rreth një ore.",
     "failure": "Nuk arritëm ta dërgojmë lidhjen. Provo sërish pas pak.",
     "unavailable": "Llogaritë nuk janë të disponueshme për momentin.",
     "linkInvalid": "Kjo lidhje ka skaduar ose është përdorur tashmë. Kërko një të re.",

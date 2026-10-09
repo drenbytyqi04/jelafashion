@@ -46,7 +46,16 @@ export function SignInPanel({
       setError(null);
       const res = await requestSignInLink({ email: values.email, next, locale });
       if (res.ok) setSentTo(values.email);
-      else setError(res.error === "unavailable" ? t("unavailable") : res.error === "failure" ? t("failure") : tf("email"));
+      else
+        setError(
+          res.error === "unavailable"
+            ? t("unavailable")
+            : res.error === "rateLimited"
+              ? t("rateLimited")
+              : res.error === "failure"
+                ? t("failure")
+                : tf("email"),
+        );
     });
 
   const withGoogle = () =>
