@@ -50,3 +50,7 @@ __pycache__/
 
 # local order store and email outbox (dev without Supabase/Resend)
 /.data/
+
+# QA screenshots written to the repo root when OUT is unset
+/undefined/
+/p[0-9]-*
