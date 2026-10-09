@@ -44,11 +44,18 @@ export default async function AdminOrder({ params }: { params: Promise<{ id: str
         description={`Bërë më ${time(order.createdAt)} · ${order.locale === "en" ? "Anglisht" : "Shqip"}`}
         actions={
           hasCustom && (
-            <Btn asChild>
-              <a href={`/admin/print/${order.id}`} target="_blank" rel="noopener">
-                Fleta e masave (print)
-              </a>
-            </Btn>
+            <div className="flex flex-wrap gap-2">
+              <Btn asChild>
+                <a href={`/admin/print/${order.id}`} target="_blank" rel="noopener">
+                  Fleta e masave (print)
+                </a>
+              </Btn>
+              <Btn asChild>
+                <a href={`/admin/print/${order.id}/pdf`} download>
+                  Shkarko PDF
+                </a>
+              </Btn>
+            </div>
           )
         }
       />

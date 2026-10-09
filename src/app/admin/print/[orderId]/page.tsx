@@ -22,7 +22,14 @@ export default async function MeasurementSheet({ params }: { params: Promise<{ o
   return (
     <div className="min-h-dvh bg-white py-8 print:py-0">
       <style>{`@page { size: A4; margin: 14mm; } @media print { body { background: white; } }`}</style>
-      <div className="mx-auto mb-6 flex max-w-[210mm] justify-end px-4 print:hidden">
+      <div className="mx-auto mb-6 flex max-w-[210mm] justify-end gap-2 px-4 print:hidden">
+        <a
+          href={`/admin/print/${order.id}/pdf`}
+          download
+          className="flex h-10 items-center rounded-admin border border-ink px-4 text-[0.8125rem]"
+        >
+          Shkarko PDF
+        </a>
         <PrintButton />
       </div>
       {items.length === 0 && <p className="mx-auto max-w-[210mm] px-4">Kjo porosi nuk ka fustane me masa.</p>}
