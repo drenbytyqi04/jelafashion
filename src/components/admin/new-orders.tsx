@@ -23,8 +23,8 @@ export function NewOrders({ orders, total }: { orders: Order[]; total: number })
   if (orders.length === 0) return null;
   return (
     <section aria-labelledby="new-orders-title" className="mb-6 rounded-admin border border-champagne bg-white">
-      <div className="flex items-center justify-between gap-3 border-b border-hairline px-4 py-3">
-        <h2 id="new-orders-title" className="flex items-center gap-2 font-semibold">
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-hairline px-4 py-3">
+        <h2 id="new-orders-title" className="flex items-center gap-2 whitespace-nowrap font-semibold">
           <span aria-hidden className="size-2 rounded-full bg-error" />
           Porositë e reja <span className="nums text-stone">({total})</span>
         </h2>

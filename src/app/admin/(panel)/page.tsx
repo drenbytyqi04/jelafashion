@@ -53,7 +53,7 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-3">
-        <div className="xl:col-span-2">
+        <div className="min-w-0 xl:col-span-2">
           <Panel title="Porositë e fundit" actions={<Link href="/admin/orders" className="text-[0.8125rem] underline underline-offset-4">Të gjitha</Link>} className="[&>div]:p-0">
             {latest.orders.length === 0 ? (
               <p className="p-4 text-stone">Ende nuk ka porosi.</p>
@@ -80,7 +80,7 @@ export default async function AdminDashboard() {
             )}
           </Panel>
         </div>
-        <Panel title="Stok i ulët">
+        <Panel title="Stok i ulët" className="min-w-0">
           {lowStock.length === 0 ? (
             <p className="text-stone">Asnjë masë me stok të ulët.</p>
           ) : (

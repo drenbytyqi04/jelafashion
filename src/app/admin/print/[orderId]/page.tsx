@@ -22,7 +22,7 @@ export default async function MeasurementSheet({ params }: { params: Promise<{ o
   return (
     <div className="min-h-dvh bg-white py-8 print:py-0">
       <style>{`@page { size: A4; margin: 14mm; } @media print { body { background: white; } }`}</style>
-      <div className="mx-auto mb-6 flex max-w-[210mm] justify-end gap-2 px-4 print:hidden">
+      <div className="mx-auto mb-6 flex max-w-[210mm] flex-wrap justify-end gap-2 px-4 print:hidden">
         <a
           href={`/admin/print/${order.id}/pdf`}
           download
@@ -37,20 +37,21 @@ export default async function MeasurementSheet({ params }: { params: Promise<{ o
         const image = catalog.find((p) => p.slug === item.productSlug)?.images[0];
         return (
           <article key={idx} className="mx-auto flex max-w-[210mm] flex-col px-4 text-ink [break-after:page] last:[break-after:auto] print:px-0">
-            <header className="flex items-end justify-between border-b border-ink pb-3">
-              <span className="wordmark text-[1.125rem]">Jela Fashion</span>
-              <span className="nums text-[0.8125rem]">
+            <header className="flex flex-wrap items-end justify-between gap-x-4 gap-y-1 border-b border-ink pb-3">
+              <span className="wordmark text-[1rem] md:text-[1.125rem]">Jela Fashion</span>
+              <span className="nums whitespace-nowrap text-[0.8125rem]">
                 {order.number} · {formatDate(order.createdAt, "sq")} · {idx + 1}/{items.length}
               </span>
             </header>
-            <div className="mt-6 grid grid-cols-[38%_1fr] gap-8">
-              <div>
+            <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-[38%_1fr] print:grid-cols-[38%_1fr]">
+              <div className="grid grid-cols-[40%_1fr] items-end gap-4 md:block print:block">
                 {image ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={image.url} alt="" className="aspect-[3/4] w-full object-cover" />
                 ) : (
                   <ImagePlaceholder ratio="3/4" />
                 )}
+                <div>
                 <p className="mt-3 font-serif text-[1.5rem] leading-tight">{item.name}</p>
                 <p className="text-[0.8125rem]">{[item.color, `Sasia ${item.quantity}`].filter(Boolean).join(" · ")}</p>
                 <p className="mt-4 text-[0.8125rem]">
@@ -58,6 +59,7 @@ export default async function MeasurementSheet({ params }: { params: Promise<{ o
                   <br />
                   {order.phone}
                 </p>
+                </div>
               </div>
               <div>
                 <table className="nums w-full border-collapse text-[0.875rem]">
