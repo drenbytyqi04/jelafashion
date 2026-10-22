@@ -357,3 +357,7 @@ to each part:
     placeholder reviews (`[REVIEW TEXT]`) read as empty on a live site, and inventing
     reviews is not allowed. The component, data and admin editor stay; re-add
     `<Testimonials>` to `src/app/[locale]/page.tsx` once real reviews exist.
+26. **Home categories are a grid on mobile, not a swipe row** (visual refinement): the
+    swipe row showed one and a half tiles, so "Short" was never seen without swiping.
+    Bridal now leads full width (4:5) with Evening and Short paired below (3:4). Desktop
+    keeps three columns with the middle tile dropped. Overrides pages/home.md section 3.

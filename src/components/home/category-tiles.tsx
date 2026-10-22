@@ -17,18 +17,27 @@ export async function CategoryTiles({ categories, locale }: { categories: Catalo
       <h2 id="categories-title" className="sr-only">
         {t("categoriesTitle")}
       </h2>
-      <ul className="container-page flex snap-x snap-mandatory scroll-px-(--gutter) gap-3 overflow-x-auto pb-2 [scrollbar-width:none] lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible">
+      {/* Mobile: bridal leads full width, evening and short pair below, so all three are
+          seen without swiping. Desktop: three columns, the middle one dropped. */}
+      <ul className="container-page grid grid-cols-2 gap-x-3 gap-y-10 lg:grid-cols-3 lg:gap-6">
         {categoryNav.map((c, i) => {
           const category = categories.find((x) => x.id === c.key);
           return (
-            <li key={c.key} className={cn("w-[78%] shrink-0 snap-start lg:w-auto", i === 1 && "lg:mt-24")}>
+            <li key={c.key} className={cn(i === 0 && "col-span-2 lg:col-span-1", i === 1 && "lg:mt-24")}>
               <Link href={c.href} className="group block">
                 <div className="overflow-hidden">
                   <div className="transition-transform duration-[1200ms] ease-(--ease-couture) group-hover:scale-[1.04] motion-reduce:transition-none">
-                    <ImagePlaceholder ratio="3/4" tint={TINTS[c.key]} src={PHOTOS[c.key]} sizes="(min-width: 1024px) 33vw, 78vw" position="top" />
+                    <ImagePlaceholder
+                      ratio="3/4"
+                      className={cn(i === 0 && "aspect-[4/5] lg:aspect-[3/4]")}
+                      tint={TINTS[c.key]}
+                      src={PHOTOS[c.key]}
+                      sizes={i === 0 ? "(min-width: 1024px) 33vw, 100vw" : "(min-width: 1024px) 33vw, 50vw"}
+                      position="top"
+                    />
                   </div>
                 </div>
-                <span className="label relative mt-5 inline-block pb-2">
+                <span className="label relative mt-4 inline-block pb-2 lg:mt-5">
                   {category ? pick(category.name, locale) : c.key}
                   <span
                     aria-hidden

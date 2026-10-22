@@ -19,7 +19,7 @@ export async function BridalFeature() {
               <ImagePlaceholder ratio="3/4" tint="#B8AA98" src={siteImages.bridalFeatureMain} sizes="(min-width: 1024px) 45vw, 100vw" position="top" />
             </Parallax>
           </RevealImage>
-          <div className="absolute -bottom-16 right-[-9%] w-[46%] border-[6px] border-linen lg:-bottom-24 lg:right-[-22%] lg:w-[44%] lg:border-8">
+          <div className="absolute -bottom-16 right-[-9%] w-[46%] border-[6px] border-linen lg:-bottom-24 lg:right-[-12%] lg:w-[40%] lg:border-8">
             <RevealImage>
               <ImagePlaceholder ratio="3/4" tint="#E2D3BF" pose="back" src={siteImages.bridalFeatureDetail} sizes="(min-width: 1024px) 30vw, 60vw" position="top" />
             </RevealImage>

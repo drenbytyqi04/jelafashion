@@ -32,7 +32,7 @@ Flow: DESIRE (1–3) → COLLECTION (4–5) → PERFECT FIT (6) → TRUST (7–1
 ├─────────────────────────────┤
 │ Handmade in Prizren • Made …│  marquee, label, ink on ivory
 ├─────────────────────────────┤
-│ ┌───────────────┐           │  categories: swipe row,
+│ ┌───────────────┐           │  categories: see MASTER.md decision 26 (grid),
 │ │  Bridal 3:4   │ ┌──────   │  tiles 80% width, peek next
 │ │               │ │ Evening │
 │ └───────────────┘ └──────   │

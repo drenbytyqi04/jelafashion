@@ -10,6 +10,7 @@ import { TapeLine } from "./tape-line";
 /** The key trust section. Numbered because the steps really are a sequence. */
 export async function MadeToMeasure() {
   const t = await getTranslations("homeSections");
+  const tn = await getTranslations("nav");
   const steps = t.raw("mtmSteps") as { title: string; text: string }[];
   const icons = [DressIcon, Ruler, Scissors];
 
@@ -18,8 +19,9 @@ export async function MadeToMeasure() {
       <TapeDivider className="container-page" />
       <div className="container-page grid gap-12 pt-20 lg:grid-cols-12 lg:gap-6 lg:pt-32">
         <div className="lg:col-span-5">
-          <RevealText as="h2" id="mtm-title" lines={t.raw("mtmTitle") as string[]} className="font-serif text-h2" />
-          <p className="measure mt-6 text-body text-stone">{t("mtmText")}</p>
+          <p className="label mb-6 text-gold-ink">{tn("madeToMeasure")}</p>
+          <RevealText as="h2" id="mtm-title" lines={t.raw("mtmTitle") as string[]} className="font-serif text-h2 font-light lg:text-h1" />
+          <p className="measure mt-6 font-serif text-lead text-stone">{t("mtmText")}</p>
           <Button asChild magnetic className="mt-10 hidden lg:inline-flex">
             <Link href="/made-to-measure">{t("mtmCta")}</Link>
           </Button>
