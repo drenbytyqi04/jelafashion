@@ -20,15 +20,16 @@ type Props = {
   immediate?: boolean;
 };
 
-/** Masked line-by-line headline reveal. Reduced motion: a short fade. */
+/** Masked line-by-line headline reveal. Reduced motion: static text. */
 export function RevealText({ lines, as: Tag = "h2", id, className, delay = 0, immediate }: Props) {
   const MotionTag = MOTION_TAGS[Tag];
   const reduce = useReducedMotionSafe();
   const each = staggerFor(lines.length);
 
   const line: Variants = reduce
-    ? // y is reset too: the preference can arrive after the line mounted translated.
-      { hidden: { opacity: 0, y: "0%" }, shown: { opacity: 1, y: "0%", transition: { duration: duration.micro, delay } } }
+    ? // Static: the text never waits on the viewport. y is reset because the preference
+      // can arrive after the line mounted translated.
+      { hidden: { y: "0%" }, shown: { y: "0%" } }
     : {
         hidden: { y: "105%" },
         shown: (i: number) => ({

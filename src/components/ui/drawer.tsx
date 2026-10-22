@@ -80,7 +80,8 @@ export function Drawer({
                 )}
                 initial={hidden}
                 animate={shown}
-                exit={hidden}
+                // Leaves quicker than it arrives, so closing never feels like waiting.
+                exit={{ ...hidden, transition: { duration: 0.35, ease: ease.curtain } }}
                 transition={{ duration: 0.6, ease: ease.couture }}
               >
                 <div className="flex min-h-16 items-center justify-between gap-4 border-b border-hairline pl-6 pr-2">

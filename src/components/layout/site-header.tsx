@@ -28,6 +28,13 @@ export function SiteHeader() {
   const [hidden, setHidden] = useState(false);
   const [focusWithin, setFocusWithin] = useState(false);
   const lastY = useRef(0);
+  // The badge settles in with a small pop when a dress is added, not on page load.
+  const prevCount = useRef<number | null>(null);
+  const [pop, setPop] = useState(0);
+  useEffect(() => {
+    if (prevCount.current !== null && count > prevCount.current) setPop((n) => n + 1);
+    prevCount.current = count;
+  }, [count]);
 
   useEffect(() => {
     let frame = 0;
@@ -123,7 +130,14 @@ export function SiteHeader() {
 
           {/* Center */}
           <Link href="/" aria-label={t("common.home")} className="flex min-h-11 items-center">
-            <span className="wordmark">Jela Fashion</span>
+            <span
+              className={cn(
+                "wordmark transition-transform duration-(--duration-reveal) ease-(--ease-couture) lg:origin-center",
+                !atTop && "lg:scale-[0.92]",
+              )}
+            >
+              Jela Fashion
+            </span>
           </Link>
 
           {/* Right */}
@@ -149,8 +163,9 @@ export function SiteHeader() {
               <ShoppingBag {...icon} />
               {count > 0 && (
                 <span
+                  key={pop}
                   aria-hidden
-                  className="nums absolute right-1 top-1 flex size-[18px] items-center justify-center rounded-full bg-champagne text-[11px] font-semibold text-ink"
+                  className={cn(pop > 0 && "animate-[badge-pop_600ms_var(--ease-couture)]", "nums absolute right-1 top-1 flex size-[18px] items-center justify-center rounded-full bg-champagne text-[11px] font-semibold text-ink")}
                 >
                   {count > 9 ? "9+" : count}
                 </span>

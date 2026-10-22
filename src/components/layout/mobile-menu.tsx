@@ -4,7 +4,7 @@ import { Heart, Search, User, X } from "lucide-react";
 import { AnimatePresence, m, type Variants } from "motion/react";
 import { Dialog } from "radix-ui";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import type { StaticPathname } from "@/i18n/routing";
 import { duration, ease } from "@/lib/motion";
 import { categoryNav } from "@/lib/nav";
@@ -28,6 +28,11 @@ const list: Variants = {
   hidden: {},
   shown: { transition: { staggerChildren: 0.07, delayChildren: 0.15 } },
 };
+// Big links rise out of a mask, like the headlines.
+const masked: Variants = {
+  hidden: { y: "105%" },
+  shown: { y: "0%", transition: { duration: duration.reveal, ease: ease.couture } },
+};
 const item: Variants = {
   hidden: { opacity: 0, y: 28 },
   shown: { opacity: 1, y: 0, transition: { duration: duration.reveal, ease: ease.couture } },
@@ -40,6 +45,7 @@ export function MobileMenu() {
   const open = useUiStore((s) => s.menuOpen);
   const setOpen = useUiStore((s) => s.setMenuOpen);
   const close = () => setOpen(false);
+  const pathname = usePathname();
   useLenisLock(open);
 
   const wa = whatsappHref();
@@ -80,17 +86,24 @@ export function MobileMenu() {
                   animate="shown"
                 >
                   <ul className="flex flex-col">
-                    {bigLinks.map((l) => (
-                      <m.li key={l.key} variants={item}>
-                        <Link
-                          href={l.href}
-                          onClick={close}
-                          className="block py-2 font-serif text-[2.5rem] font-light leading-[1.1]"
-                        >
-                          {t(`nav.${l.key}`)}
-                        </Link>
-                      </m.li>
-                    ))}
+                    {bigLinks.map((l) => {
+                      const current = pathname === l.href;
+                      return (
+                        <li key={l.key} className="overflow-hidden">
+                          <m.div variants={masked}>
+                            <Link
+                              href={l.href}
+                              onClick={close}
+                              aria-current={current ? "page" : undefined}
+                              className="flex items-center gap-4 py-2 font-serif text-[2.5rem] font-light leading-[1.1] active:text-stone"
+                            >
+                              {t(`nav.${l.key}`)}
+                              {current && <span aria-hidden className="h-px w-8 bg-champagne" />}
+                            </Link>
+                          </m.div>
+                        </li>
+                      );
+                    })}
                   </ul>
 
                   <m.div variants={item} className="mt-10">
@@ -99,7 +112,7 @@ export function MobileMenu() {
                       {categoryNav.map((c) => (
                         <li key={c.key}>
                           <Link href={c.href} onClick={close} className="group block">
-                            <ImagePlaceholder ratio="3/4" tone={c.tone} src={MENU_PHOTOS[c.key]} sizes="30vw" position="top" />
+                            <ImagePlaceholder className="transition-opacity duration-(--duration-micro) group-active:opacity-80" ratio="3/4" tone={c.tone} src={MENU_PHOTOS[c.key]} sizes="30vw" position="top" />
                             <span className="label mt-3 block">{t(`nav.${c.key}`)}</span>
                           </Link>
                         </li>

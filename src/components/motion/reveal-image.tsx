@@ -6,23 +6,13 @@ import { cn } from "@/lib/cn";
 import { duration, ease } from "@/lib/motion";
 import { useReducedMotionSafe } from "@/components/motion/use-reduced-motion-safe";
 
-/** Clip-path reveal from the bottom edge with a slight settle of the image inside. */
+/** Clip-path reveal from the bottom edge with a slight settle of the image inside. Reduced motion: static. */
 export function RevealImage({ children, className }: { children: ReactNode; className?: string }) {
   const reduce = useReducedMotionSafe();
 
-  if (reduce) {
-    return (
-      <m.div
-        className={className}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: duration.micro }}
-      >
-        {children}
-      </m.div>
-    );
-  }
+  // Reduced motion: the image is simply there. A fade gated on whileInView kept lazy
+  // images at opacity 0 when they entered the viewport, and Chrome never fetched them.
+  if (reduce) return <div className={className}>{children}</div>;
 
   return (
     <m.div
