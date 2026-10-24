@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, Ruler, Video } from "lucide-react";
+import { ArrowRight, Heart, Ruler, Video } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
@@ -38,6 +38,7 @@ export function PurchasePanel({
   whatsappHref: string | null;
 }) {
   const t = useTranslations("product");
+  const tn = useTranslations("nav");
   const tw = useTranslations("wizard");
   const locale = useLocale() as Locale;
   const name = pick(product.name, locale);
@@ -128,7 +129,8 @@ export function PurchasePanel({
 
   return (
     <div className="flex flex-col">
-      <h1 className="font-serif text-h2 font-light">{name}</h1>
+      <p className="label text-stone">{tn(product.category)}</p>
+      <h1 className="mt-3 font-serif text-h2 font-light lg:text-h1">{name}</h1>
       <p className="nums mt-3 font-serif text-price">
         <span className="sr-only">{t("priceLabel")}: </span>
         {formatPrice(product.priceCents, locale)}
@@ -221,15 +223,32 @@ export function PurchasePanel({
             }}
             className="peer sr-only"
           />
+          {/* Made to measure as its own choice: the atelier's signature, not a seventh size. */}
           <span
             className={cn(
-              "flex min-h-12 items-center justify-center gap-3 border px-4 text-small transition-colors duration-(--duration-micro)",
-              "border-field hover:border-ink peer-checked:border-ink peer-checked:bg-ink peer-checked:text-ivory",
+              "group relative flex min-h-16 items-center gap-4 border px-4 py-3 transition-colors duration-(--duration-micro)",
+              "border-field hover:border-ink peer-checked:border-ink peer-checked:bg-linen",
               "peer-focus-visible:outline peer-focus-visible:outline-1 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ink",
             )}
           >
-            <Ruler aria-hidden size={18} strokeWidth={1.25} />
-            {t("customSizeOption")}
+            <span
+              aria-hidden
+              className={cn(
+                "absolute inset-y-0 left-0 w-0.5 origin-top bg-champagne transition-transform duration-(--duration-ui) ease-(--ease-couture)",
+                choice === "custom" ? "scale-y-100" : "scale-y-0",
+              )}
+            />
+            <Ruler aria-hidden size={20} strokeWidth={1.25} className="shrink-0 text-gold-ink" />
+            <span className="flex min-w-0 flex-1 flex-col">
+              <span className="text-small font-medium">{t("customSize")}</span>
+              <span className="text-[0.8125rem] leading-snug text-stone">{t("customSizeSub")}</span>
+            </span>
+            <ArrowRight
+              aria-hidden
+              size={16}
+              strokeWidth={1.25}
+              className="shrink-0 transition-transform duration-(--duration-ui) ease-(--ease-couture) group-hover:translate-x-1"
+            />
           </span>
         </label>
         <p id="size-error" role="alert" className={cn("text-small text-error", error ? "mt-3" : "sr-only")}>
@@ -293,7 +312,11 @@ export function PurchasePanel({
         <div className="container-page flex h-16 items-center gap-4">
           <div className="min-w-0 flex-1">
             <p className="truncate font-serif text-[1.125rem] leading-tight">{name}</p>
-            <p className="nums text-small text-stone">{formatPrice(product.priceCents, locale)}</p>
+            <p className="nums truncate text-small text-stone">
+              {formatPrice(product.priceCents, locale)}
+              {choice && choice !== "custom" && <> · {choice}</>}
+              {choice === "custom" && <> · {t("customSizeShort")}</>}
+            </p>
           </div>
           <Button
             size="sm"

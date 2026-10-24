@@ -231,6 +231,7 @@
     "chooseSize": "Zgjidh masën",
     "customSize": "Masë e personalizuar",
     "customSizeShort": "Sipas masave",
+    "customSizeSub": "E qepur sipas trupit tënd, me udhëzim hap pas hapi",
     "customSizeHint": "Qepet sipas masave të tua. I shënon ato në faqen e fustanit.",
     "outOfStock": "{size}, nuk ka në gjendje",
     "added": "U shtua në shportë",

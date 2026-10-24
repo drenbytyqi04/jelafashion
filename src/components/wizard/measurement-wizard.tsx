@@ -84,6 +84,33 @@ export function MeasurementWizard({
   const [leaveOpen, setLeaveOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const closingRef = useRef(false);
+  // State, not a ref: Radix mounts the portal a render after `open` turns true.
+  const [shell, setShell] = useState<HTMLDivElement | null>(null);
+
+  // iOS keeps fixed layers full height under the keyboard, which hid "Next". Track the
+  // visual viewport so the wizard ends just above the keyboard, and give the figure only
+  // the room the step itself doesn't need (none on short phones while typing).
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!shell || !vv) return;
+    const fit = () => {
+      shell.style.top = `${vv.offsetTop}px`;
+      shell.style.height = `${vv.height}px`;
+      const keyboard = vv.height < window.innerHeight - 120;
+      shell.toggleAttribute("data-keyboard", keyboard);
+      // ~370px is what the header, question, field and buttons need. The figure keeps
+      // at least 110px (still legible) and gives way only on the shortest screens.
+      const figure = vv.height >= 460 ? Math.max(110, vv.height - 370) : 0;
+      shell.style.setProperty("--wizard-figure", `${figure}px`);
+    };
+    fit();
+    vv.addEventListener("resize", fit);
+    vv.addEventListener("scroll", fit);
+    return () => {
+      vv.removeEventListener("resize", fit);
+      vv.removeEventListener("scroll", fit);
+    };
+  }, [shell]);
 
   const hasSaved = definitions.some((d) => saved.values[d.id] != null);
   const current = step >= 0 && step < total ? definitions[step] : null;
@@ -291,11 +318,11 @@ export function MeasurementWizard({
 
   const progress = step === INTRO ? 0 : step >= total ? 1 : (step + 1) / total;
   const view = current?.view ?? "front";
+  // Steps glide in on the reading direction and leave quicker than they arrive.
   const slide = {
-    initial: { opacity: 0, x: 24 * dir },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -24 * dir },
-    transition: { duration: duration.ui, ease: ease.couture },
+    initial: { opacity: 0, x: 32 * dir },
+    animate: { opacity: 1, x: 0, transition: { duration: 0.5, ease: ease.couture } },
+    exit: { opacity: 0, x: -20 * dir, transition: { duration: 0.22, ease: ease.leave } },
   };
 
   const summaryRows = useMemo(
@@ -321,8 +348,9 @@ export function MeasurementWizard({
             <Dialog.Portal forceMount>
               <Dialog.Content asChild forceMount aria-describedby={undefined}>
                 <m.div
+                  ref={setShell}
                   data-lenis-prevent
-                  className="wizard fixed inset-0 z-50 flex flex-col overflow-y-auto bg-ivory focus:outline-none"
+                  className="wizard fixed inset-x-0 top-0 z-50 h-dvh flex flex-col overflow-y-auto bg-ivory focus:outline-none"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
@@ -387,7 +415,7 @@ export function MeasurementWizard({
                     {/* Step content */}
                     <div className="relative flex flex-1 flex-col overflow-hidden md:overflow-visible">
                       <AnimatePresence mode="wait" initial={false}>
-                        <m.div key={`${step}-${editing}`} className="container-page flex flex-1 flex-col pb-[max(1rem,env(safe-area-inset-bottom))] pt-6 md:px-0 md:pt-0" {...slide}>
+                        <m.div key={`${step}-${editing}`} className="wizard-step container-page flex flex-1 flex-col pb-[max(1rem,env(safe-area-inset-bottom))] pt-6 md:px-0 md:pt-0" {...slide}>
                           {step === INTRO && (
                             <div className="flex flex-1 flex-col">
                               <h2 className="font-serif text-h3">{t("introTitle")}</h2>
@@ -509,7 +537,7 @@ export function MeasurementWizard({
                               )}
 
                               {!warning && (
-                                <div className="mt-auto grid grid-cols-[auto_1fr] gap-3 pt-8">
+                                <div className="wizard-actions mt-auto grid grid-cols-[auto_1fr] gap-3 pt-8">
                                   <Button variant="secondary" onClick={back} aria-label={editing ? t("backToSummary") : t("back")} className="px-5">
                                     <ArrowLeft aria-hidden size={18} strokeWidth={1.25} />
                                   </Button>

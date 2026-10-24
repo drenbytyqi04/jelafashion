@@ -50,6 +50,12 @@ export function ProductGallery({ product, locale }: { product: CatalogProduct; l
             </li>
           ))}
         </ul>
+        <span
+          aria-hidden
+          className="nums label pointer-events-none absolute bottom-7 right-(--gutter) bg-ivory/85 px-2 py-1 text-[0.625rem] tracking-[0.2em]"
+        >
+          {active + 1} / {count}
+        </span>
         <div aria-hidden className="mx-(--gutter) mt-3 h-px bg-hairline">
           <span
             className="block h-full bg-champagne transition-transform duration-(--duration-ui) ease-(--ease-couture)"
