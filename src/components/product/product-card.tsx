@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, Plus, Ruler } from "lucide-react";
+import { Heart, Plus, Ruler, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { Link } from "@/i18n/navigation";
@@ -14,6 +14,9 @@ import { useUiStore } from "@/stores/ui";
 import { productItem, track } from "@/lib/tracking/track";
 import { useWishlistStore } from "@/stores/wishlist";
 import { ProductMedia } from "./product-media";
+
+/** A dress reads as "New" for this long after it is published. */
+const NEW_FOR_DAYS = 30;
 
 export function ProductCard({
   product,
@@ -57,6 +60,9 @@ export function ProductCard({
   }
 
   const hasSecond = product.images.length > 1 || product.images.length === 0;
+  // Read once per mount. Server and client could only disagree in the instant a dress turns 30 days old.
+  const [now] = useState(() => Date.now());
+  const isNew = now - Date.parse(product.publishedAt) < NEW_FOR_DAYS * 86_400_000;
 
   return (
     <article className={cn("group relative", className)} onMouseLeave={() => setPicking(false)}>
@@ -75,6 +81,12 @@ export function ProductCard({
           )}
         </Link>
 
+        {isNew && !picking && (
+          <span className="label pointer-events-none absolute left-3 top-3 bg-ivory/90 px-2 py-1 text-[0.625rem] tracking-[0.2em]">
+            {t("newBadge")}
+          </span>
+        )}
+
         <button
           type="button"
           onClick={() => {
@@ -88,18 +100,42 @@ export function ProductCard({
           <Heart aria-hidden size={20} strokeWidth={1.25} className={cn(saved && "fill-ink")} />
         </button>
 
+        {/* Touch: a "+" opens the same size picker the hover panel shows on desktop. */}
+        {!picking && (
+          <button
+            type="button"
+            onClick={() => setPicking(true)}
+            aria-label={t("quickAddTo", { name })}
+            className="absolute bottom-1 right-1 flex size-11 items-center justify-center [@media(hover:hover)]:hidden"
+          >
+            <span className="flex size-8 items-center justify-center rounded-full bg-ivory/90 text-ink">
+              <Plus aria-hidden size={16} strokeWidth={1.25} />
+            </span>
+          </button>
+        )}
+
         {/* Quick add: slides up on hover (desktop) and on keyboard focus */}
         <div
           className={cn(
             "absolute inset-x-0 bottom-0 hidden translate-y-full bg-ivory/95 transition-transform duration-(--duration-ui) ease-(--ease-couture)",
             "[@media(hover:hover)]:block group-hover:translate-y-0 focus-within:translate-y-0",
-            picking && "translate-y-0",
+            picking && "block translate-y-0 bg-ivory",
           )}
         >
           {picking ? (
-            <div className="p-3">
-              <p className="label mb-2 text-stone">{t("chooseSize")}</p>
-              <ul className="grid grid-cols-6 gap-1">
+            <div className="p-2.5 [@media(hover:hover)]:p-3">
+              <div className="mb-1.5 flex items-center justify-between">
+                <p className="label whitespace-nowrap text-[0.625rem] text-stone [@media(hover:hover)]:text-label">{t("chooseSize")}</p>
+                <button
+                  type="button"
+                  onClick={() => setPicking(false)}
+                  aria-label={t("closeQuickAdd")}
+                  className="-my-3 -mr-3 flex size-11 items-center justify-center text-stone hover:text-ink [@media(hover:hover)]:hidden"
+                >
+                  <X aria-hidden size={16} strokeWidth={1.25} />
+                </button>
+              </div>
+              <ul className="grid grid-cols-3 gap-1 [@media(hover:hover)]:grid-cols-6">
                 {product.sizes.map(({ size, stock }) => {
                   const unavailable = product.availability === "in_stock" && stock === 0;
                   return (
@@ -109,7 +145,7 @@ export function ProductCard({
                         disabled={unavailable}
                         onClick={() => add(size)}
                         aria-label={unavailable ? t("outOfStock", { size }) : size}
-                        className="label flex h-9 w-full items-center justify-center border border-field text-[0.6875rem] tracking-[0.08em] hover:border-ink disabled:border-hairline disabled:text-stone disabled:line-through"
+                        className="label flex h-11 w-full items-center justify-center border border-field [@media(hover:hover)]:h-9 text-[0.6875rem] tracking-[0.08em] hover:border-ink disabled:border-hairline disabled:text-stone disabled:line-through"
                       >
                         {size}
                       </button>
@@ -119,11 +155,12 @@ export function ProductCard({
               </ul>
               <Link
                 href={href}
-                className="mt-2 flex min-h-9 items-center gap-2 text-small text-ink"
+                className="mt-1 flex min-h-11 items-center gap-1.5 text-[0.8125rem] text-ink [@media(hover:hover)]:mt-2 [@media(hover:hover)]:min-h-9 [@media(hover:hover)]:gap-2 [@media(hover:hover)]:text-small"
                 title={t("customSizeHint")}
               >
-                <Ruler aria-hidden size={16} strokeWidth={1.25} />
-                <span className="link-quiet">{t("customSize")}</span>
+                <Ruler aria-hidden size={16} strokeWidth={1.25} className="shrink-0" />
+                <span className="link-quiet truncate [@media(hover:hover)]:hidden">{t("customSizeShort")}</span>
+                <span className="link-quiet hidden truncate [@media(hover:hover)]:inline">{t("customSize")}</span>
               </Link>
             </div>
           ) : (
@@ -140,32 +177,35 @@ export function ProductCard({
         </div>
       </div>
 
-      <div className="mt-4 flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <h3 className="truncate font-serif text-[1.25rem] leading-tight">
-            <Link href={href} tabIndex={-1}>
-              {name}
-            </Link>
-          </h3>
-          {product.colors.length > 0 && (
-            <ul className="mt-2 flex gap-1.5" aria-label={t("colors", { count: product.colors.length })}>
-              {product.colors.map((c) => (
-                <li key={c.id}>
-                  <span
-                    title={pick(c.name, locale)}
-                    className="block size-2.5 rounded-full border border-ink/20"
-                    style={{ background: c.hex }}
-                  />
-                  <span className="sr-only">{pick(c.name, locale)}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+      <div className="mt-4 flex items-baseline justify-between gap-3">
+        <h3 className="min-w-0 truncate font-serif text-[1.25rem] leading-tight lg:text-[1.375rem]">
+          <Link href={href} tabIndex={-1}>
+            {name}
+          </Link>
+        </h3>
         <p className="nums shrink-0 font-serif text-price">
           <span className="sr-only">{t("priceLabel")}: </span>
           {formatPrice(product.priceCents, locale)}
         </p>
+      </div>
+      <div className="mt-2 flex min-h-3 items-center justify-between gap-3">
+        {product.colors.length > 0 && (
+          <ul className="flex gap-2" aria-label={t("colors", { count: product.colors.length })}>
+            {product.colors.map((c) => (
+              <li key={c.id}>
+                <span
+                  title={pick(c.name, locale)}
+                  className="block size-3 rounded-full border border-ink/20"
+                  style={{ background: c.hex }}
+                />
+                <span className="sr-only">{pick(c.name, locale)}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {product.availability === "made_to_order" && (
+          <p className="truncate text-[0.75rem] text-stone">{t("madeToOrderShort")}</p>
+        )}
       </div>
     </article>
   );

@@ -140,7 +140,11 @@ export function CollectionView({
         >
           <SlidersHorizontal aria-hidden size={16} strokeWidth={1.25} />
           {t("filter")}
-          {activeCount > 0 && <span className="nums">({activeCount})</span>}
+          {activeCount > 0 && (
+            <span className="nums flex size-[18px] items-center justify-center rounded-full bg-champagne text-[0.625rem] tracking-normal text-ink">
+              {activeCount}
+            </span>
+          )}
         </button>
         <button type="button" onClick={() => setSortOpen(true)} className="label flex min-h-12 items-center justify-center gap-2">
           {t("sort")}
@@ -247,7 +251,11 @@ export function CollectionView({
             <ul
               className={cn(
                 "grid gap-x-3 gap-y-10 lg:gap-x-6 lg:gap-y-16",
-                grid === "standard" ? "grid-cols-2 lg:grid-cols-3" : "grid-cols-1 md:grid-cols-2",
+                // Desktop: the middle column sits lower, an editorial stagger rather than a
+                // spreadsheet. Transform only, so rows keep their height and nothing reflows.
+                grid === "standard"
+                  ? "grid-cols-2 lg:grid-cols-3 lg:pb-16 lg:[&>li:nth-child(3n+2)]:translate-y-16"
+                  : "grid-cols-1 md:grid-cols-2",
               )}
             >
               {shown.map((p, i) => (
