@@ -11,7 +11,6 @@ import { flyToCart } from "@/lib/fly-to-cart";
 import { formatPrice } from "@/lib/format";
 import { lineKey, useCartStore } from "@/stores/cart";
 import { productItem, track } from "@/lib/tracking/track";
-import { toast } from "@/stores/toast";
 import { useWishlistStore } from "@/stores/wishlist";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -39,7 +38,6 @@ export function PurchasePanel({
 }) {
   const t = useTranslations("product");
   const tn = useTranslations("nav");
-  const tw = useTranslations("wizard");
   const locale = useLocale() as Locale;
   const name = pick(product.name, locale);
 
@@ -105,7 +103,7 @@ export function PurchasePanel({
     }
     addToCart({ ...baseLine(), key: lineKey(product.id, choice, color?.id), size: choice });
     track({ name: "add_to_cart", item: productItem(product, name, choice) });
-    toast({ title: t("added"), description: t("addedText", { name, size: choice }), tone: "success" });
+    // The cart drawer that opens after the flight is the confirmation (no toast over its button).
     flyToCart(productImageEl());
   }
 
@@ -120,7 +118,6 @@ export function PurchasePanel({
       notes: result.notes || undefined,
     });
     track({ name: "add_to_cart", item: productItem(product, name, "custom") });
-    toast({ title: tw("added"), description: tw("addedText", { name }), tone: "success" });
     // Let the wizard fade before the image flies.
     window.setTimeout(() => flyToCart(productImageEl()), 420);
   }

@@ -491,6 +491,7 @@ export function CheckoutView({
             >
               <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
                 <h2 id="checkout-contact" className={sectionTitle}>
+                  <span aria-hidden className="nums label mr-3 align-[0.35em] text-gold-ink">01</span>
                   {t("contact")}
                 </h2>
                 {account ? (
@@ -554,6 +555,7 @@ export function CheckoutView({
               className="mt-10 border-t border-hairline pt-10"
             >
               <h2 id="checkout-delivery" className={cn(sectionTitle, "mb-6")}>
+                <span aria-hidden className="nums label mr-3 align-[0.35em] text-gold-ink">02</span>
                 {t("delivery")}
               </h2>
               {savedAddresses.length > 0 && (
@@ -594,6 +596,7 @@ export function CheckoutView({
               className="mt-10 border-t border-hairline pt-10"
             >
               <h2 id="checkout-shipping" className={cn(sectionTitle, "mb-6")}>
+                <span aria-hidden className="nums label mr-3 align-[0.35em] text-gold-ink">03</span>
                 {t("shipping")}
               </h2>
               <div
@@ -656,6 +659,7 @@ export function CheckoutView({
               className="mt-10 border-t border-hairline pt-10"
             >
               <h2 id="checkout-payment" className={cn(sectionTitle, "mb-6")}>
+                <span aria-hidden className="nums label mr-3 align-[0.35em] text-gold-ink">04</span>
                 {t("payment")}
               </h2>
               <div
@@ -701,6 +705,7 @@ export function CheckoutView({
               className="mt-10 border-t border-hairline pt-10"
             >
               <h2 id="checkout-billing" className={cn(sectionTitle, "mb-6")}>
+                <span aria-hidden className="nums label mr-3 align-[0.35em] text-gold-ink">05</span>
                 {t("billing")}
               </h2>
               <Controller

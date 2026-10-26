@@ -9,7 +9,6 @@ import { pick } from "@/lib/catalog/types";
 import { cn } from "@/lib/cn";
 import { formatPrice } from "@/lib/format";
 import { lineKey, useCartStore } from "@/stores/cart";
-import { toast } from "@/stores/toast";
 import { useUiStore } from "@/stores/ui";
 import { productItem, track } from "@/lib/tracking/track";
 import { useWishlistStore } from "@/stores/wishlist";
@@ -55,7 +54,7 @@ export function ProductCard({
     });
     setPicking(false);
     track({ name: "add_to_cart", item: productItem(product, name, size) });
-    toast({ title: t("added"), description: t("addedText", { name, size }), tone: "success" });
+    // The drawer is the confirmation: it shows the dress, and a toast would cover its button.
     openCart(true);
   }
 
