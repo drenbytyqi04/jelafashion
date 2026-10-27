@@ -160,6 +160,9 @@ with self-drawing measurement lines.
    README "Launching on Vercel".
    Pre-launch hardening done: security headers, per-address rate limits on public
    forms (`src/lib/security/rate-limit.ts`, migration `rate_limits`).
+   Visual refinement pass done (base, home, collection, product + wizard, cart/checkout,
+   final audit of 64 pages × 7 widths in both motion modes). Reveals are static under
+   reduced motion; the "New" card label renders client-only; decisions 25–26 in MASTER.md.
 
 After each phase: run the dev server, check 375px and desktop, run the pre-delivery
 checklist in MASTER.md, fix all errors, then **stop and wait for approval**.

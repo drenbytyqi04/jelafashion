@@ -2,7 +2,7 @@
 
 import { Heart, Plus, Ruler, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { Link } from "@/i18n/navigation";
 import type { CatalogProduct, Locale, Size } from "@/lib/catalog/types";
 import { pick } from "@/lib/catalog/types";
@@ -16,6 +16,7 @@ import { ProductMedia } from "./product-media";
 
 /** A dress reads as "New" for this long after it is published. */
 const NEW_FOR_DAYS = 30;
+const noopSubscribe = () => () => {};
 
 export function ProductCard({
   product,
@@ -59,9 +60,13 @@ export function ProductCard({
   }
 
   const hasSecond = product.images.length > 1 || product.images.length === 0;
-  // Read once per mount. Server and client could only disagree in the instant a dress turns 30 days old.
-  const [now] = useState(() => Date.now());
-  const isNew = now - Date.parse(product.publishedAt) < NEW_FOR_DAYS * 86_400_000;
+  // Client-only: a cached or prerendered page can be older than the visit, so a dress may
+  // have stopped being "new" in between. The server renders no label; hydration adds it.
+  const isNew = useSyncExternalStore(
+    noopSubscribe,
+    () => Date.now() - Date.parse(product.publishedAt) < NEW_FOR_DAYS * 86_400_000,
+    () => false,
+  );
 
   return (
     <article className={cn("group relative", className)} onMouseLeave={() => setPicking(false)}>
