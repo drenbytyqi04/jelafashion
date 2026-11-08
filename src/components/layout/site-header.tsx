@@ -8,6 +8,7 @@ import { cn } from "@/lib/cn";
 import { primaryNav } from "@/lib/nav";
 import { selectCartCount, useCartStore } from "@/stores/cart";
 import { useUiStore } from "@/stores/ui";
+import { CART_LANDED_EVENT, isFlying, REVEAL_HEADER_EVENT } from "@/lib/fly-to-cart";
 import { LanguageSwitcher } from "./language-switcher";
 import { MobileMenu } from "./mobile-menu";
 import { CartDrawer } from "./cart-drawer";
@@ -28,13 +29,31 @@ export function SiteHeader() {
   const [hidden, setHidden] = useState(false);
   const [focusWithin, setFocusWithin] = useState(false);
   const lastY = useRef(0);
-  // The badge settles in with a small pop when a dress is added, not on page load.
-  const prevCount = useRef<number | null>(null);
+  // The badge settles in when a dress is added (not on page load, when the saved cart is
+  // restored). With a flight under way, it waits for the dress to land in the bag.
   const [pop, setPop] = useState(0);
-  useEffect(() => {
-    if (prevCount.current !== null && count > prevCount.current) setPop((n) => n + 1);
-    prevCount.current = count;
-  }, [count]);
+  const [held, setHeld] = useState<number | null>(null);
+  const shownCount = held ?? count;
+  useEffect(
+    () =>
+      useCartStore.subscribe((state, prev) => {
+        if (!useCartStore.persist.hasHydrated()) return;
+        if (selectCartCount(state) <= selectCartCount(prev)) return;
+        const settle = () => {
+          setHeld(null);
+          setPop((n) => n + 1);
+        };
+        // The store notifies inside the click handler, before flyToCart starts; decide
+        // once the handler has finished. While the dress flies, the bag keeps its old count.
+        const before = selectCartCount(prev);
+        queueMicrotask(() => {
+          if (!isFlying()) return settle();
+          setHeld(before);
+          window.addEventListener(CART_LANDED_EVENT, settle, { once: true });
+        });
+      }),
+    [],
+  );
 
   useEffect(() => {
     let frame = 0;
@@ -50,11 +69,15 @@ export function SiteHeader() {
         }
       });
     };
+    // Fly-to-cart calls the header back so the bag is there to receive the dress.
+    const reveal = () => setHidden(false);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener(REVEAL_HEADER_EVENT, reveal);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener(REVEAL_HEADER_EVENT, reveal);
     };
   }, []);
 
@@ -161,13 +184,13 @@ export function SiteHeader() {
               className={cn(iconLink, "relative -mr-3 lg:mr-0")}
             >
               <ShoppingBag {...icon} />
-              {count > 0 && (
+              {shownCount > 0 && (
                 <span
                   key={pop}
                   aria-hidden
                   className={cn(pop > 0 && "animate-[badge-pop_600ms_var(--ease-couture)]", "nums absolute right-1 top-1 flex size-[18px] items-center justify-center rounded-full bg-champagne text-[11px] font-semibold text-ink")}
                 >
-                  {count > 9 ? "9+" : count}
+                  {shownCount > 9 ? "9+" : shownCount}
                 </span>
               )}
             </button>
