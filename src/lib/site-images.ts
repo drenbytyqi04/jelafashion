@@ -4,7 +4,9 @@
 // Credits are in PHOTO-CREDITS.md. Swap a URL here to change a slot.
 
 export const siteImages = {
-  hero: "https://images.unsplash.com/photo-1779055660064-7a81ee65e0ce?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8Mjl8fHdlZGRpbmclMjBkcmVzc3xlbnwwfDF8fHwxNzk0MTU2OTg3fDI&ixlib=rb-4.1.0&w=2400&fit=max&fm=jpg&q=80",
+  hero: "https://images.unsplash.com/photo-1611145678882-edb8ab823bc6?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8NXx8YnJpZGV8ZW58MHx8fHwxNzk0MTU3NTMzfDI&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
+  /** Landscape hero for screens from 1024px (art-directed in HeroMedia). */
+  heroWide: "https://images.unsplash.com/photo-1754549229229-a63d681d6993?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8Mjl8fGJyaWRlfGVufDB8fHx8MTc5NDE1NzUzM3wy&ixlib=rb-4.1.0&w=2400&fit=max&fm=jpg&q=80",
   categoryBridal: "https://images.unsplash.com/photo-1770217612968-8a2e22a3d4b7?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8Mzd8fGVsZWdhbnQlMjBicmlkZSUyMGRyZXNzfGVufDB8MXx8fDE3OTQxNTY5NzN8Mg&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
   categoryEvening: "https://images.unsplash.com/photo-1765871422582-fa0ecfed1764?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8NDZ8fGRyZXNzfGVufDB8MXx8fDE3OTQxNTY5ODl8Mg&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
   categoryShort: "https://images.unsplash.com/photo-1779400204302-d2c3ed9d003d?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8OXx8c2hvcnQlMjBkcmVzcyUyMGZhc2hpb24lMjBzdHVkaW98ZW58MHwxfHx8MTc5NDE1NzA0MHwy&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",

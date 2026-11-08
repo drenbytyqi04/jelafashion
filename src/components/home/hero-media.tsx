@@ -1,5 +1,6 @@
 "use client";
 
+import { getImageProps } from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { siteImages } from "@/lib/site-images";
@@ -29,10 +30,15 @@ export function HeroMedia({ videoUrl, posterUrl }: { videoUrl: string | null; po
     if (play) ref.current?.play().catch(() => {});
   }, [play]);
 
-  // Without a video from the admin, the poster (or the illustrative photo) fills the frame.
+  // Without a video from the admin, the poster fills the frame. With no poster either, the
+  // illustrative photo is art-directed: a portrait frame for phones, a landscape one from
+  // 1024px, so the desktop hero is never a blown-up crop of a vertical image.
   const poster = posterUrl ?? siteImages.hero;
   if (!videoUrl) {
-    return <ImagePlaceholder ratio="9/16" tint="#6B645C" className="h-full !aspect-auto" src={poster} sizes="100vw" priority position="top" />;
+    if (posterUrl) {
+      return <ImagePlaceholder ratio="9/16" tint="#6B645C" className="h-full !aspect-auto" src={posterUrl} sizes="100vw" priority position="top" />;
+    }
+    return <HeroPicture />;
   }
 
   return (
@@ -47,5 +53,29 @@ export function HeroMedia({ videoUrl, posterUrl }: { videoUrl: string | null; po
       preload="none"
       aria-hidden
     />
+  );
+}
+
+/** Phone and desktop frames of the illustrative hero; eager and high priority (it is the LCP). */
+function HeroPicture() {
+  const common = { alt: "", sizes: "100vw", quality: 75 };
+  const {
+    props: { srcSet: wide },
+  } = getImageProps({ ...common, src: siteImages.heroWide, width: 2400, height: 1600 });
+  const {
+    props: { srcSet: tall, ...rest },
+  } = getImageProps({ ...common, src: siteImages.hero, width: 1200, height: 1800 });
+  return (
+    <picture>
+      <source media="(min-width: 64rem)" srcSet={wide} />
+      <img
+        {...rest}
+        alt=""
+        srcSet={tall}
+        loading="eager"
+        fetchPriority="high"
+        className="absolute inset-0 h-full w-full object-cover object-[50%_30%] lg:object-center"
+      />
+    </picture>
   );
 }

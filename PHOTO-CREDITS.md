@@ -35,7 +35,8 @@ advertising: dress photos in the admin (Products → photos), the other slots in
 
 ## Site sections
 
-- hero: [Alexander Mass](https://unsplash.com/photos/bride-in-a-veil-with-wedding-dress-W3fq6PTEm1o)
+- hero (phones): [Marius Muresan](https://unsplash.com/photos/woman-in-white-floral-lace-dress-xfNhe75x_vo)
+- heroWide (desktop): [Marius Muresan](https://unsplash.com/photos/a-bride-poses-elegantly-in-her-wedding-gown-eNOAalzDivo)
 - categoryBridal: [Alexander Mass](https://unsplash.com/photos/bride-in-a-white-wedding-dress-with-veil--O3Xho3QGFo)
 - categoryEvening: [FOTOGRAFÍA EDITORIAL](https://unsplash.com/photos/woman-in-shimmering-gown-at-restaurant-FeEqHM5o_p4)
 - categoryShort: [ola szkolda](https://unsplash.com/photos/blonde-woman-in-black-dress-touching-her-hair-eAYv02ewbsI)
