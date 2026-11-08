@@ -300,6 +300,26 @@ html[data-reveal-fallback] [data-reveal] {
   }
 }
 
+/* A champagne rule that draws down when a choice becomes active */
+@keyframes rule-in {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* Touch quick-add panel: rises from the card's lower edge */
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
 /* Cart count: a soft pop when a dress lands in the bag */
 @keyframes badge-pop {
   0% {

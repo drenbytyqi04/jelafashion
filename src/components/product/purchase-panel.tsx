@@ -158,7 +158,7 @@ export function PurchasePanel({
                   className="peer sr-only"
                 />
                 <span className="block size-6 rounded-full border border-ink/25" style={{ background: c.hex }} />
-                <span aria-hidden className="absolute inset-[5px] rounded-full border border-ink opacity-0 peer-checked:opacity-100" />
+                <span aria-hidden className="absolute inset-[5px] scale-90 rounded-full border border-ink opacity-0 transition-[opacity,transform] duration-(--duration-ui) peer-checked:scale-100 peer-checked:opacity-100" />
                 <span aria-hidden className="absolute inset-[3px] rounded-full peer-focus-visible:outline peer-focus-visible:outline-1 peer-focus-visible:outline-ink" />
                 <span className="sr-only">{pick(c.name, locale)}</span>
               </label>

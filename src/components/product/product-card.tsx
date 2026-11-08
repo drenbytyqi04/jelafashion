@@ -78,7 +78,7 @@ export function ProductCard({
           {hasSecond && (
             <div
               aria-hidden
-              className="absolute inset-0 opacity-0 transition-opacity duration-[600ms] ease-(--ease-couture) [@media(hover:hover)]:group-hover:opacity-100"
+              className="absolute inset-0 opacity-0 transition-opacity duration-[800ms] ease-(--ease-couture) [@media(hover:hover)]:group-hover:opacity-100"
             >
               <ProductMedia product={product} locale={locale} index={1} sizes={sizes} />
             </div>
@@ -112,7 +112,7 @@ export function ProductCard({
             aria-label={t("quickAddTo", { name })}
             className="absolute bottom-1 right-1 flex size-11 items-center justify-center [@media(hover:hover)]:hidden"
           >
-            <span className="flex size-8 items-center justify-center rounded-full bg-ivory/90 text-ink">
+            <span className="flex size-8 items-center justify-center rounded-full bg-ivory/90 text-ink transition-transform duration-(--duration-micro) active:scale-90">
               <Plus aria-hidden size={16} strokeWidth={1.25} />
             </span>
           </button>
@@ -123,7 +123,8 @@ export function ProductCard({
           className={cn(
             "absolute inset-x-0 bottom-0 hidden translate-y-full bg-ivory/95 transition-transform duration-(--duration-ui) ease-(--ease-couture)",
             "[@media(hover:hover)]:block group-hover:translate-y-0 focus-within:translate-y-0",
-            picking && "block translate-y-0 bg-ivory",
+            // On touch the panel appears from display:none, so it slides up with a keyframe.
+            picking && "block translate-y-0 animate-[sheet-up_var(--duration-ui)_var(--ease-couture)] bg-ivory",
           )}
         >
           {picking ? (
@@ -149,7 +150,7 @@ export function ProductCard({
                         disabled={unavailable}
                         onClick={() => add(size)}
                         aria-label={unavailable ? t("outOfStock", { size }) : size}
-                        className="label flex h-11 w-full items-center justify-center border border-field [@media(hover:hover)]:h-9 text-[0.6875rem] tracking-[0.08em] hover:border-ink disabled:border-hairline disabled:text-stone disabled:line-through"
+                        className="label flex h-11 w-full items-center justify-center border border-field transition-colors [@media(hover:hover)]:h-9 text-[0.6875rem] tracking-[0.08em] hover:border-ink disabled:border-hairline disabled:text-stone disabled:line-through"
                       >
                         {size}
                       </button>

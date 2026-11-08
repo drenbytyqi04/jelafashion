@@ -69,7 +69,7 @@ export function RadioGroup({
               )}
             >
               {variant === "card" && checked && (
-                <span aria-hidden className="absolute inset-y-0 left-0 w-[3px] bg-champagne" />
+                <span aria-hidden className="absolute inset-y-0 left-0 w-[3px] origin-top animate-[rule-in_var(--duration-ui)_var(--ease-couture)] bg-champagne" />
               )}
               <label
                 htmlFor={id}
@@ -89,8 +89,9 @@ export function RadioGroup({
                   onChange={() => onValueChange(option.value)}
                   className={cn(
                     "size-5 shrink-0 appearance-none rounded-full border border-field bg-ivory",
-                    "transition-[border-color,border-width] duration-(--duration-micro)",
-                    "checked:border-[6px] checked:border-ink",
+                    // The dot is an inset shadow, not a thicker border: same look, paint-only.
+                    "transition-[border-color,box-shadow] duration-(--duration-micro)",
+                    "checked:border-ink checked:shadow-[inset_0_0_0_5px_var(--color-ink)]",
                   )}
                 />
                 <span className="flex min-w-0 flex-1 flex-col">

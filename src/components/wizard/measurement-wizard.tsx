@@ -8,7 +8,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } fro
 import type { Locale, MeasurementDefinition } from "@/lib/catalog/types";
 import { pick } from "@/lib/catalog/types";
 import { cn } from "@/lib/cn";
-import { duration, ease } from "@/lib/motion";
+import { duration, ease, leave } from "@/lib/motion";
 import { formatMeasure, parseMeasure, toCm, toUnit, type Unit } from "@/lib/units";
 import { myMeasurementProfiles, saveMeasurementProfile } from "@/app/actions/account";
 import type { MeasurementProfile } from "@/lib/account/types";
@@ -398,10 +398,11 @@ export function MeasurementWizard({
                         <m.div
                           key={step === summaryStep ? "summary" : view}
                           className="absolute inset-0 flex items-center justify-center p-4"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: duration.ui }}
+                          // The figure settles into place as the view changes; it leaves quicker.
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, transition: leave("ui") }}
+                          transition={{ duration: duration.reveal, ease: ease.couture }}
                         >
                           <MeasurementIllustration
                             view={view}
