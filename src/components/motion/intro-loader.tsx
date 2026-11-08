@@ -9,7 +9,7 @@ const KEY = INTRO_STORAGE_KEY;
 export const introSeenScript = `try{if(sessionStorage.getItem("${INTRO_STORAGE_KEY}"))document.documentElement.setAttribute("data-intro-seen","")}catch(e){}`;
 
 /**
- * First visit per session: wordmark letters rise, the tape line draws, then a curtain wipe.
+ * First visit per session: wordmark letters rise, the tape line draws, then a curtain wipe (~1.9s).
  * Runs on CSS alone so it finishes even before hydration or without JS; `introSeenScript`
  * hides it on repeat visits before first paint. Reduced motion: never shown.
  */
@@ -22,7 +22,7 @@ export async function IntroLoader() {
           <p className="wordmark flex text-[clamp(1.5rem,1.2rem+1.5vw,2.25rem)]">
             {WORD.split("").map((ch, i) => (
               <span key={i} className="block overflow-hidden">
-                <span className="intro-letter block" style={{ animationDelay: `${0.1 + i * 0.05}s` }}>
+                <span className="intro-letter block" style={{ animationDelay: `${0.08 + i * 0.04}s` }}>
                   {ch === " " ? " " : ch}
                 </span>
               </span>

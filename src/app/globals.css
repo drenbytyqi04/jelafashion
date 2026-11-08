@@ -82,7 +82,7 @@
   --default-transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 
   --animate-skeleton: skeleton 1.6s ease-in-out infinite;
-  --animate-rise-in: rise-in 600ms var(--ease-curtain) both;
+  --animate-rise-in: rise-in 600ms var(--ease-couture) both;
 
   @keyframes skeleton {
     0%,
@@ -425,19 +425,19 @@ html[data-reveal-fallback] [data-reveal] {
   }
 }
 
-/* Intro loader (components/motion/intro-loader.tsx), about 2.2s end to end */
+/* Intro loader (components/motion/intro-loader.tsx), about 1.9s end to end */
 .intro {
-  animation: intro-curtain 800ms var(--ease-curtain) 1.4s forwards;
+  animation: intro-curtain 750ms var(--ease-curtain) 1.15s forwards;
 }
 .intro-letter {
   animation: reveal-line 600ms var(--ease-couture) both;
 }
 .intro-line {
   transform: scaleX(0);
-  animation: intro-line 500ms var(--ease-couture) 0.9s forwards;
+  animation: intro-line 500ms var(--ease-couture) 0.7s forwards;
 }
 .intro-skip {
-  animation: intro-hide 300ms linear 1.9s forwards;
+  animation: intro-hide 300ms linear 1.6s forwards;
 }
 @keyframes intro-curtain {
   to {
@@ -482,7 +482,7 @@ html[data-intro-seen] .intro-skip {
 
 /* Home hero (Phase 1). --intro-delay holds entrances until the intro curtain lifts. */
 .hero {
-  --intro-delay: 1.7s;
+  --intro-delay: 1.4s;
 }
 html[data-intro-seen] .hero,
 html[data-intro-skipped] .hero {

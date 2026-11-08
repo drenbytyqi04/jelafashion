@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 // The button's CSS fades it out with the curtain; unmounting afterwards also removes it
 // from the tab order and the accessibility tree.
-const INTRO_MS = 2300;
+const INTRO_MS = 2000;
 
 export function IntroSkip({ storageKey, label }: { storageKey: string; label: string }) {
   const [done, setDone] = useState(false);
