@@ -64,7 +64,8 @@ export function NewsletterForm({ source = "footer", onSubscribed }: { source?: "
         </Button>
       </div>
       <p className="mt-3 text-small text-stone">
-        <Link href="/privacy" className="link-underline">
+        {/* The whole line is the link, so it gets a 24px-high target (WCAG 2.5.8). */}
+        <Link href="/privacy" className="link-underline inline-block py-0.5 leading-[1.4]">
           {t("consent")}
         </Link>
       </p>
