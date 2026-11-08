@@ -71,7 +71,7 @@ export function RevealText({ lines, as: Tag = "h2", id, className, delay = 0, im
     >
       {lines.map((text, i) => (
         <span key={i} className="block overflow-hidden pb-[0.08em] -mb-[0.08em]">
-          <m.span className="block will-change-transform" variants={line} custom={i}>
+          <m.span data-reveal className="block will-change-transform" variants={line} custom={i}>
             {text}
             {i < lines.length - 1 ? " " : null}
           </m.span>

@@ -7,6 +7,7 @@ import { routing } from "@/i18n/routing";
 import { cormorant, cormorantItalic, manrope } from "@/app/fonts";
 import { site } from "@/lib/site";
 import { introSeenScript } from "@/components/motion/intro-loader";
+import { revealFallbackScript, revealNoScriptCss } from "@/components/motion/reveal-safety";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { CheckoutFooter } from "@/components/layout/checkout-chrome";
 import { FooterSwitch, HeaderSwitch } from "@/components/layout/chrome-switch";
@@ -57,7 +58,10 @@ export default async function LocaleLayout({
       <head>
         {/* Plain inline script, not next/script: it must run before first paint (next/script's
             beforeInteractive defers inline code until the Next runtime boots). */}
-        <script dangerouslySetInnerHTML={{ __html: `${introSeenScript}${consentPendingScript}` }} />
+        <script dangerouslySetInnerHTML={{ __html: `${introSeenScript}${consentPendingScript}${revealFallbackScript}` }} />
+        <noscript>
+          <style>{revealNoScriptCss}</style>
+        </noscript>
       </head>
       <body>
         <NextIntlClientProvider>

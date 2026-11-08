@@ -13,6 +13,16 @@ export const duration = {
   cinematic: 1.4,
 };
 
+/** Exits are about 60% of the matching entrance, so closing never feels like waiting. */
+export const exitDuration = {
+  micro: 0.12,
+  ui: 0.25,
+  reveal: 0.55,
+};
+
+/** A transition that leaves: shorter, accelerating out. */
+export const leave = (d: keyof typeof exitDuration = "ui") => ({ duration: exitDuration[d], ease: ease.leave });
+
 export const stagger = 0.07;
 /** Cap total stagger so long lists never feel slow. */
 export const staggerFor = (count: number) => Math.min(stagger, 0.5 / Math.max(count, 1));

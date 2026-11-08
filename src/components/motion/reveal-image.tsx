@@ -16,6 +16,7 @@ export function RevealImage({ children, className }: { children: ReactNode; clas
 
   return (
     <m.div
+      data-reveal
       className={cn("overflow-hidden", className)}
       initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
       whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
@@ -23,6 +24,7 @@ export function RevealImage({ children, className }: { children: ReactNode; clas
       transition={{ duration: duration.cinematic, ease: ease.curtain }}
     >
       <m.div
+        data-reveal
         initial={{ scale: 1.08 }}
         whileInView={{ scale: 1 }}
         viewport={{ once: true, margin: "0px 0px -10% 0px" }}

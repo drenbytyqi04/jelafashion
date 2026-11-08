@@ -73,6 +73,13 @@
   --duration-ui: 400ms;
   --duration-reveal: 900ms;
   --duration-cinematic: 1400ms;
+  --duration-exit-micro: 120ms;
+  --duration-exit-ui: 250ms;
+  --duration-exit-reveal: 550ms;
+
+  /* Every bare transition-* utility follows the brand curve, not Tailwind's default. */
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 
   --animate-skeleton: skeleton 1.6s ease-in-out infinite;
   --animate-rise-in: rise-in 600ms var(--ease-curtain) both;
@@ -259,6 +266,22 @@
     clip-path: inset(50%);
     white-space: nowrap;
   }
+}
+
+/* Reveals (RevealText, RevealImage) never leave content hidden: with reduced motion, without
+   JS (noscript copy in the layout) or when hydration is slow (data-reveal-fallback, set by
+   the head script), every reveal shows its final state. */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    clip-path: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+html[data-reveal-fallback] [data-reveal] {
+  clip-path: none !important;
+  transform: none !important;
+  opacity: 1 !important;
 }
 
 /* Page transition on client-side navigation (see [locale]/template.tsx) */

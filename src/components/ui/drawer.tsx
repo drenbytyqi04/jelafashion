@@ -6,7 +6,7 @@ import { Dialog } from "radix-ui";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { duration, ease } from "@/lib/motion";
+import { duration, ease, leave } from "@/lib/motion";
 import { useLenisLock } from "@/components/motion/use-scroll-lock";
 import { useReducedMotionSafe } from "@/components/motion/use-reduced-motion-safe";
 
@@ -66,7 +66,7 @@ export function Drawer({
                 className="fixed inset-0 z-50 bg-ink/40"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                exit={{ opacity: 0, transition: leave("ui") }}
                 transition={{ duration: duration.ui, ease: ease.couture }}
               />
             </Dialog.Overlay>

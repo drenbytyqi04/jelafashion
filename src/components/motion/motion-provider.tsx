@@ -3,7 +3,7 @@
 import "lenis/dist/lenis.css";
 import { ReactLenis } from "lenis/react";
 import { MotionConfig, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { MotionFeatures } from "./motion-features";
 
 /**
@@ -12,6 +12,10 @@ import { MotionFeatures } from "./motion-features";
  */
 export function MotionProvider({ children }: { children: ReactNode }) {
   const reduce = useReducedMotion() ?? false;
+  // Hydrated: the head script's reveal fallback stands down (see reveal-safety.ts).
+  useEffect(() => {
+    window.__jfHydrated = true;
+  }, []);
   return (
     <MotionConfig reducedMotion="user">
       <MotionFeatures>

@@ -60,7 +60,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       aria-busy={loading || undefined}
       className={cn(
         "label relative inline-flex select-none items-center justify-center gap-3 overflow-hidden text-center",
-        "transition-[background-color,color,border-color,transform] duration-(--duration-ui) ease-(--ease-couture) active:scale-[0.985] disabled:active:scale-100",
+        // Colours ease over 400ms; the press answers the finger in 200ms.
+        "[transition:background-color_var(--duration-ui)_var(--ease-couture),color_var(--duration-ui)_var(--ease-couture),border-color_var(--duration-ui)_var(--ease-couture),transform_var(--duration-micro)_var(--ease-couture)]",
+        "active:scale-[0.985] disabled:active:scale-100",
         "disabled:opacity-60",
         variant !== "text" && sizes[size],
         variants[variant],
