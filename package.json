@@ -12,7 +12,8 @@
     "db:seed-sql": "tsx scripts/generate-seed.ts",
     "qa:product": "node scripts/qa-product.mjs",
     "qa:checkout": "node scripts/qa-checkout.mjs",
-    "qa:admin": "node scripts/qa-admin.mjs"
+    "qa:admin": "node scripts/qa-admin.mjs",
+    "qa:full": "node scripts/qa-full.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
