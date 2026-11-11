@@ -15,7 +15,7 @@ export const siteImages = {
   bridalFeatureDetail: "/photos/jf-yllka-1.jpg",
   atelierStory: "/photos/jf-look-4.jpg",
   atelierMain: "/photos/jf-look-5.jpg",
-  atelierDetail: "https://images.unsplash.com/photo-1788009732092-59a1eea5daa1?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8OXx8c2VhbXN0cmVzcyUyMGF0ZWxpZXIlMjBzZXdpbmclMjB3ZWRkaW5nJTIwZHJlc3N8ZW58MHwxfHx8MTc5NDE1NjkyNXwy&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
+  atelierDetail: "/photos/jf-look-15.jpg",
   finalCta: "/photos/jf-final-wide.jpg",
   bannerBridal: "/photos/jf-lirika-1.jpg",
   bannerEvening: "/photos/jf-hena-1.jpg",
@@ -24,11 +24,11 @@ export const siteImages = {
   bannerNewIn: "/photos/jf-look-6.jpg",
   lookbook: [
     "/photos/jf-look-1.jpg",
-    "/photos/jf-vera-1.jpg",
+    "/photos/jf-look-12.jpg",
     "/photos/jf-look-2.jpg",
-    "/photos/jf-mira-1.jpg",
+    "/photos/jf-look-14.jpg",
     "/photos/jf-look-3.jpg",
-    "/photos/jf-nata-1.jpg",
+    "/photos/jf-look-13.jpg",
   ],
   instagram: [
     "/photos/jf-drita-1.jpg",

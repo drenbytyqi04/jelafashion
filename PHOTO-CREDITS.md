@@ -29,7 +29,7 @@ The others below are still illustrative.
 - bridalFeatureDetail: atelier photo (Yllka)
 - atelierStory: atelier photo (green gown with pearls)
 - atelierMain: atelier photo (red one-shoulder gown)
-- atelierDetail: [ASMA MISSI](https://unsplash.com/photos/tailoring-scissors-and-measuring-tape-l3yTyZ04QdQ)
+- atelierDetail: atelier photo (blush lace gown with satin drape)
 - finalCta: triptych of three atelier gowns
 - bannerBridal: atelier photo (Lirika)
 - bannerEvening: atelier photo (Hëna)
