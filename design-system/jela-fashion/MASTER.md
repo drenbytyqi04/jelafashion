@@ -361,3 +361,9 @@ to each part:
     swipe row showed one and a half tiles, so "Short" was never seen without swiping.
     Bridal now leads full width (4:5) with Evening and Short paired below (3:4). Desktop
     keeps three columns with the middle tile dropped. Overrides pages/home.md section 3.
+33. **The floating WhatsApp button is WhatsApp green** (owner's request): a solid #25D366
+    circle with the white glyph, so visitors from Instagram recognise it instantly. It is
+    the only place that colour appears; the "Custom size" button beside it stays ivory.
+34. **Empty categories leave the menus** (launch): a category with no published dress is
+    dropped from the header, mobile menu, cart drawer, footer and home tiles, and returns
+    by itself once a dress in it is published (`nav-categories.tsx`, layout).

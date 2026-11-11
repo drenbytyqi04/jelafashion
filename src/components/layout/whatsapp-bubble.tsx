@@ -31,6 +31,26 @@ const useConsentDecided = () =>
     () => false,
   );
 
+/**
+ * True while a phone shows the top of the home page: the hero's two buttons sit at the
+ * bottom of the screen there, so the floating buttons wait until she scrolls on.
+ */
+function useOverHeroCtas(active: boolean) {
+  return useSyncExternalStore(
+    (cb) => {
+      if (!active) return () => {};
+      window.addEventListener("scroll", cb, { passive: true });
+      window.addEventListener("resize", cb);
+      return () => {
+        window.removeEventListener("scroll", cb);
+        window.removeEventListener("resize", cb);
+      };
+    },
+    () => active && window.innerWidth < 1024 && window.scrollY < window.innerHeight * 0.6,
+    () => active,
+  );
+}
+
 const circle =
   "flex size-12 items-center justify-center rounded-full border border-hairline bg-ivory text-ink transition-colors duration-(--duration-micro) hover:border-ink md:size-14";
 
@@ -69,6 +89,7 @@ export function WhatsAppBubble({ definitions }: { definitions: MeasurementDefini
   const [panelOpen, setPanelOpen] = useState(false);
   const [wizardOpen, setWizardOpen] = useState(false);
   const onMadeToMeasure = pathname.startsWith("/made-to-measure");
+  const tucked = useOverHeroCtas(pathname === "/");
 
   useEffect(() => {
     if (!decided || onMadeToMeasure) return;
@@ -102,10 +123,24 @@ export function WhatsAppBubble({ definitions }: { definitions: MeasurementDefini
 
   if (!decided || pathname.startsWith("/checkout") || pathname.startsWith("/dress")) return null;
   return (
-    <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40 flex flex-col items-end gap-3 md:bottom-8 md:right-8">
+    <div
+      inert={tucked}
+      className={
+        "fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40 flex flex-col items-end gap-3 transition-[opacity,translate] duration-(--duration-ui) ease-(--ease-couture) motion-reduce:transition-none md:bottom-8 md:right-8 " +
+        (tucked ? "pointer-events-none translate-y-3 opacity-0" : "translate-y-0 opacity-100")
+      }
+    >
       {href && (
-        <a href={href} target="_blank" rel="noopener" aria-label={t("whatsappBubble")} title={t("whatsappBubble")} className={circle}>
-          <WhatsAppIcon size={24} />
+        // WhatsApp's own green, so it is recognised at a glance (MASTER.md decision 33).
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener"
+          aria-label={t("whatsappBubble")}
+          title={t("whatsappBubble")}
+          className="flex size-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_8px_24px_-12px_rgb(26_26_26/0.35)] transition-[filter] duration-(--duration-micro) hover:brightness-95 md:size-14"
+        >
+          <WhatsAppIcon size={28} strokeWidth={1.75} />
         </a>
       )}
       <div className="relative flex items-center">
