@@ -10,7 +10,7 @@ import { CollectionView } from "./collection-view";
 
 export type CollectionScope = { kind: "category"; category: CategoryId } | { kind: "all" } | { kind: "new-in" };
 
-const BANNER_PHOTO: Record<string, string> = {
+const BANNER_PHOTO: Record<string, string | null> = {
   bridal: siteImages.bannerBridal,
   evening: siteImages.bannerEvening,
   short: siteImages.bannerShort,

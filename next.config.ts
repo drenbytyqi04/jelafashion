@@ -9,8 +9,6 @@ const nextConfig: NextConfig = {
     // Product and site images from Supabase Storage's public buckets.
     remotePatterns: [
       { protocol: "https", hostname: "*.supabase.co", pathname: "/storage/v1/object/public/**" },
-      // Illustrative Unsplash photos used until the atelier's own photography is uploaded.
-      { protocol: "https", hostname: "images.unsplash.com", pathname: "/photo-*" },
     ],
   },
   // Baseline security headers on every response. No script CSP: nonces would force every

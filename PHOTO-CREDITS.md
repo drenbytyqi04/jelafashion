@@ -1,22 +1,14 @@
 # Photo credits
 
-The photos currently on the site are **illustrative stock photos from
-[Unsplash](https://unsplash.com/license)** (free to use under the Unsplash License). They
-are not Jela Fashion dresses and must be replaced with the atelier's own photography before
-advertising: dress photos in the admin (Products → photos), the other slots in
+Every photo on the site is Jela Fashion's own (in `public/photos`). There is no stock
+photography. Dress photos are managed in the admin (Products → photos), the other slots in
 `src/lib/site-images.ts`.
 
 ## Dresses
 
-The atelier's own photos (in `public/photos`): `nata`, `vera`, `hena`, `mira`, `zana`, `drita`, `lirika`, `bora`, `yllka`.
-The others below are still illustrative.
-
-- `lule`: [ola szkolda](https://unsplash.com/photos/a-woman-in-a-pink-ruffled-dress-holding-small-flowers-AmHazWH3x7c)
-- `lule`: [ola szkolda](https://unsplash.com/photos/woman-in-pink-ruffled-dress-and-white-boots-on-rocks-II6J3XQWNpY)
-- `era`: [engin akyurt](https://unsplash.com/photos/person-in-white-linen-dress-qSA-x_pTHqQ)
-- `era`: [engin akyurt](https://unsplash.com/photos/woman-wearing-white-eyelet-dress-Hrmnk-gdE8o)
-- `dea`: [ola szkolda](https://unsplash.com/photos/blonde-woman-posing-in-a-black-cut-out-dress-X7qQUIuoMc0)
-- `dea`: [ola szkolda](https://unsplash.com/photos/young-woman-in-black-dress-with-hair-in-motion-pR_487XJWVw)
+Atelier photos: `nata`, `vera`, `hena`, `mira`, `zana`, `drita`, `lirika`, `bora`, `yllka`.
+The short dresses `lule`, `era` and `dea` show the neutral croquis placeholder until the
+atelier sends their photos.
 
 ## Site sections
 
@@ -24,7 +16,7 @@ The others below are still illustrative.
 - heroWide (desktop): triptych of three atelier gowns
 - categoryBridal: atelier photo (Drita)
 - categoryEvening: atelier photo (Zana)
-- categoryShort: [ola szkolda](https://unsplash.com/photos/blonde-woman-in-black-dress-touching-her-hair-eAYv02ewbsI)
+- categoryShort: placeholder (awaiting short-dress photos)
 - bridalFeatureMain: atelier photo (Bora)
 - bridalFeatureDetail: atelier photo (Yllka)
 - atelierStory: atelier photo (green gown with pearls)
@@ -33,7 +25,7 @@ The others below are still illustrative.
 - finalCta: triptych of three atelier gowns
 - bannerBridal: atelier photo (Lirika)
 - bannerEvening: atelier photo (Hëna)
-- bannerShort: [Brian Wangenheim](https://unsplash.com/photos/a-woman-in-a-white-dress-laughing-against-a-wall-JiSI4n3IRXE)
+- bannerShort: placeholder (awaiting short-dress photos)
 - bannerAll: atelier photo (lookbook gown 1)
 - bannerNewIn: atelier photo (red long-sleeved gown)
 - lookbook and Instagram grid: all atelier photos (`public/photos`)
