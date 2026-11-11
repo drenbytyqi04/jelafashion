@@ -77,7 +77,8 @@ function CustomSizeIcon() {
  * measurement wizard with the measurements every dress needs; they are kept on the device
  * (or the account) and pre-fill the wizard on whichever dress she then chooses. Hidden
  * during checkout (focus mode), on the dress page (its own WhatsApp link and "Custom size"
- * sit beside the sticky add-to-cart) and while the cookie banner is up.
+ * sit beside the sticky add-to-cart), on the order page (it has its own WhatsApp link, and
+ * the buttons would cover the bank details' copy buttons) and while the cookie banner is up.
  */
 export function WhatsAppBubble({ definitions }: { definitions: MeasurementDefinition[] }) {
   const t = useTranslations();
@@ -121,7 +122,7 @@ export function WhatsAppBubble({ definitions }: { definitions: MeasurementDefini
     window.setTimeout(() => setWizardOpen(true), 350);
   }
 
-  if (!decided || pathname.startsWith("/checkout") || pathname.startsWith("/dress")) return null;
+  if (!decided || ["/checkout", "/dress", "/order"].some((path) => pathname.startsWith(path))) return null;
   return (
     <div
       inert={tucked}
