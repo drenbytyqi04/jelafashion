@@ -2,7 +2,8 @@ import type { Availability, CatalogProduct, CategoryId, Length, Sleeves } from "
 
 // URL <-> filter state for collection pages. Pure functions, used on server and client.
 
-export const PAGE_SIZE = 8;
+// Four rows of three on desktop, six rows of two on phones.
+export const PAGE_SIZE = 12;
 
 export const SORTS = ["newest", "price-asc", "price-desc"] as const;
 export type Sort = (typeof SORTS)[number];
