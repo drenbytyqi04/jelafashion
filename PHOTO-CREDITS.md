@@ -20,8 +20,8 @@ The others below are still illustrative.
 
 ## Site sections
 
-- hero (phones): [Marius Muresan](https://unsplash.com/photos/woman-in-white-floral-lace-dress-xfNhe75x_vo)
-- heroWide (desktop): [Marius Muresan](https://unsplash.com/photos/a-bride-poses-elegantly-in-her-wedding-gown-eNOAalzDivo)
+- hero (phones): atelier photo (red gown with satin sleeves)
+- heroWide (desktop): triptych of three atelier gowns
 - categoryBridal: atelier photo (Drita)
 - categoryEvening: atelier photo (Zana)
 - categoryShort: [ola szkolda](https://unsplash.com/photos/blonde-woman-in-black-dress-touching-her-hair-eAYv02ewbsI)
@@ -30,7 +30,7 @@ The others below are still illustrative.
 - atelierStory: atelier photo (green gown with pearls)
 - atelierMain: atelier photo (red one-shoulder gown)
 - atelierDetail: [ASMA MISSI](https://unsplash.com/photos/tailoring-scissors-and-measuring-tape-l3yTyZ04QdQ)
-- finalCta: [Alexander Mass](https://unsplash.com/photos/elegant-woman-in-wedding-dress-with-reflection-black-and-white-7GaA-gyyd7w)
+- finalCta: triptych of three atelier gowns
 - bannerBridal: atelier photo (Lirika)
 - bannerEvening: atelier photo (Hëna)
 - bannerShort: [Brian Wangenheim](https://unsplash.com/photos/a-woman-in-a-white-dress-laughing-against-a-wall-JiSI4n3IRXE)
