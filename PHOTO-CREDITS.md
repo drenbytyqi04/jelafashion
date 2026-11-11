@@ -8,15 +8,11 @@ advertising: dress photos in the admin (Products → photos), the other slots in
 
 ## Dresses
 
-The atelier's own photos (in `public/photos`): `nata`, `vera`, `hena`, `mira`, `zana`.
+The atelier's own photos (in `public/photos`): `nata`, `vera`, `hena`, `mira`, `zana`, `drita`, `lirika`.
 The others below are still illustrative.
 
-- `drita`: [Alexander Mass](https://unsplash.com/photos/elegant-white-wedding-dress-with-intricate-beaded-sleeves-dfXj4nE6whc)
-- `drita`: [Alexander Mass](https://unsplash.com/photos/bride-in-a-white-dress-with-veil-illuminated-veil-YFlDLxzwKWA)
 - `bora`: [Alexander Mass](https://unsplash.com/photos/a-bride-in-a-white-strapless-wedding-dress-sQOoc7Ldn4A)
 - `bora`: [Alexander Mass](https://unsplash.com/photos/a-woman-in-a-white-strapless-wedding-dress-KB60kQ21IYY)
-- `lirika`: [Alexander Mass](https://unsplash.com/photos/elegant-bride-in-white-wedding-dress-stands-in-a-doorway-Ax7kHw6j904)
-- `lirika`: [Alexander Mass](https://unsplash.com/photos/elegant-woman-in-white-wedding-dress-on-dark-stairs-Wvd4qUErVQg)
 - `yllka`: [Alexander Mass](https://unsplash.com/photos/a-bride-in-a-white-lace-dress-poses-outdoors-NrQEHcaEolI)
 - `yllka`: [Alexander Mass](https://unsplash.com/photos/a-white-lace-wedding-dress-hangs-on-a-hanger-vqykG3tH_Wo)
 - `lule`: [ola szkolda](https://unsplash.com/photos/a-woman-in-a-pink-ruffled-dress-holding-small-flowers-AmHazWH3x7c)
@@ -30,7 +26,7 @@ The others below are still illustrative.
 
 - hero (phones): [Marius Muresan](https://unsplash.com/photos/woman-in-white-floral-lace-dress-xfNhe75x_vo)
 - heroWide (desktop): [Marius Muresan](https://unsplash.com/photos/a-bride-poses-elegantly-in-her-wedding-gown-eNOAalzDivo)
-- categoryBridal: [Alexander Mass](https://unsplash.com/photos/bride-in-a-white-wedding-dress-with-veil--O3Xho3QGFo)
+- categoryBridal: atelier photo (Drita)
 - categoryEvening: atelier photo (Zana)
 - categoryShort: [ola szkolda](https://unsplash.com/photos/blonde-woman-in-black-dress-touching-her-hair-eAYv02ewbsI)
 - bridalFeatureMain: [Alexander Mass](https://unsplash.com/photos/blonde-woman-in-white-dress-by-wooden-door-and-window-lljv82wfEPs)
@@ -39,20 +35,9 @@ The others below are still illustrative.
 - atelierMain: [lucas Favre](https://unsplash.com/photos/woman-sewing-at-table-v8JtKauvvDk)
 - atelierDetail: [ASMA MISSI](https://unsplash.com/photos/tailoring-scissors-and-measuring-tape-l3yTyZ04QdQ)
 - finalCta: [Alexander Mass](https://unsplash.com/photos/elegant-woman-in-wedding-dress-with-reflection-black-and-white-7GaA-gyyd7w)
-- bannerBridal: [Alexander Mass](https://unsplash.com/photos/elegant-white-wedding-gown-hanging-on-a-hanger-mGWsO8-yFMI)
+- bannerBridal: atelier photo (Lirika)
 - bannerEvening: atelier photo (Hëna)
 - bannerShort: [Brian Wangenheim](https://unsplash.com/photos/a-woman-in-a-white-dress-laughing-against-a-wall-JiSI4n3IRXE)
-- bannerAll: [Jarvis Couture Bridal & Prom Tyler TX](https://unsplash.com/photos/a-woman-in-a-wedding-dress-standing-in-front-of-a-rack-of-dresses-HJWLIFZfozg)
-- bannerNewIn: [FOTOGRAFÍA EDITORIAL](https://unsplash.com/photos/woman-in-elegant-green-dress-with-intricate-lace-details-dCM0RNfwhSM)
-- lookbook 1: [Alexander Mass](https://unsplash.com/photos/a-bride-in-a-white-dress-with-a-veil-k3VftRoAzbE)
-- lookbook 2: atelier photo (Vera)
-- lookbook 3: [Alexander Mass](https://unsplash.com/photos/white-off-the-shoulder-dress-hanging-from-a-wall-light-fixture-yXtkS3YCk34)
-- lookbook 4: atelier photo (Mira)
-- lookbook 5: [Alexander Mass](https://unsplash.com/photos/woman-in-white-dress-and-hat-by-brick-wall-3jwENS_dbUE)
-- lookbook 6: [FOTOGRAFÍA EDITORIAL](https://unsplash.com/photos/two-elegant-women-in-formal-gowns-Q6S66XiXM3c)
-- instagram 1: [Alexander Mass](https://unsplash.com/photos/woman-in-white-robe-touching-a-wedding-dress-zP1fDmOIobg)
-- instagram 2: [FOTOGRAFÍA EDITORIAL](https://unsplash.com/photos/woman-in-sequined-dress-in-restaurant-kYoudyqiAkk)
-- instagram 3: [Mihaela Claudia Puscas](https://unsplash.com/photos/woman-checks-a-beautiful-beaded-gown-657NOzox0Po)
-- instagram 4: [Tândara Trentin](https://unsplash.com/photos/lace-and-a-fashion-sketch-create-a-bridal-design-ktUY-zDtUwQ)
-- instagram 5: [FOTOGRAFÍA EDITORIAL](https://unsplash.com/photos/blonde-woman-in-elegant-dress-posing-indoors-J2a1to2uZ9M)
-- instagram 6: [Alexander Mass](https://unsplash.com/photos/a-white-wedding-dress-hangs-on-a-wall-8q2XEX0Ohko)
+- bannerAll: atelier photo (lookbook gown 1)
+- bannerNewIn: atelier photo (lookbook gown 3)
+- lookbook and Instagram grid: all atelier photos (`public/photos`)
