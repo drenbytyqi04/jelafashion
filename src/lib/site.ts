@@ -20,7 +20,8 @@ export const site = {
   instagramHandle: "jelafashionpz",
   instagramUrl: "https://www.instagram.com/jelafashionpz/",
   url: siteUrl(),
-  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "",
+  // The atelier's WhatsApp. The env var can override it (e.g. a test number in staging).
+  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "+38343544420",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "",
 } as const;
 

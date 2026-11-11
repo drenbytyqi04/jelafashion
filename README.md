@@ -221,8 +221,9 @@ product in the admin (SEO section).
 map slot), FAQ, Shipping (rates from the shipping zones), Returns, Privacy, Terms,
 Cookies, Wishlist and Search. Legal pages carry `[PLACEHOLDER]`s (company name, address,
 business number, return window…) for the atelier and its lawyer to fill in; nothing
-legal is invented. A floating WhatsApp button appears once `NEXT_PUBLIC_WHATSAPP_NUMBER`
-is set (hidden on dress pages, which have their own, and during checkout). The newsletter
+legal is invented. The floating WhatsApp button uses the atelier's number (+383 43 544 420,
+in `src/lib/site.ts`; `NEXT_PUBLIC_WHATSAPP_NUMBER` overrides it) and is hidden on dress
+pages, which have their own, and during checkout. The newsletter
 offer appears once per device after 30 seconds and a scroll, never on dress pages, in the
 cart, checkout or account, and never over an open dialog.
 
