@@ -1,5 +1,6 @@
-// Illustrative photography from Unsplash (https://unsplash.com/license) for every image slot
-// outside the product catalogue, until the atelier's own photos are uploaded. Editorial
+// Slots outside the product catalogue. Paths under /photos are the atelier's own photos
+// (public/photos); the rest is illustrative photography from Unsplash
+// (https://unsplash.com/license) until more of the atelier's photos arrive. Editorial
 // series (bridal, evening, atelier details) chosen for one consistent, couture look.
 // Credits are in PHOTO-CREDITS.md. Swap a URL here to change a slot.
 
@@ -8,7 +9,7 @@ export const siteImages = {
   /** Landscape hero for screens from 1024px (art-directed in HeroMedia). */
   heroWide: "https://images.unsplash.com/photo-1754549229229-a63d681d6993?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8Mjl8fGJyaWRlfGVufDB8fHx8MTc5NDE1NzUzM3wy&ixlib=rb-4.1.0&w=2400&fit=max&fm=jpg&q=80",
   categoryBridal: "https://images.unsplash.com/photo-1770217612968-8a2e22a3d4b7?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8Mzd8fGVsZWdhbnQlMjBicmlkZSUyMGRyZXNzfGVufDB8MXx8fDE3OTQxNTY5NzN8Mg&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
-  categoryEvening: "https://images.unsplash.com/photo-1765871422582-fa0ecfed1764?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8NDZ8fGRyZXNzfGVufDB8MXx8fDE3OTQxNTY5ODl8Mg&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
+  categoryEvening: "/photos/jf-zana-1.jpg",
   categoryShort: "https://images.unsplash.com/photo-1779400204302-d2c3ed9d003d?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8OXx8c2hvcnQlMjBkcmVzcyUyMGZhc2hpb24lMjBzdHVkaW98ZW58MHwxfHx8MTc5NDE1NzA0MHwy&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
   bridalFeatureMain: "https://images.unsplash.com/photo-1782787231783-1f03a0e39187?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8MjF8fHdlZGRpbmclMjBkcmVzc3xlbnwwfDF8fHwxNzk0MTU2OTg3fDI&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
   bridalFeatureDetail: "https://images.unsplash.com/photo-1779675259100-b266ec489f42?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8NHx8YnJpZGFsJTIwZW1icm9pZGVyeSUyMGRldGFpbHxlbnwwfDF8fHwxNzk0MTU2OTU4fDI&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
@@ -17,15 +18,15 @@ export const siteImages = {
   atelierDetail: "https://images.unsplash.com/photo-1788009732092-59a1eea5daa1?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8OXx8c2VhbXN0cmVzcyUyMGF0ZWxpZXIlMjBzZXdpbmclMjB3ZWRkaW5nJTIwZHJlc3N8ZW58MHwxfHx8MTc5NDE1NjkyNXwy&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
   finalCta: "https://images.unsplash.com/photo-1782787229049-4713d4f10195?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8MzB8fGVsZWdhbnQlMjBicmlkZSUyMGRyZXNzfGVufDB8MXx8fDE3OTQxNTY5NzN8Mg&ixlib=rb-4.1.0&w=2400&fit=max&fm=jpg&q=80",
   bannerBridal: "https://images.unsplash.com/photo-1782787231777-57f68be77d76?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8MTB8fHdlZGRpbmclMjBkcmVzc3xlbnwwfDF8fHwxNzk0MTU2OTg3fDI&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
-  bannerEvening: "https://images.unsplash.com/photo-1765871421824-f06af71a4650?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8MzV8fGRyZXNzfGVufDB8MXx8fDE3OTQxNTY5ODl8Mg&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
+  bannerEvening: "/photos/jf-hena-1.jpg",
   bannerShort: "https://images.unsplash.com/photo-1766299234906-22a5f7bbeb35?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8MTJ8fHdoaXRlJTIwbWluaSUyMGRyZXNzJTIwZmFzaGlvbnxlbnwwfDF8fHwxNzk0MTU2OTU2fDI&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
   bannerAll: "https://images.unsplash.com/photo-1676132068619-f015a54cee3d?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8MjN8fGVsZWdhbnQlMjBicmlkZSUyMGRyZXNzfGVufDB8MXx8fDE3OTQxNTY5NzN8Mg&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
   bannerNewIn: "https://images.unsplash.com/photo-1765229278111-75e6f77ddfde?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8NDF8fGRyZXNzfGVufDB8MXx8fDE3OTQxNTY5ODl8Mg&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
   lookbook: [
     "https://images.unsplash.com/photo-1777312377880-4f08acc48020?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8MXx8d2VkZGluZyUyMGRyZXNzfGVufDB8MXx8fDE3OTQxNTY5ODd8Mg&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
-    "https://images.unsplash.com/photo-1765229276634-9708213ad8f9?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8OHx8ZHJlc3N8ZW58MHwxfHx8MTc5NDE1Njk4OHwy&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
+    "/photos/jf-vera-1.jpg",
     "https://images.unsplash.com/photo-1782787231736-a0e3260151ad?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8MjR8fHdlZGRpbmclMjBkcmVzc3xlbnwwfDF8fHwxNzk0MTU2OTg3fDI&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
-    "https://images.unsplash.com/photo-1765871421201-e06df489fb52?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8NHx8ZHJlc3N8ZW58MHwxfHx8MTc5NDE1Njk4OHwy&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
+    "/photos/jf-mira-1.jpg",
     "https://images.unsplash.com/photo-1776267772784-ec37e7b9d0d3?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8MTh8fHdlZGRpbmclMjBkcmVzc3xlbnwwfDF8fHwxNzk0MTU2OTg3fDI&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
     "https://images.unsplash.com/photo-1765229282730-0c5cfd5c8575?ixid=M3wxMDE3MjIwfDB8MXxzZWFyY2h8MTF8fGRyZXNzfGVufDB8MXx8fDE3OTQxNTY5ODh8Mg&ixlib=rb-4.1.0&w=1600&fit=max&fm=jpg&q=80",
   ],
