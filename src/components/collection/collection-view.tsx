@@ -75,6 +75,15 @@ export function CollectionView({
   const [sortOpen, setSortOpen] = useState(false);
   const [grid, setGrid] = useState<GridMode>("standard");
   const [chipsExpanded, setChipsExpanded] = useState(false);
+  // Filters live behind a button at every width: a sheet from below on phones, a panel
+  // from the left on desktop, chosen when it opens.
+  const [filterSide, setFilterSide] = useState<"bottom" | "left">("bottom");
+
+  function openFilters() {
+    setDraft(filters);
+    setFilterSide(window.matchMedia("(min-width: 64rem)").matches ? "left" : "bottom");
+    setFilterOpen(true);
+  }
 
   useEffect(() => {
     try {
@@ -103,11 +112,6 @@ export function CollectionView({
   const results = useMemo(() => applyFilters(products, filters), [products, filters]);
   const draftResults = useMemo(() => applyFilters(products, draft), [products, draft]);
   const keys = FILTER_KEYS.filter((k) => showCategory || k !== "category");
-  const counts = useMemo(
-    () => optionCounts(products, filters, keys, colors.map((c) => c.family)),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [products, filters, colors, showCategory],
-  );
   const draftCounts = useMemo(
     () => optionCounts(products, draft, keys, colors.map((c) => c.family)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,18 +128,15 @@ export function CollectionView({
   const MOBILE_CHIPS = 3;
 
   const cardSizes =
-    grid === "standard" ? "(min-width: 1024px) 25vw, 50vw" : "(min-width: 1024px) 37vw, 100vw";
+    grid === "standard" ? "(min-width: 1024px) 30vw, 50vw" : "(min-width: 1024px) 45vw, 100vw";
 
   return (
-    <div className="container-page pb-24 lg:grid lg:grid-cols-12 lg:gap-6">
+    <div className="container-page pb-24">
       {/* Mobile toolbar */}
       <div className="sticky top-(--header-offset) z-30 -mx-(--gutter) mb-4 grid grid-cols-2 border-b border-hairline bg-ivory transition-[top] duration-(--duration-ui) ease-(--ease-couture) lg:hidden">
         <button
           type="button"
-          onClick={() => {
-            setDraft(filters);
-            setFilterOpen(true);
-          }}
+          onClick={openFilters}
           className="label flex min-h-12 items-center justify-center gap-2 border-r border-hairline"
         >
           <SlidersHorizontal aria-hidden size={16} strokeWidth={1.25} />
@@ -151,21 +152,7 @@ export function CollectionView({
         </button>
       </div>
 
-      {/* Desktop filters */}
-      <aside className="hidden lg:col-span-3 lg:block" aria-label={t("filters")}>
-        <div className="sticky top-[calc(var(--header-offset)+24px)] max-h-[calc(100dvh-var(--header-offset)-48px)] overflow-y-auto pb-8 pr-4 transition-[top] duration-(--duration-ui)" data-lenis-prevent>
-          <FilterGroups
-            filters={filters}
-            onToggle={(k, v) => commit(toggle(filters, k, v))}
-            colorOptions={colors}
-            showCategory={showCategory}
-            counts={counts}
-            idPrefix="desk"
-          />
-        </div>
-      </aside>
-
-      <div className="lg:col-span-9">
+      <div>
         {/* Results bar */}
         <div className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-3">
           {/* The count heads the grid, so card titles (h3) sit under an h2. */}
@@ -173,6 +160,20 @@ export function CollectionView({
             {t("results", { count: results.length })}
           </h2>
           <div className="ml-auto flex items-center gap-4">
+            <button
+              type="button"
+              onClick={openFilters}
+              aria-haspopup="dialog"
+              className="label hidden h-[52px] items-center gap-2 border border-field px-5 transition-colors duration-(--duration-ui) hover:border-ink lg:flex"
+            >
+              <SlidersHorizontal aria-hidden size={16} strokeWidth={1.25} />
+              {t("filter")}
+              {activeCount > 0 && (
+                <span className="nums flex size-[18px] items-center justify-center rounded-full bg-champagne text-[0.625rem] tracking-normal text-ink">
+                  {activeCount}
+                </span>
+              )}
+            </button>
             <Select
               label={<span className="sr-only">{t("sortBy")}</span>}
               value={filters.sort}
@@ -284,9 +285,9 @@ export function CollectionView({
         )}
       </div>
 
-      {/* Mobile filter drawer: edits a draft, applied with one button */}
+      {/* Filter drawer: edits a draft, applied with one button */}
       <Drawer
-        side="bottom"
+        side={filterSide}
         open={filterOpen}
         onOpenChange={setFilterOpen}
         title={t("filters")}
@@ -319,7 +320,7 @@ export function CollectionView({
           colorOptions={colors}
           showCategory={showCategory}
           counts={draftCounts}
-          idPrefix="mob"
+          idPrefix="filters"
         />
       </Drawer>
 
