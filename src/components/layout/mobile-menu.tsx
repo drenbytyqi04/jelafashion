@@ -8,6 +8,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import type { StaticPathname } from "@/i18n/routing";
 import { duration, ease } from "@/lib/motion";
 import { categoryNav } from "@/lib/nav";
+import { useVisibleNav } from "./nav-categories";
 import { whatsappHref } from "@/lib/site";
 import { useUiStore } from "@/stores/ui";
 import { useLenisLock } from "@/components/motion/use-scroll-lock";
@@ -46,6 +47,7 @@ export function MobileMenu() {
   const setOpen = useUiStore((s) => s.setMenuOpen);
   const close = () => setOpen(false);
   const pathname = usePathname();
+  const categories = useVisibleNav(categoryNav);
   useLenisLock(open);
 
   const wa = whatsappHref();
@@ -108,8 +110,8 @@ export function MobileMenu() {
 
                   <m.div variants={item} className="mt-10">
                     <p className="label mb-4 text-stone">{t("menu.collections")}</p>
-                    <ul className="grid grid-cols-3 gap-3">
-                      {categoryNav.map((c) => (
+                    <ul className={categories.length === 2 ? "grid grid-cols-2 gap-3" : "grid grid-cols-3 gap-3"}>
+                      {categories.map((c) => (
                         <li key={c.key}>
                           <Link href={c.href} onClick={close} className="group block">
                             <ImagePlaceholder className="transition-opacity duration-(--duration-micro) group-active:opacity-80" ratio="3/4" tone={c.tone} src={MENU_PHOTOS[c.key]} sizes="30vw" position="top" />

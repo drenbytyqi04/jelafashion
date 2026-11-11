@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import type { CategoryId } from "@/lib/catalog/types";
 import type { StaticPathname } from "@/i18n/routing";
 import { site, whatsappHref } from "@/lib/site";
 import { Accordion } from "@/components/ui/accordion";
@@ -10,7 +11,7 @@ import { CookieSettingsLink } from "@/components/consent/cookie-settings-link";
 
 type FooterLink = { label: string; href: StaticPathname } | { label: string; external: string; icon?: "instagram" | "whatsapp" };
 
-export function SiteFooter() {
+export function SiteFooter({ emptyCategories = [] }: { emptyCategories?: readonly CategoryId[] }) {
   const t = useTranslations();
   const wa = whatsappHref();
 
@@ -21,7 +22,7 @@ export function SiteFooter() {
       links: [
         { label: t("nav.bridal"), href: "/bridal" },
         { label: t("nav.evening"), href: "/evening" },
-        { label: t("nav.short"), href: "/short" },
+        ...(emptyCategories.includes("short") ? [] : [{ label: t("nav.short"), href: "/short" as const }]),
         { label: t("nav.newIn"), href: "/new-in" },
       ],
     },

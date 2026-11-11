@@ -4,6 +4,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { categoryNav } from "@/lib/nav";
+import { useVisibleNav } from "./nav-categories";
 import type { Locale } from "@/lib/catalog/types";
 import { formatPrice } from "@/lib/format";
 import { selectCartCount, selectCartSubtotal, useCartStore } from "@/stores/cart";
@@ -15,6 +16,7 @@ import { CartLineItem } from "@/components/cart/cart-line-item";
 export function CartDrawer() {
   const t = useTranslations("cart");
   const tn = useTranslations("nav");
+  const categories = useVisibleNav(categoryNav);
   const locale = useLocale() as Locale;
   const open = useUiStore((s) => s.cartOpen);
   const setOpen = useUiStore((s) => s.setCartOpen);
@@ -57,7 +59,7 @@ export function CartDrawer() {
           <p className="mt-3 text-body text-stone">{t("emptyText")}</p>
           {/* Straight into a collection, rather than a dead end */}
           <ul className="mt-8 flex flex-col border-t border-hairline">
-            {categoryNav.map((c) => (
+            {categories.map((c) => (
               <li key={c.key} className="border-b border-hairline">
                 <Link href={c.href} onClick={close} className="group flex min-h-14 items-center justify-between font-serif text-[1.375rem]">
                   {tn(c.key)}

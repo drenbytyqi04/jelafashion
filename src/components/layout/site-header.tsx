@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/cn";
 import { primaryNav } from "@/lib/nav";
+import { useVisibleNav } from "./nav-categories";
 import { selectCartCount, useCartStore } from "@/stores/cart";
 import { useUiStore } from "@/stores/ui";
 import { CART_LANDED_EVENT, isFlying, REVEAL_HEADER_EVENT } from "@/lib/fly-to-cart";
@@ -20,6 +21,7 @@ const HIDE_AFTER = 160;
 
 export function SiteHeader() {
   const t = useTranslations();
+  const navItems = useVisibleNav(primaryNav);
   const pathname = usePathname();
   const overlayPage = OVERLAY_PATHS.has(pathname);
   const count = useCartStore(selectCartCount);
@@ -126,7 +128,7 @@ export function SiteHeader() {
             </button>
             <nav aria-label={t("nav.primary")} className="hidden nav:block">
               <ul className="flex items-center gap-5">
-                {primaryNav.map((item) => {
+                {navItems.map((item) => {
                   const active = pathname === item.href;
                   return (
                     <li key={item.key}>

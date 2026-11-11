@@ -19,7 +19,9 @@ import { ConsentBanner } from "@/components/consent/consent-banner";
 import { consentPendingScript } from "@/components/consent/pending-script";
 import { TrackingScripts } from "@/components/tracking/tracking-scripts";
 import { Toaster } from "@/components/ui/toaster";
-import { getMeasurementDefinitions } from "@/lib/catalog/repository";
+import { NavCategoriesProvider } from "@/components/layout/nav-categories";
+import { getCatalog, getMeasurementDefinitions } from "@/lib/catalog/repository";
+import type { CategoryId } from "@/lib/catalog/types";
 
 
 export function generateStaticParams() {
@@ -53,7 +55,12 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
   const t = await getTranslations("common");
   // The measurements every dress asks for, for "Custom size" before a dress is chosen.
-  const coreMeasurements = (await getMeasurementDefinitions()).filter((m) => m.alwaysRequired);
+  const [definitions, catalog] = await Promise.all([getMeasurementDefinitions(), getCatalog()]);
+  const coreMeasurements = definitions.filter((m) => m.alwaysRequired);
+  // Categories without a published dress drop out of every menu until one is published.
+  const emptyCategories = (["bridal", "evening", "short"] as const satisfies readonly CategoryId[]).filter(
+    (id) => !catalog.some((p) => p.category === id),
+  );
 
   return (
     // The intro loader's inline script sets data attributes on <html> before hydration.
@@ -69,6 +76,7 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider>
           <MotionProvider>
+            <NavCategoriesProvider empty={emptyCategories}>
             <a
               href="#main"
               className="sr-only-focusable fixed left-4 top-4 z-[80] bg-ink px-4 py-3 text-small text-ivory"
@@ -79,13 +87,14 @@ export default async function LocaleLayout({
             <main id="main" tabIndex={-1} className="outline-none">
               {children}
             </main>
-            <FooterSwitch site={<SiteFooter />} focus={<CheckoutFooter />} />
+            <FooterSwitch site={<SiteFooter emptyCategories={emptyCategories} />} focus={<CheckoutFooter />} />
             <WhatsAppBubble definitions={coreMeasurements} />
             <NewsletterPopup />
             <ConsentBanner />
             <Toaster />
             <StoreHydrator />
             <TrackingScripts />
+            </NavCategoriesProvider>
           </MotionProvider>
         </NextIntlClientProvider>
       </body>
