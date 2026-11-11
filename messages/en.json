@@ -214,10 +214,11 @@
       "champagne": "Champagne",
       "blush": "Blush",
       "black": "Black",
-      "red": "Burgundy",
+      "red": "Red",
       "silver": "Silver",
       "green": "Green",
-      "blue": "Blue"
+      "blue": "Blue",
+      "brown": "Brown"
     }
   },
   "product": {

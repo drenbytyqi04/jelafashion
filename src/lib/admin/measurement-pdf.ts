@@ -17,6 +17,7 @@ import {
 } from "pdf-lib";
 import type { Order } from "@/lib/commerce/types";
 import { formatDate } from "@/lib/format";
+import { absoluteUrl } from "@/lib/seo";
 import { formatMeasure } from "@/lib/units";
 
 // The A4 measurement sheet as a downloadable PDF: the same content and layout as the print
@@ -68,7 +69,8 @@ function drawCover(page: PDFPage, img: PDFImage, x: number, y: number, w: number
 async function loadImage(doc: PDFDocument, url: string | undefined): Promise<PDFImage | null> {
   if (!url) return null;
   try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+    // Site-hosted photos are root-relative; the server fetches them by absolute URL.
+    const res = await fetch(url.startsWith("/") ? absoluteUrl(url) : url, { signal: AbortSignal.timeout(8000) });
     if (!res.ok) return null;
     const bytes = new Uint8Array(await res.arrayBuffer());
     const type = res.headers.get("content-type") ?? "";

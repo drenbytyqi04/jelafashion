@@ -19,6 +19,8 @@ export function publicSupabase(): SupabaseClient | null {
 export function storagePublicUrl(bucket: string, path: string | null | undefined): string | null {
   if (!path) return null;
   if (/^https?:\/\//.test(path)) return path;
+  // Photos shipped with the site (public/photos) are stored as root-relative paths.
+  if (path.startsWith("/")) return path;
   const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
   return base ? `${base}/storage/v1/object/public/${bucket}/${path}` : null;
 }
