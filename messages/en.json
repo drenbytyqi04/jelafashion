@@ -1187,6 +1187,16 @@
     "footerLink": "Cookie settings"
   },
   "whatsappBubble": "Message us on WhatsApp",
+  "customSizeBubble": {
+    "label": "Custom size",
+    "open": "Order a dress made to your measurements",
+    "dismiss": "Dismiss",
+    "panelTitle": "Let us create your dress, made to your measurements.",
+    "panelText": "{count} measurements, one at a time, each with an illustration. We keep them and fill them in for the dress you choose.",
+    "start": "Start",
+    "save": "Save my measurements",
+    "saved": "Your measurements are saved. Choose a dress and select “Custom size”: they will be there."
+  },
   "newsletterPopup": {
     "label": "Letters from the atelier",
     "title": "New collections, to you first.",

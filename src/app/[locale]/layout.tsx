@@ -19,6 +19,7 @@ import { ConsentBanner } from "@/components/consent/consent-banner";
 import { consentPendingScript } from "@/components/consent/pending-script";
 import { TrackingScripts } from "@/components/tracking/tracking-scripts";
 import { Toaster } from "@/components/ui/toaster";
+import { getMeasurementDefinitions } from "@/lib/catalog/repository";
 
 
 export function generateStaticParams() {
@@ -51,6 +52,8 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
   const t = await getTranslations("common");
+  // The measurements every dress asks for, for "Custom size" before a dress is chosen.
+  const coreMeasurements = (await getMeasurementDefinitions()).filter((m) => m.alwaysRequired);
 
   return (
     // The intro loader's inline script sets data attributes on <html> before hydration.
@@ -77,7 +80,7 @@ export default async function LocaleLayout({
               {children}
             </main>
             <FooterSwitch site={<SiteFooter />} focus={<CheckoutFooter />} />
-            <WhatsAppBubble />
+            <WhatsAppBubble definitions={coreMeasurements} />
             <NewsletterPopup />
             <ConsentBanner />
             <Toaster />

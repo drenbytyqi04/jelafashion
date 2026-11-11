@@ -50,10 +50,14 @@ export function MeasurementWizard({
   productName,
   definitions,
   onComplete,
+  confirmLabel,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  productName: string;
+  /** The dress being measured for; omitted when taking measurements ahead of choosing one. */
+  productName?: string;
+  /** Summary button label; defaults to "add to cart". */
+  confirmLabel?: string;
   /** Measurements this dress needs, in order. */
   definitions: MeasurementDefinition[];
   onComplete: (result: WizardResult) => void;
@@ -361,7 +365,7 @@ export function MeasurementWizard({
                     <div className="container-page flex min-h-14 items-center justify-between gap-4">
                       <div className="min-w-0">
                         <Dialog.Title className="font-serif text-[1.25rem] leading-tight">{t("title")}</Dialog.Title>
-                        <p className="truncate text-small text-stone">{t("for", { name: productName })}</p>
+                        {productName && <p className="truncate text-small text-stone">{t("for", { name: productName })}</p>}
                       </div>
                       <button
                         type="button"
@@ -611,7 +615,7 @@ export function MeasurementWizard({
                               )}
                               <div className="mt-auto pt-6">
                                 <Button onClick={confirmAll} className="w-full">
-                                  {t("confirmAdd")}
+                                  {confirmLabel ?? t("confirmAdd")}
                                 </Button>
                               </div>
                             </div>

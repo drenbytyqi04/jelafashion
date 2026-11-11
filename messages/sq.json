@@ -1188,6 +1188,16 @@
     "footerLink": "Cilësimet e cookies"
   },
   "whatsappBubble": "Na shkruaj në WhatsApp",
+  "customSizeBubble": {
+    "label": "Sipas masave",
+    "open": "Porosit një fustan sipas masave të tua",
+    "dismiss": "Mbyll",
+    "panelTitle": "Le ta krijojmë fustanin tënd, sipas masave të tua.",
+    "panelText": "{count} masa, një nga një, me një vizatim për secilën. I ruajmë dhe plotësohen vetë te fustani që zgjedh.",
+    "start": "Fillo",
+    "save": "Ruaj masat",
+    "saved": "Masat u ruajtën. Zgjidh fustanin dhe zgjidh “Sipas masave”: masat do të jenë aty."
+  },
   "newsletterPopup": {
     "label": "Letra nga atelja",
     "title": "Koleksionet e reja, së pari te ti.",
