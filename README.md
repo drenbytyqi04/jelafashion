@@ -149,8 +149,11 @@ the same email), saved addresses, measurement profiles and profile. Checkout pre
 signed-in customer's details and saved address, and the measurement wizard offers and
 saves account profiles.
 
-**The admin panel** is at `/admin` (Albanian, never indexed), for accounts whose
-`profiles.role` is `admin`. It covers the dashboard, orders (status workflow Awaiting
+**The admin panel** is at `/admin` (Albanian, never indexed). Only the atelier's account
+gets in: `profiles.role` must be `admin` *and* the email must be `jelafashionpz@gmail.com`
+(`ADMIN_EMAIL` overrides it; `src/lib/auth/admin-email.ts`). On the live site it signs in
+with that email and its Supabase Auth password (change it in Supabase → Authentication →
+Users, or with "Send password recovery"); local development keeps email links. It covers the dashboard, orders (status workflow Awaiting
 payment → Paid → In production → Shipped → Delivered / Cancelled, each change emailed to
 the customer; payment proofs; printable measurement sheet; CSV export), products (text in
 both languages, photos, colours, sizes and stock, required measurements, SEO),

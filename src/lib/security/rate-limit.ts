@@ -17,6 +17,7 @@ export const LIMITS = {
   contact: { limit: 5, windowSeconds: 3600 },
   newsletter: { limit: 10, windowSeconds: 3600 },
   signInLink: { limit: 5, windowSeconds: 900 },
+  adminSignIn: { limit: 5, windowSeconds: 900 },
   discount: { limit: 20, windowSeconds: 600 },
   order: { limit: 10, windowSeconds: 600 },
   proof: { limit: 20, windowSeconds: 3600 },

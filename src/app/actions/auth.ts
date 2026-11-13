@@ -8,6 +8,7 @@ import type { Locale } from "@/lib/catalog/types";
 import { sendEmail } from "@/lib/email/send";
 import { SimpleEmail } from "@/emails/simple-email";
 import { createLinkToken, LOCAL_SESSION_COOKIE } from "@/lib/auth/local-session";
+import { adminEmail } from "@/lib/auth/admin-email";
 import { authMode, safeNext } from "@/lib/auth/viewer";
 import { siteOrigin } from "@/lib/site-origin";
 import { withinRateLimit } from "@/lib/security/rate-limit";
@@ -110,6 +111,33 @@ export async function requestSignInLink(input: unknown): Promise<AuthResult> {
   }
 
   return { ok: false, error: "unavailable" };
+}
+
+const adminSchema = z.object({
+  email: z.string().trim().toLowerCase().email().max(254),
+  password: z.string().min(1).max(200),
+});
+
+export type AdminSignInResult = { ok: true } | { ok: false; error: "invalid" | "rateLimited" | "unavailable" };
+
+/**
+ * The atelier's password sign-in to the admin panel. Only the atelier's address is tried
+ * at all; any other answer is the same "wrong email or password", so the form reveals
+ * nothing. Five attempts per 15 minutes per address.
+ */
+export async function adminSignIn(input: unknown): Promise<AdminSignInResult> {
+  if (authMode() !== "supabase") return { ok: false, error: "unavailable" };
+  const parsed = adminSchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "invalid" };
+  if (!(await withinRateLimit("adminSignIn"))) return { ok: false, error: "rateLimited" };
+  if (parsed.data.email !== adminEmail()) return { ok: false, error: "invalid" };
+  const supabase = await sessionSupabase();
+  const { error } = await supabase!.auth.signInWithPassword(parsed.data);
+  if (error) {
+    if (error.status === 429) return { ok: false, error: "rateLimited" };
+    return { ok: false, error: "invalid" };
+  }
+  return { ok: true };
 }
 
 /** Google sign-in (Supabase only): returns the provider URL for the browser to open. */

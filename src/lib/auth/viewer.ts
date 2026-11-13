@@ -5,6 +5,7 @@ import { cache } from "react";
 import type { Viewer } from "@/lib/account/types";
 import { localDataEnabled } from "@/lib/local-db";
 import { sessionSupabase, supabaseAuthConfigured } from "@/lib/supabase/server-client";
+import { adminEmail } from "./admin-email";
 import { LOCAL_SESSION_COOKIE, localSessionUser } from "./local-session";
 
 export type AuthMode = "supabase" | "local" | null;
@@ -32,13 +33,15 @@ export const getViewer = cache(async (): Promise<Viewer | null> => {
     const user = data.user;
     if (!user?.email) return null;
     const { data: profile } = await supabase.from("profiles").select("full_name, phone, locale, role").eq("id", user.id).maybeSingle();
+    const email = user.email.toLowerCase();
     return {
       id: user.id,
-      email: user.email.toLowerCase(),
+      email,
       fullName: profile?.full_name ?? (user.user_metadata?.full_name as string | undefined) ?? null,
       phone: profile?.phone ?? null,
       locale: profile?.locale === "en" ? "en" : "sq",
-      role: profile?.role === "admin" ? "admin" : "customer",
+      // Admin needs both the role and the atelier's address: no other account gets in.
+      role: profile?.role === "admin" && email === adminEmail() ? "admin" : "customer",
     };
   }
   if (mode === "local") {
