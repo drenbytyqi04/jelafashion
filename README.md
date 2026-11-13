@@ -118,7 +118,7 @@ indexed and never sent as a referrer.
 | --- | --- |
 | `SUPABASE_SERVICE_ROLE_KEY` | storing orders and proofs (required in production) |
 | `RESEND_API_KEY`, `EMAIL_FROM` | customer emails; `EMAIL_FROM` must be on a domain verified in Resend |
-| `SHOP_NOTIFICATION_EMAIL` | new order, proof uploaded and card payment alerts to the atelier |
+| `SHOP_NOTIFICATION_EMAIL` | new order, proof uploaded, card payment and contact-form alerts to the atelier (defaults to jelafashionpz@gmail.com) |
 | `PAYSERA_PROJECT_ID`, `PAYSERA_SIGN_PASSWORD`, `PAYSERA_TEST_MODE` | card payments |
 
 **Paysera setup**: create a project at paysera.com, copy the project ID and sign password

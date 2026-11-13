@@ -46,5 +46,9 @@ export async function sendEmail({ to, subject, react, replyTo, tag }: Email): Pr
   }
 }
 
-/** Where shop alerts go; falls back to the public contact address. */
-export const shopInbox = () => process.env.SHOP_NOTIFICATION_EMAIL || process.env.NEXT_PUBLIC_CONTACT_EMAIL || null;
+/**
+ * Where shop alerts go (new order, payment proof, card payment, contact form): the
+ * atelier's inbox, unless SHOP_NOTIFICATION_EMAIL or the public contact address is set.
+ */
+export const shopInbox = () =>
+  process.env.SHOP_NOTIFICATION_EMAIL || process.env.NEXT_PUBLIC_CONTACT_EMAIL || "jelafashionpz@gmail.com";
